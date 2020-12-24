@@ -52,6 +52,7 @@ app.use(express.static(path.join(__dirname, '../public')))
 
 // Any routes or other various middlewares should go here!
 app.use('/api', require('./api'))
+app.use('/auth', require('./auth'))
 
 // Make sure this is right at the end of your server logic!
 // (However, if you have middleware to serve up 404s, that go would before this as well, or inside ~server/api/index.js)
