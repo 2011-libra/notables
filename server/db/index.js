@@ -2,6 +2,7 @@
 // The purpose of this module is to bring your Sequelize instance (`db`) together with your models
 
 const db = require('./database')
+const User = require('./User')
 // const Project = require('./project')
 // const Robot = require('./robot')
 // const RobotProject = require('./robotproject')
@@ -18,7 +19,7 @@ const db = require('./database')
 module.exports = {
   // Include your models in this exports object as well!
   db,
-  // Project,
+  User
   // Robot,
   // RobotProject
 }

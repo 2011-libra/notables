@@ -6,7 +6,7 @@ module.exports = {
     path: __dirname, // assumes your bundle.js will also be in the root of your project folder
     filename: 'public/bundle.js'
   },
-  devtool: 'source-map',
+  devtool: 'source-map', // make debugging easier and tells us where the error originated, rather than where in the bundle.js
   module: {
     rules: [
       {

@@ -4,7 +4,10 @@ const db = require('./database');
 //Lodash is a JavaScript library which provides utility functions for common programming tasks using the functional programming paradigm.
 const _ = require('lodash');
 
-const User = db.defint('user', {
+const User = db.define('user', {
+    google_id: {
+      type: Sequelize.STRING,
+    },
     email: {
       type: Sequelize.STRING,
       unique: true,
