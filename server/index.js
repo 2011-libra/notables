@@ -5,6 +5,13 @@ const morgan = require("morgan");
 const session = require("express-session");
 const passport = require("passport");
 const { User } = require("./db");
+const GoogleStrategy = require("passport-google-oauth");
+
+// We need to make sure our local NODE_ENV variable is in fact set to 'development'
+// Node may have actually done this for you when you installed it! If not though, be sure to do that.
+if (process.env.NODE_ENV === "development") {
+  require("../secretkey"); // this will mutate the process.env object with your secrets.
+}
 
 // Middlewares are functions that have access to the request object (req), the response object (res), and the next middleware function in the application's request-response cycle.
 
@@ -29,6 +36,7 @@ app.use(
 // initialize passport (* must be after our 'session' middleware)
 // initialize() is a middle-ware that initialises Passport.
 app.use(passport.initialize());
+// // establishes `req.user` for any middleware that runs after it
 app.use(passport.session());
 
 //Each subsequent request will not contain credentials, but rather the unique cookie that identifies the session. In order to support login sessions, Passport will serialize and deserialize user instances to and from the session.
