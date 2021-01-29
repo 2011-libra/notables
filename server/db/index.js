@@ -1,19 +1,16 @@
 // The purpose of this module is to bring your Sequelize instance (`db`) together with your models
 
 const db = require("./database");
-const User = require("./User");
+const User = require("./user");
+const Document = require("./document");
+const UserDocument = require("./user_document");
 
-// This is a great place to establish associations between your models
-// (https://sequelize-guides.netlify.com/association-types/).
-// Example:
-//
-// Puppy.belongsTo(Owner)
-
-// Robot.belongsToMany(Project, {through: RobotProject})
-// Project.belongsToMany(Robot, {through: RobotProject})
+User.belongsToMany(Document, { through: "user_document" });
+Document.belongsToMany(User, { through: "user_document" });
 
 module.exports = {
-  // Include your models in this exports object as well!
   db,
   User,
+  Document,
+  UserDocument,
 };

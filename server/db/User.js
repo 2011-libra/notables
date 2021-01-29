@@ -19,7 +19,7 @@ const User = db.define(
     salt: {
       type: Sequelize.STRING,
     },
-    google_id: {
+    googleId: {
       type: Sequelize.STRING,
     },
   },
