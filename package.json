@@ -20,12 +20,10 @@
   "lint-staged": {
     "*.{js,jsx}": [
       "prettier --write",
-      "npm run lint-fix",
-      "git add"
+      "npm run lint-fix"
     ],
     "*.{css,scss,json,md}": [
-      "prettier --write",
-      "git add"
+      "prettier --write"
     ]
   },
   "author": "",
