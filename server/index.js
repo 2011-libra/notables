@@ -45,7 +45,7 @@ passport.serializeUser((user, done) => {
 
 // deserialize user run every subsequent request that contains a serialized user
 passport.deserializeUser((id, done) => {
-  User.findById(id)
+  User.findByPk(id)
     .then((user) => done(null, user))
     .catch(done);
 });

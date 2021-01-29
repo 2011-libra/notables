@@ -1,5 +1,6 @@
 const Sequelize = require("sequelize");
 const db = require("./database");
+const crypto = require("crypto");
 
 //Lodash is a JavaScript library which provides utility functions for common programming tasks using the functional programming paradigm.
 const _ = require("lodash");
@@ -29,9 +30,7 @@ const User = db.define(
 
 // returns true or false if the entered password matches
 User.prototype.correctPassword = function (candidatePassword) {
-  return (
-    this.User.encryptPassword(candidatePassword, this.salt) === this.password
-  );
+  return this.encryptPassword(candidatePassword, this.salt) === this.password;
 };
 
 // utilizes lodash package
@@ -48,7 +47,7 @@ User.generateSalt = function () {
 };
 
 // accepts a plain text password and a salt, and returns its hash
-User.encryptPassword = function (plainText, salt) {
+User.prototype.encryptPassword = function (plainText, salt) {
   const hash = crypto.createHash("sha1"); // crypto.createHash(algorithm[, options])
   // In cryptography, SHA-1 (Secure Hash Algorithm 1) is a cryptographic hash function which takes an input and produces a 160-bit (20-byte) hash value known as a message digest – typically rendered as a hexadecimal number, 40 digits long.
 
