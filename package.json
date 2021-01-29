@@ -13,7 +13,10 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "lodash": "^4.17.20",
     "morgan": "^1.10.0",
+    "passport": "^0.4.1",
     "pg": "^8.5.1",
     "pg-hstore": "^2.3.3",
     "react": "^17.0.1",
