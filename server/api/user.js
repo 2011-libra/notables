@@ -6,6 +6,10 @@ const {
   UserDocument,
 } = require('../db')
 
+/* ::::: PLEASE NOTE ::::: */
+/* Passport's req.user should be used instead of "id". */
+/* For testing purposes, req.params.id is being utilized for initial development purposes. */
+
 // matches GET requests to /api/user
 router.get('/:id', async function (req, res, next) {
   try {
