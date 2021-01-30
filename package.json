@@ -12,11 +12,6 @@
     "start-dev": "webpack -w & nodemon main",
     "build-watch": "webpack -w"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "lint-staged": {
     "*.{js,jsx}": [
       "prettier --write",
@@ -33,6 +28,7 @@
     "express-session": "^1.17.1",
     "lodash": "^4.17.20",
     "morgan": "^1.10.0",
+    "mysql2": "^1.7.0",
     "passport": "^0.4.1",
     "passport-google-oauth": "^2.0.0",
     "pg": "^8.5.1",

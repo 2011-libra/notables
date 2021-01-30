@@ -3,12 +3,12 @@
 
 const Sequelize = require("sequelize");
 
-const db = new Sequelize(
-  process.env.DATABASE_URL || "postgres://localhost:5432/boilermaker",
-  {
-    logging: false, // unless you like the logs
-    // ...and there are many other options you may want to play with
-  }
-);
+const db = new Sequelize('capstone','guest','password',{
+  host: 'localhost',
+  // port: 3306,
+  dialect: 'mysql',
+  logging: false,
+
+});
 
 module.exports = db;
