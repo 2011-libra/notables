@@ -3,6 +3,7 @@
 
 const Sequelize = require('sequelize');
 
+
 const db = new Sequelize('capstone', 'guest', 'password', {
   host: 'localhost',
   dialect: 'mysql',

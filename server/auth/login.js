@@ -16,7 +16,7 @@ router.put("/", async (req, res, next) => {
     else {
       req.login(user, (err) => {
         if (err) next(err);
-        else res.json({ email: user.email });
+        else res.json({ id: user.id, email: user.email });
       });
     }
   } catch (error) {
