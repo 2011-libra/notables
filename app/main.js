@@ -3,13 +3,13 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import store from './store.js';
 import '../public/index.css';
-import './socket'
+import './socket';
+import Texteditor from './components/texteditor/texteditor.js';
 
 ReactDOM.render(
   <Provider store={store}>
-    <h1>Hello World</h1>
-  </Provider>
-  ,
+    <Texteditor />
+  </Provider>,
   document.getElementById('app')
 );
 
