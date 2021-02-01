@@ -1,4 +1,5 @@
 import React from 'react';
+import { FaBold, FaItalic } from 'react-icons/fa';
 import './Texteditor.css';
 
 export default function toolbar() {
@@ -38,10 +39,46 @@ export default function toolbar() {
     const target = document.getSelection();
     format('insertHTML', `<h2>${target}</h2>`);
   }
+
+  //CODEBLOCK? Very buggy
+  function addCodeBlock() {
+    const codeBlock = document.createElement('pre');
+    const target = document.getSelection();
+    if (
+      target.focusNode.nodeName.includes('#text') ||
+      target.focusNode.classList.contains('title') ||
+      target.focusNode.className.includes('codeBlock')
+    ) {
+      return;
+    }
+    const id = `codeBlock-${
+      document.getElementsByClassName('codeBlock').length + 1
+    }`;
+    codeBlock.classList.add('codeBlock');
+
+    format('insertHTML', `<pre class='codeBlock' id='${id}'>${target}</pre>`);
+    addLineAfterBlock(id);
+  }
+  function addLineAfterBlock(id) {
+    const block = document.getElementById(`${id}`);
+    const div = document.createElement('div');
+    const br = document.createElement('br');
+    div.appendChild(br);
+
+    if (!block) {
+      return;
+    } else {
+      block.after(div);
+    }
+  }
   return (
     <div className="toolbar">
-      <button onClick={e => format('bold')}>Bold</button>
-      <button onClick={e => format('italic')}>Italics</button>
+      <button onClick={e => format('bold')}>
+        <FaBold />
+      </button>
+      <button onClick={e => format('italic')}>
+        <FaItalic />
+      </button>
       <button onClick={e => format('insertUnorderedList')}>List</button>
       <button onClick={e => addLink()}>Link</button>
       <div id="url-input" className="hidden">
@@ -51,7 +88,6 @@ export default function toolbar() {
       <button onClick={e => setHeaderOne()}>Header 1</button>
       <button onClick={e => setHeaderTwo()}>Header 2</button>
       <button onClick={e => addCodeBlock()}>CodeBlock</button>
-      <button onClick={e => handleSubmit()}>Submit</button>
     </div>
   );
 }

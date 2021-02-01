@@ -5,12 +5,6 @@ import Toolbar from './toolbar';
 function texteditor() {
   return (
     <div className="texteditor_container">
-      <div
-        id="title"
-        contentEditable="true"
-        data-placeholder="Your title here..."
-        className="title"
-      ></div>
       <Toolbar />
       <div
         className="editor"
