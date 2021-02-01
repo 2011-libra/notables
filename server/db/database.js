@@ -1,14 +1,12 @@
 // The sole purpose of this module is to establish a connection to your
 // Postgres database by creating a Sequelize instance (called `db`).
 
-const Sequelize = require("sequelize");
+const Sequelize = require('sequelize');
 
-const db = new Sequelize(
-  process.env.DATABASE_URL || "postgres://localhost:5432/boilermaker",
-  {
-    logging: false, // unless you like the logs
-    // ...and there are many other options you may want to play with
-  }
-);
+const db = new Sequelize('capstone', 'guest', 'password', {
+  host: 'localhost',
+  dialect: 'mysql',
+  logging: false
+});
 
 module.exports = db;
