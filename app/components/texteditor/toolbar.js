@@ -1,5 +1,12 @@
-import React from 'react';
-import { FaBold, FaItalic } from 'react-icons/fa';
+import React, { useState } from 'react';
+import {
+  FaBold,
+  FaItalic,
+  FaListUl,
+  FaLink,
+  FaHeading,
+  FaCode
+} from 'react-icons/fa';
 import './Texteditor.css';
 
 export default function toolbar() {
@@ -29,15 +36,6 @@ export default function toolbar() {
     );
     document.getElementById('txtFormatUrl').value = '';
     show.classList.add('hidden');
-  }
-  //SETTING HEADERS
-  function setHeaderOne() {
-    const target = document.getSelection();
-    format('insertHTML', `<h1>${target}</h1>`);
-  }
-  function setHeaderTwo() {
-    const target = document.getSelection();
-    format('insertHTML', `<h2>${target}</h2>`);
   }
 
   //CODEBLOCK? Very buggy
@@ -71,23 +69,44 @@ export default function toolbar() {
       block.after(div);
     }
   }
+
   return (
     <div className="toolbar">
+      <select
+        onChange={e => {
+          if (e.target.value === '1') {
+            const target = document.getSelection();
+            format('insertHTML', `<h1>${target}</h1>`);
+          } else if (e.target.value === '2') {
+            const target = document.getSelection();
+            format('insertHTML', `<h2>${target}</h2>`);
+          }
+        }}
+      >
+        <option value="1">Heading 1</option>
+        <option value="2">Heading 2</option>
+      </select>
+
       <button onClick={e => format('bold')}>
         <FaBold />
       </button>
       <button onClick={e => format('italic')}>
         <FaItalic />
       </button>
-      <button onClick={e => format('insertUnorderedList')}>List</button>
-      <button onClick={e => addLink()}>Link</button>
+      <button onClick={e => format('insertUnorderedList')}>
+        <FaListUl />
+      </button>
+      <button onClick={e => addLink()}>
+        <FaLink />
+      </button>
       <div id="url-input" className="hidden">
         <input id="txtFormatUrl" placeholder="url" />
         <button onClick={e => setUrl(e)}>Create Link</button>
       </div>
-      <button onClick={e => setHeaderOne()}>Header 1</button>
-      <button onClick={e => setHeaderTwo()}>Header 2</button>
-      <button onClick={e => addCodeBlock()}>CodeBlock</button>
+
+      <button onClick={e => addCodeBlock()}>
+        <FaCode />
+      </button>
     </div>
   );
 }
