@@ -1,0 +1,72 @@
+.texteditor_container {
+  width: 95%;
+}
+.toolbar {
+  border: solid 1px #ddd;
+  background: #f4f4f4;
+  padding: 5px;
+  margin-top: 95px;
+  margin-left: 25%;
+  border-radius: 3px;
+  /* position: fixed; */
+  top: 50px;
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.hidden {
+  display: none;
+}
+
+#title:empty:before,
+.editor:empty:before {
+  content: attr(data-placeholder);
+  color: gray;
+}
+
+.editor {
+  border: solid 1px #ccc;
+  /* width: 95%; */
+  max-width: 700px;
+  min-height: 100px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  font-size: 20px;
+}
+.editor > li {
+  list-style: square;
+  margin: initial;
+}
+#title {
+  border: solid 1px #ccc;
+  /* width: 95%; */
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+  font-size: 40px;
+}
+.editor:focus,
+#title:focus {
+  outline: none;
+}
+#title:empty:before,
+.editor:empty:before {
+  content: attr(data-placeholder);
+  color: gray;
+}
+.codeBlock {
+  background-color: rgb(21, 34, 75);
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0;
+  margin-bottom: 0;
+  height: auto;
+  min-height: 39px;
+  font-family: 'Courier New', Courier, monospace;
+  overflow: auto;
+  color: white;
+  padding: 8px;
+}
