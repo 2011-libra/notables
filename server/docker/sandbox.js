@@ -15,14 +15,17 @@ await docker.buildImage({
   }
 )
 
-// if(!docker.getContainer('sample15')){
-//   await docker.createContainer({Image: 'sample',
-//   AttachStdin: false,
-//   AttachStdout: true,
-//   AttachStderr: true,
-//   Tty: true,cmd: [], name: 'sample15'}, function (err, container){
-//   })
-// }
+  await docker.createContainer({
+    Image: 'sample',
+    AttachStdin: false,
+    AttachStdout: true,
+    AttachStderr: true,
+    Tty: true,
+    cmd: [],
+    name: 'sample-container'},
+    function (err, container){
+  })
+
 let output = '';
 const [res, container] = await docker.run(
   'sample',
@@ -30,7 +33,7 @@ const [res, container] = await docker.run(
   [stdout, stderr],
   { Tty: false }
 )
-    await console.log('stdout: %j', stdout.toString())
+    await console.log('[sandbox.js] stdout: %j', stdout.toString())
     output = await stdout.toString();
     // console.log('stderr: %j', stderr.toString())
     await container.remove()
@@ -38,7 +41,7 @@ const [res, container] = await docker.run(
 return output;
 
 }
-// makeImage();
+
 module.exports = makeImage;
 
 // const container = docker.getContainer('sample15')
