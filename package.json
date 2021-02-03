@@ -4,6 +4,7 @@
   "description": "",
   "main": "./app/main.js",
   "scripts": {
+    "docker": "docker pull node:12-alpine",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint ./ --ignore-path .gitignore",
     "lint-fix": "npm run lint -- --fix",
