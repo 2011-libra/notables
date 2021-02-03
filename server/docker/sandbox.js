@@ -4,75 +4,111 @@ const streams = require('memory-streams');
 const path = require('path');
 const tar = require('tar');
 
+const removeStaleContainer = async token => {
+  try {
+    const staleContainer = docker.getContainer(`${token}-container`);
+    await staleContainer.stop();
+    await staleContainer.remove();
+  } catch (error) {
+    console.log('Error in removeStaleContainer:', error);
+  }
+};
+
+const makeContainer = async token => {
+  try {
+    const container = await docker.createContainer({
+      Image: 'node:12-alpine',
+      AttachStdin: false,
+      AttachStdout: true,
+      AttachStderr: true,
+      Tty: false,
+      cmd: ['node', 'code'],
+      name: `${token}-container`
+    });
+    return container;
+  } catch (error) {
+    console.log('Error in createContainer:', error);
+
+    if (error.statusCode === 409) {
+      // Error: container already exists
+      await removeStaleContainer(token);
+    }
+  }
+};
+
+const archiveCode = async token => {
+  try {
+    await tar.create(
+      {
+        cwd: path.join(__dirname, `/${token}`),
+        file: path.join(__dirname, `/${token}/code.tar`)
+      },
+      ['code.js']
+    );
+  } catch (error) {
+    console.log('Error in archiveCode:', error);
+  }
+};
+
+const putCodeInContainer = async (container, token) => {
+  try {
+    await container.putArchive(path.join(__dirname, `/${token}/code.tar`), {
+      path: '/'
+    });
+  } catch (error) {
+    console.log('Error in putCodeInContainer:', error);
+  }
+};
+
+const listenToContainer = async (container, stream) => {
+  try {
+    const attachedStream = await container.attach({
+      stream: true,
+      stdout: true,
+      stderr: true
+    });
+    attachedStream.pipe(stream);
+  } catch (error) {
+    console.log('Error in listenToContainer:', error);
+  }
+};
+
 const runContainer = async token => {
   const stdout = new streams.WritableStream();
-  const container = await docker.createContainer({
-    Image: 'node:12-alpine',
-    AttachStdin: false,
-    AttachStdout: true,
-    AttachStderr: true,
-    Tty: false,
-    cmd: ['node', 'code'],
-    name: `${token}-container`
-  });
+  const container = await makeContainer(token);
 
-  await tar.create(
-    {
-      cwd: path.join(__dirname, `/${token}`),
-      file: path.join(__dirname, `/${token}/code.tar`)
-    },
-    ['code.js'],
-    function (err) {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log('Tar file of source code created');
-      }
-    }
-  );
-
-  await container.putArchive(
-    path.join(__dirname, `/${token}/code.tar`),
-    { path: '/' },
-    (writeError, writeStream) => {
-      if (writeError) {
-        console.error('put archive error', writeError);
-      }
-      console.log('put archive finished');
-    }
-  );
-
-  const stream = await container.attach({
-    stream: true,
-    stdout: true,
-    stderr: true
-  });
-  console.log('all good?*****');
-  stream.pipe(stdout);
-  console.log('all good!*****');
-
-  await container.start();
-  await container.stop();
-  await container.remove();
-  console.log('End of sandbox file.');
+  try {
+    await archiveCode(token);
+    await putCodeInContainer(container, token);
+    await listenToContainer(container, stdout);
+    await container.start();
+  } catch (error) {
+    console.log('Error in runContainer:', error);
+  } finally {
+    await container.stop();
+    await container.remove();
+  }
 
   return stdout.toString();
 };
 
+const trimControlCharacters = string => {
+  let readableOutput = '';
+  for (let i = 0; i < string.length; i++) {
+    if (string.charCodeAt(i) > 31) {
+      readableOutput += string[i];
+    }
+  }
+  return readableOutput;
+};
+
 const run = async token => {
   try {
-    const output = await runContainer(token);
-    console.log('DONE!');
-
-    let readableOutput = '';
-    for (let i = 0; i < output.length; i++) {
-      if (output.charCodeAt(i) > 31) {
-        readableOutput += output[i];
-      }
-    }
-    return readableOutput;
+    const rawOutput = await runContainer(token);
+    return trimControlCharacters(rawOutput);
   } catch (error) {
-    console.log(error);
+    console.log('Error in run:', error);
+    return '[server error in running code]';
   }
 };
 
