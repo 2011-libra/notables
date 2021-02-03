@@ -39,7 +39,7 @@ export default function toolbar() {
     show.classList.add('hidden');
   }
 
-  //CODEBLOCK? Very buggy
+  //CODEBLOCK (Need to fix)
   function addCodeBlock() {
     const codeBlock = document.createElement('pre');
     const target = document.getSelection();
