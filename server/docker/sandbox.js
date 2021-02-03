@@ -17,7 +17,8 @@ const removeStaleContainer = async token => {
 const makeContainer = async token => {
   try {
     const container = await docker.createContainer({
-      Image: 'node:12-alpine',
+      // Image: 'node:12-alpine',
+      Image: 'node-libra',
       AttachStdin: false,
       AttachStdout: true,
       AttachStderr: true,

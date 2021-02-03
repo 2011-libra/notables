@@ -3,6 +3,21 @@ const sandbox = require('./sandbox');
 const fs = require('fs');
 const path = require('path');
 
+const wrapCode = code => {
+  return (
+    `const { VM } = require('vm2');
+  const vm = new VM();
+
+  const codeString = '` +
+    code +
+    `'
+
+  vm.run(codeString);
+  process.exit(1);
+  `
+  );
+};
+
 const makeWorkingDir = (token, code) => {
   try {
     fs.mkdirSync(path.join(__dirname, `/${token}`));
@@ -11,7 +26,8 @@ const makeWorkingDir = (token, code) => {
   }
 
   try {
-    fs.writeFileSync(path.join(__dirname, `/${token}/code.js`), code);
+    const wrappedCode = wrapCode(code);
+    fs.writeFileSync(path.join(__dirname, `/${token}/code.js`), wrappedCode);
   } catch (error) {
     console.log('Error in writeFile:', error);
   }
