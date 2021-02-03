@@ -12,7 +12,7 @@ import { MdImportExport } from 'react-icons/md';
 import { CSSTransition } from 'react-transition-group';
 
 function DropdownMenu() {
-  const [activeMenu, setActiveMenu] = useState('main' || 'account' || 'import');
+  const [activeMenu, setActiveMenu] = useState('main');
   const [menuHeight, setMenuHeight] = useState(null);
   const dropdownRef = useRef(null);
 
@@ -73,8 +73,8 @@ function DropdownMenu() {
         </div>
       </CSSTransition>
       {/* account */}
-      <CSSTransition
-        in={activeMenu === 'account'}
+      {/* <CSSTransition
+        in={activeMenu === 'main'}
         timeout={500}
         classNames="menu-primary"
         unmountOnExit
@@ -89,8 +89,8 @@ function DropdownMenu() {
             Account
           </DropdownItem>
         </div>
-      </CSSTransition>
-      <CSSTransition
+      </CSSTransition> */}
+      {/* <CSSTransition
         in={activeMenu === 'account'}
         timeout={500}
         classNames="menu-secondary"
@@ -101,10 +101,10 @@ function DropdownMenu() {
           <DropdownItem goToMenu="account" leftIcon={<FaArrowAltCircleLeft />}>
             <h2>account</h2>
           </DropdownItem>
-          {/* <DropdownItem leftIcon={<FaBolt />}>Dark Mode</DropdownItem>
-          <DropdownItem leftIcon={<FaBolt />}>Word Count</DropdownItem> */}
+          <DropdownItem leftIcon={<FaBolt />}>Sign In</DropdownItem>
+          <DropdownItem leftIcon={<FaBolt />}>Sign Out</DropdownItem>
         </div>
-      </CSSTransition>{' '}
+      </CSSTransition> */}
     </div>
   );
 }

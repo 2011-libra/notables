@@ -77,7 +77,7 @@ a {
   border-radius: var(--border-radius);
   padding: 1rem;
   overflow: hidden;
-  transitionl: height var(--speed) ease;
+  transition: height var(--speed) ease;
 }
 
 .menu-item {
