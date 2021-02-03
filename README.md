@@ -41,3 +41,9 @@ npm run start
 ```
 
 Users can now navigate to `localhost:8080` using a browser.
+
+# Authors
+- Brad Gersh
+- Jonathan Hualoto
+- Matthew Leng
+- Vincent Pang
