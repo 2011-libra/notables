@@ -11,6 +11,7 @@ import DropdownMenu from './components/navbar/dropdownmenu';
 import Texteditor from './components/texteditor/texteditor.js';
 import { CgProfile } from 'react-icons/cg';
 import { MdImportExport } from 'react-icons/md';
+import Dropzone from './components/import/dropzone';
 
 ReactDOM.render(
   <Provider store={store}>
@@ -23,6 +24,7 @@ ReactDOM.render(
       </NavItem>
     </Navbar>
     <Texteditor />
+    <Dropzone />
   </Provider>,
   document.getElementById('app')
 );
