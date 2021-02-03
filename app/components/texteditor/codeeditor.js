@@ -1,23 +1,21 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect, useSelector, useDispatch } from 'react-redux';
 import { fetchCode } from '../../redux/CodeEditor';
-import axios from 'axios'; //temporary axios for development, will move to thunk
 
-export default function codeeditor() {
-  const codeState = useSelector(state => state);
-  console.log('im the stateeeee', codeState);
-
+export default function codeeditor(props) {
+  let codeState = useSelector(state => state);
   const dispatch = useDispatch();
+
+  useEffect (()=>{
+    document.getElementById('editor').innerText = codeState.stdout.stdout || ''
+    },
+    [codeState]
+  )
 
   async function handleSubmit(evt) {
     evt.preventDefault();
-    console.log(evt);
-    // runcode();
     const codeSnippet = document.getElementById('editor').innerText;
-    console.log(codeSnippet);
     await dispatch(fetchCode(codeSnippet, '12345'));
-    //codeState =
-    console.log('codeStateeeee', codeState);
   }
 
   return (
