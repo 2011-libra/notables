@@ -1,14 +1,18 @@
 # Usage
-To run, be sure that Docker is installed on the server and that the `node:12-alpine` Docker image is installed. This can be done with `docker pull node:12-alpine` or
+
+## Before the first run
+1. Be sure that Docker is installed and running on the server. (On a Mac, [Docker Desktop](https://www.docker.com/products/docker-desktop) should be installed and running.) The `node:12-alpine` Docker image needs to be locally available, which can be done with `docker pull node:12-alpine` or
 
 `npm run docker`
 
-Install the dependencies
+2. Install the NPM dependencies
 
 `npm install`
 
-then start the server.
+## Running the server
+
+Start the server with
 
 `npm run start`
 
-Navigate to `localhost:8080` using a browser.
+Users can now navigate to `localhost:8080` using a browser.
