@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-//import reducers here
+import codeEditorReducer from './CodeEditor';
 
 const appReducer = combineReducers({
-  //add reducers here
+  stdout: codeEditorReducer
 });
 
 export default appReducer;
