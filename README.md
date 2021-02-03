@@ -20,13 +20,13 @@ FLUSH PRIVILEGES;
 
 It should now be possible to log in to MySQL via `mysql -u guest -p` with password `password`. (This will be secured using an environment variable soon, and the privileges to the account will be more restricted to only the tables we need to access.)
 
-2. **Docker.** Be sure that Docker is installed and running on the server. (On a Mac, [Docker Desktop](https://www.docker.com/products/docker-desktop) should be installed and running.) The `node:12-alpine` Docker image needs to be locally available, which can be done with `docker pull node:12-alpine` or
+3. **Docker.** Be sure that Docker is installed and running on the server. (On a Mac, [Docker Desktop](https://www.docker.com/products/docker-desktop) should be installed and running.) The `node:12-alpine` Docker image needs to be locally available, which can be done with `docker pull node:12-alpine` or
 
   ```
   npm run docker
   ```
 
-3. **Dependencies.** Install the NPM dependencies
+4. **Dependencies.** Install the NPM dependencies
 
   ```
   npm install
