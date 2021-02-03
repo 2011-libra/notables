@@ -3,6 +3,7 @@ import {
   FaBold,
   FaItalic,
   FaListUl,
+  FaListOl,
   FaLink,
   FaHeading,
   FaCode
@@ -83,6 +84,7 @@ export default function toolbar() {
           }
         }}
       >
+        <option>Select a heading</option>
         <option value="1">Heading 1</option>
         <option value="2">Heading 2</option>
       </select>
@@ -95,6 +97,9 @@ export default function toolbar() {
       </button>
       <button onClick={e => format('insertUnorderedList')}>
         <FaListUl />
+      </button>
+      <button onClick={e => format('insertOrderedList')}>
+        <FaListOl />
       </button>
       <button onClick={e => addLink()}>
         <FaLink />
