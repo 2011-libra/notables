@@ -6,7 +6,7 @@ import '../public/index.css';
 import './socket';
 import Navbar from './components/navbar/navbar';
 import NavItem from './components/navbar/navitem';
-import { FaCog, FaArrowAltCircleRight } from 'react-icons/fa';
+import { FaCog } from 'react-icons/fa';
 import DropdownMenu from './components/navbar/dropdownmenu';
 import Texteditor from './components/texteditor/texteditor.js';
 import { CgProfile } from 'react-icons/cg';
@@ -15,12 +15,8 @@ import { MdImportExport } from 'react-icons/md';
 ReactDOM.render(
   <Provider store={store}>
     <Navbar>
-      <NavItem icon={<MdImportExport />}>
-        <DropdownMenu></DropdownMenu>
-      </NavItem>
-      <NavItem icon={<CgProfile />}>
-        <DropdownMenu></DropdownMenu>
-      </NavItem>
+      <NavItem icon={<MdImportExport />}></NavItem>
+      <NavItem icon={<CgProfile />}></NavItem>
 
       <NavItem icon={<FaCog />}>
         <DropdownMenu></DropdownMenu>
