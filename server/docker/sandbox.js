@@ -22,8 +22,11 @@ const makeContainer = async token => {
       AttachStdout: true,
       AttachStderr: true,
       Tty: false,
-      cmd: ['node', 'code'],
-      name: `${token}-container`
+      Cmd: ['node', 'code'],
+      name: `${token}-container`,
+      HostConfig: {
+        CapDrop: ['ALL']
+      }
     });
     return container;
   } catch (error) {
