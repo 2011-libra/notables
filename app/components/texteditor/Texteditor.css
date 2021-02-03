@@ -35,6 +35,18 @@
   margin-top: 20px;
   font-size: 20px;
 }
+
+.codeeditor_container > .editor {
+  background-color: black;
+  color: rgb(0, 222, 0);
+  font-family: courier;
+}
+
+.codeeditor_container > .editor::placeholder {
+  color: rgb(0, 222, 0);
+  font-family: courier;
+}
+
 .editor > li {
   list-style: square;
   margin: initial;
