@@ -22,7 +22,7 @@ ReactDOM.render(
       </NavItem>
     </Navbar> */}
     <Nav />
-    <Texteditor />
+    {/* <Texteditor /> */}
     <Dropzone />
   </Provider>,
   document.getElementById('app')
