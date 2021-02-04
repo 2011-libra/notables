@@ -36,28 +36,6 @@
   font-size: 20px;
 }
 
-.code-blocks {
-  border: solid 1px #ccc;
-  /* width: 95%; */
-  max-width: 700px;
-  min-height: 100px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 20px;
-  font-size: 20px;
-}
-
-.code-block-container > .code-blocks {
-  background-color: black;
-  color: rgb(0, 222, 0);
-  font-family: courier;
-}
-
-.code-block-container > .code-blocks::placeholder {
-  color: rgb(0, 222, 0);
-  font-family: courier;
-}
-
 .editor > li {
   list-style: square;
   margin: initial;
@@ -81,6 +59,15 @@
   color: gray;
 }
 
+.codeeditor_button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/**********************************/
+/*** RUNNABLE CODEBLOCK/SNIPPET ***/
+/**********************************/
 .codeBlock {
   background-color: rgb(222, 222, 222);
   margin-left: auto;
@@ -98,16 +85,14 @@
   display: inline-block;
 }
 
-.codeeditor_button {
+.code-block-buttons {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.code-block-buttons {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.sandbox-stdout {
+  color: green
 }
 
 /* .pre {
@@ -120,3 +105,24 @@
   color: black;
 } */
 
+.code-blocks {
+  border: solid 1px #ccc;
+  /* width: 95%; */
+  max-width: 700px;
+  min-height: 100px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  font-size: 20px;
+}
+
+.code-block-container > .code-blocks {
+  background-color: black;
+  color: rgb(0, 222, 0);
+  font-family: courier;
+}
+
+.code-block-container > .code-blocks::placeholder {
+  color: rgb(0, 222, 0);
+  font-family: courier;
+}

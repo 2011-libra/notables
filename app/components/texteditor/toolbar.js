@@ -14,11 +14,17 @@ import './Texteditor.css';
 
 export default function toolbar() {
 
-  //BOLD, ITALICS, UNORDERED LISTS
+  /******************************/
+  /*** EXECCOMMAND FORMATTING ***/
+  /******************************/
+  //BOLD, ITALICS, UNORDERED LISTS, ETC.
   function format(com, val) {
     document.execCommand(com, false, val);
   }
-  //SUPPOSE TO ADD LINKS
+
+  /*****************/
+  /*** HYPERLINK ***/
+  /*****************/
   function addLink() {
     const show = document.getElementById('url-input');
     if (show.classList.contains('hidden')) {
@@ -27,7 +33,10 @@ export default function toolbar() {
       show.classList.add('hidden');
     }
   }
-  //SETTING URLS
+
+  /*******************/
+  /*** SETTING URL ***/
+  /*******************/
   function setUrl(e) {
     e.preventDefault();
     const url = document.getElementById('txtFormatUrl').value;
@@ -42,8 +51,9 @@ export default function toolbar() {
     show.classList.add('hidden');
   }
 
-  /*****************/
-  /*** CODEBLOCK ***/
+  /**********************************/
+  /*** RUNNABLE CODEBLOCK/SNIPPET ***/
+  /**********************************/
   function addCodeBlock() {
     const codeBlock = document.createElement('pre');
     const target = document.getSelection();
@@ -61,9 +71,13 @@ export default function toolbar() {
     }`;
     codeBlock.classList.add('codeBlock');
 
+    // format and inserts html element
     format('insertHTML', `<pre class='codeBlock' id='${id}' tabindex=0><button id="${id}-button"contentEditable=false >▶</button>${target} </pre>`);
+
+    // add a line break after the code block
     addLineAfterBlock(id);
 
+    // event listener for running the code
     document.getElementById(`${id}-button`).addEventListener('click', async ()=>{
       const runnableCode = document.getElementById(`${id}`).innerText.slice(1)
       // await dispatch(fetchCode(runnableCode, 'sample-token'));
@@ -71,15 +85,24 @@ export default function toolbar() {
         code: runnableCode,
         token: 'sample-token'
       })
-      const outputNode = document.createElement('pre')
-      outputNode.innerText = stdout.data
-      document.getElementById(`${id}`).appendChild(outputNode)
+
+      if(!document.getElementById(`stdout-for-${id}`)){
+        const outputNode = document.createElement('pre')
+        outputNode.innerText = stdout.data
+        outputNode.id = `stdout-for-${id}`
+        outputNode.className = 'sandbox-stdout'
+        document.getElementById(`${id}`).appendChild(outputNode)
+      } else {
+        document.getElementById(`stdout-for-${id}`).innerText = stdout.data
+      }
     })
   }
 
 
 
-
+  /**********************/
+  /*** ADD LINE BREAK ***/
+  /**********************/
   function addLineAfterBlock(id) {
     const block = document.getElementById(`${id}`);
     const div = document.createElement('div');
