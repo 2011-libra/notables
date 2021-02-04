@@ -12,17 +12,16 @@ import Texteditor from './components/texteditor/texteditor.js';
 import { CgProfile } from 'react-icons/cg';
 import { MdImportExport } from 'react-icons/md';
 import Dropzone from './components/import/dropzone';
+import Nav from './components/navbar/nav';
 
 ReactDOM.render(
   <Provider store={store}>
-    <Navbar>
-      <NavItem icon={<MdImportExport />}></NavItem>
-      <NavItem icon={<CgProfile />}></NavItem>
-
-      <NavItem icon={<FaCog />}>
+    {/* <Navbar>
+      <NavItem icon={<GiHamburgerMenu />}>
         <DropdownMenu></DropdownMenu>
       </NavItem>
-    </Navbar>
+    </Navbar> */}
+    <Nav />
     <Texteditor />
     <Dropzone />
   </Provider>,
