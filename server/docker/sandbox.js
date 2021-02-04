@@ -86,7 +86,7 @@ const runContainer = async token => {
     console.log('Error in runContainer:', error);
   } finally {
     await container.stop();
-    // await container.remove();
+    await container.remove();
   }
 
   return stdout.toString();
