@@ -50,7 +50,6 @@ const cleanupWorkingDir = token => {
 // Check that brackets match and there are no floating
 // string delimiters
 const pairsMatch = string => {
-  console.log(string);
   const opens = {
     '(': true,
     '[': true,
@@ -71,7 +70,6 @@ const pairsMatch = string => {
 
   for (let i = 0; i < string.length; i++) {
     const char = string[i];
-    console.log(char, stack);
     if (!inString) {
       if (char === '\\') {
         return false;

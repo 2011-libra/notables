@@ -89,6 +89,7 @@ const runContainer = async token => {
   } catch (error) {
     console.log('Error in runContainer:', error);
   } finally {
+    // Next line will automatically kill container in 10 sec.
     await container.stop();
     await container.remove();
   }
