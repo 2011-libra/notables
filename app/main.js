@@ -11,17 +11,17 @@ import DropdownMenu from './components/navbar/dropdownmenu';
 import Texteditor from './components/texteditor/texteditor.js';
 import { CgProfile } from 'react-icons/cg';
 import { MdImportExport } from 'react-icons/md';
+import Nav from './components/navbar/nav';
+import { GiHamburgerMenu } from 'react-icons/gi';
 
 ReactDOM.render(
   <Provider store={store}>
-    <Navbar>
-      <NavItem icon={<MdImportExport />}></NavItem>
-      <NavItem icon={<CgProfile />}></NavItem>
-
-      <NavItem icon={<FaCog />}>
+    {/* <Navbar>
+      <NavItem icon={<GiHamburgerMenu />}>
         <DropdownMenu></DropdownMenu>
       </NavItem>
-    </Navbar>
+    </Navbar> */}
+    <Nav />
     <Texteditor />
   </Provider>,
   document.getElementById('app')
