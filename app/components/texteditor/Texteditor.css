@@ -22,7 +22,7 @@
 #title:empty:before,
 .editor:empty:before {
   content: attr(data-placeholder);
-  color: gray;
+  color: rgb(128, 128, 128);
 }
 
 .editor {
@@ -36,13 +36,24 @@
   font-size: 20px;
 }
 
-.codeeditor_container > .editor {
+.code-blocks {
+  border: solid 1px #ccc;
+  /* width: 95%; */
+  max-width: 700px;
+  min-height: 100px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  font-size: 20px;
+}
+
+.code-block-container > .code-blocks {
   background-color: black;
   color: rgb(0, 222, 0);
   font-family: courier;
 }
 
-.codeeditor_container > .editor::placeholder {
+.code-block-container > .code-blocks::placeholder {
   color: rgb(0, 222, 0);
   font-family: courier;
 }
@@ -69,18 +80,22 @@
   content: attr(data-placeholder);
   color: gray;
 }
+
 .codeBlock {
-  background-color: rgb(21, 34, 75);
+  background-color: rgb(222, 222, 222);
   margin-left: auto;
   margin-right: auto;
   margin-top: 0;
   margin-bottom: 0;
   height: auto;
-  min-height: 39px;
+  min-height: 18px;
   font-family: 'Courier New', Courier, monospace;
   overflow: auto;
-  color: white;
+  color: rgb(0, 0, 0);
   padding: 8px;
+  border: .5px solid gray;
+  border-radius: 8px;
+  display: inline-block;
 }
 
 .codeeditor_button {
@@ -88,3 +103,20 @@
   justify-content: center;
   align-items: center;
 }
+
+.code-block-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* .pre {
+  background-color: lightgray;
+  font-family: courier;
+  padding: 0px 5px;
+  border: .5px solid gray;
+  border-radius: 8px;
+  display: inline-block;
+  color: black;
+} */
+

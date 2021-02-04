@@ -1,6 +1,6 @@
 import React from 'react';
 import './Texteditor.css';
-import Codeeditor from './codeeditor';
+import CodeBlock from './CodeBlock';
 import Toolbar from './toolbar';
 let TurndownService = window.TurndownService;
 
@@ -21,6 +21,8 @@ function texteditor() {
     element.click();
   };
 
+
+
   return (
     <div className="texteditor_container">
       <div className="codeeditor_button">
@@ -34,7 +36,7 @@ function texteditor() {
         data-placeholder="Type your notes here!"
       ></div>
       <div id="targetDiv"></div>
-      <Codeeditor />
+      <CodeBlock />
     </div>
   );
 }

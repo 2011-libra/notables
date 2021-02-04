@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+const ReactDOM = require('react-dom');
+import CodeBlock from './CodeBlock';
+const hljs = window.hljs;
 import {
   FaBold,
   FaItalic,
@@ -39,25 +42,37 @@ export default function toolbar() {
     show.classList.add('hidden');
   }
 
-  //CODEBLOCK (Need to fix)
+  /*****************/
+  /*** CODEBLOCK ***/
   function addCodeBlock() {
     const codeBlock = document.createElement('pre');
     const target = document.getSelection();
-    if (
+    if ( //prevents nesting and code block insertion inside invalid nodes
       target.focusNode.nodeName.includes('#text') ||
       target.focusNode.classList.contains('title') ||
-      target.focusNode.className.includes('codeBlock')
+      target.focusNode.className.includes('codeBlock') ||
+      target.focusNode.className.includes('code-blocks')
     ) {
       return;
     }
+    // creating unique 'id' for each code-block
     const id = `codeBlock-${
       document.getElementsByClassName('codeBlock').length + 1
     }`;
     codeBlock.classList.add('codeBlock');
 
-    format('insertHTML', `<pre class='codeBlock' id='${id}'>${target}</pre>`);
+    format('insertHTML', `<pre class='codeBlock' id='${id}' tabindex=0><button id="${id}-button"contentEditable=false >▶</button>${target} </pre>`);
     addLineAfterBlock(id);
+
+    document.getElementById(`${id}-button`).addEventListener('click', ()=>{
+      const runnableCode = document.getElementById(`${id}`).innerText.slice(1)
+
+    })
   }
+
+
+
+
   function addLineAfterBlock(id) {
     const block = document.getElementById(`${id}`);
     const div = document.createElement('div');
@@ -115,3 +130,4 @@ export default function toolbar() {
     </div>
   );
 }
+
