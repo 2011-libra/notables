@@ -6,19 +6,21 @@ const path = require('path');
 const wrapCode = code => {
   return code;
   // return (
-  //   `const { VM } = require('vm2');
-  // const vm = new VM({
-  //   timeout: 12000,
-  //   sandbox: {}
-  // });
+  //   `const { NodeVM } = require('vm2');
+  //   const vm = new NodeVM({
+  //     console: 'inherit',
+  //     sandbox: {},
+  //   });
 
-  // const codeString = '` +
+  //   const runCode = vm.run(\`module.exports = () => {` +
   //   code +
-  //   `'
-
-  // vm.run(codeString);
-  // process.exit(1);
-  // `
+  //   `} \`);
+  //   try {
+  //     runCode();
+  //   } catch (error) {
+  //     console.log('Syntax error')
+  //   }
+  //   process.exit(1);`
   // );
 };
 
@@ -48,16 +50,15 @@ const cleanupWorkingDir = token => {
 // Check that brackets match and there are no floating
 // string delimiters
 const pairsMatch = string => {
+  console.log(string);
   const opens = {
     '(': true,
     '[': true,
-    '<': true,
     '{': true
   };
   const closes = {
     ')': '(',
     ']': '[',
-    '>': '<',
     '}': '{'
   };
   const stringChars = {
@@ -70,6 +71,7 @@ const pairsMatch = string => {
 
   for (let i = 0; i < string.length; i++) {
     const char = string[i];
+    console.log(char, stack);
     if (!inString) {
       if (char === '\\') {
         return false;
