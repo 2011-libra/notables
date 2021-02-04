@@ -71,6 +71,9 @@ const pairsMatch = string => {
   for (let i = 0; i < string.length; i++) {
     const char = string[i];
     if (!inString) {
+      if (char === '\\') {
+        return false;
+      }
       if (stringChars[char]) {
         inString = char;
       } else if (opens[char]) {
@@ -107,7 +110,7 @@ router.post('/', async (req, res, next) => {
       cleanupWorkingDir(token);
     }
   } else {
-    res.send('Syntax error in code');
+    res.send('Syntax problem with input');
   }
 });
 
