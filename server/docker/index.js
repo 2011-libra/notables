@@ -3,28 +3,18 @@ const sandbox = require('./sandbox');
 const fs = require('fs');
 const path = require('path');
 
-const wrapCode = code => {
-  return code;
-  // return (
-  //   `const { NodeVM } = require('vm2');
-  //   const vm = new NodeVM({
-  //     console: 'inherit',
-  //     sandbox: {},
-  //   });
+// const wrapCode = code => {
+//   return `
+//   let code = () => {};
+//   try {
+//     code = () => ${code};
+//   } catch (error) {
+//     console.log(error.toString());
+//   }
+//   module.exports = code`;
+// };
 
-  //   const runCode = vm.run(\`module.exports = () => {` +
-  //   code +
-  //   `} \`);
-  //   try {
-  //     runCode();
-  //   } catch (error) {
-  //     console.log('Syntax error')
-  //   }
-  //   process.exit(1);`
-  // );
-};
-
-const makeWorkingDir = (token, code) => {
+const makeWorkingDir = (token, codeObj) => {
   try {
     fs.mkdirSync(path.join(__dirname, `/${token}`));
   } catch (error) {
@@ -32,8 +22,11 @@ const makeWorkingDir = (token, code) => {
   }
 
   try {
-    const wrappedCode = wrapCode(code);
-    fs.writeFileSync(path.join(__dirname, `/${token}/code.js`), wrappedCode);
+    // const wrappedCode = wrapCode(code);
+    fs.writeFileSync(
+      path.join(__dirname, `/${token}/code.json`),
+      JSON.stringify(codeObj)
+    );
   } catch (error) {
     console.log('Error in writeFile:', error);
   }
@@ -99,7 +92,7 @@ router.post('/', async (req, res, next) => {
   const token = req.body.token;
   if (pairsMatch(code)) {
     try {
-      makeWorkingDir(token, code);
+      makeWorkingDir(token, { code });
       const output = await sandbox(token);
       console.log('[API Route] sandbox() output:', output);
 

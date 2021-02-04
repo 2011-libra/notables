@@ -17,13 +17,12 @@ const removeStaleContainer = async token => {
 const makeContainer = async token => {
   try {
     const container = await docker.createContainer({
-      // Image: 'node:12-alpine',
       Image: 'node-libra',
       AttachStdin: false,
       AttachStdout: true,
       AttachStderr: true,
       Tty: false,
-      Cmd: ['node', 'code'],
+      Cmd: ['node', 'runner'],
       name: `${token}-container`,
       HostConfig: {
         CapDrop: ['ALL']
@@ -47,7 +46,7 @@ const archiveCode = async token => {
         cwd: path.join(__dirname, `/${token}`),
         file: path.join(__dirname, `/${token}/code.tar`)
       },
-      ['code.js']
+      ['code.json']
     );
   } catch (error) {
     console.log('Error in archiveCode:', error);
