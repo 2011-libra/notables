@@ -6,7 +6,10 @@ const path = require('path');
 const wrapCode = code => {
   return (
     `const { VM } = require('vm2');
-  const vm = new VM();
+  const vm = new VM({
+    timeout: 12000,
+    sandbox: {}
+  });
 
   const codeString = '` +
     code +
