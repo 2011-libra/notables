@@ -49,8 +49,18 @@ function DropdownMenu() {
       >
         <div className="menu">
           <DropdownItem
+            leftIcon={<MdImportExport />}
+            // rightIcon={<FaArrowAltCircleRight />}
+            goToMenu="impexp"
+          >
+            Import/Export
+          </DropdownItem>
+          <DropdownItem leftIcon={<CgProfile />} goToMenu="account">
+            Account
+          </DropdownItem>
+          <DropdownItem
             leftIcon={<FaCog />}
-            rightIcon={<FaArrowAltCircleRight />}
+            // rightIcon={<FaArrowAltCircleRight />}
             goToMenu="settings"
           >
             Settings
@@ -73,25 +83,23 @@ function DropdownMenu() {
           <DropdownItem leftIcon={<FaBolt />}>Word Count</DropdownItem>
         </div>
       </CSSTransition>
-      {/* account */}
-      {/* <CSSTransition
-        in={activeMenu === 'main'}
+
+      <CSSTransition
+        in={activeMenu === 'impexp'}
         timeout={500}
-        classNames="menu-primary"
+        classNames="menu-secondary"
         unmountOnExit
         onEnter={calcHeight}
       >
         <div className="menu">
-          <DropdownItem
-            leftIcon={<CgProfile />}
-            rightIcon={<FaArrowAltCircleRight />}
-            goToMenu="account"
-          >
-            Account
+          <DropdownItem goToMenu="main" leftIcon={<FaArrowAltCircleLeft />}>
+            <h2>Import/Export</h2>
           </DropdownItem>
+          <DropdownItem leftIcon={<FaBolt />}>Import</DropdownItem>
+          <DropdownItem leftIcon={<FaBolt />}>Export</DropdownItem>
         </div>
-      </CSSTransition> */}
-      {/* <CSSTransition
+      </CSSTransition>
+      <CSSTransition
         in={activeMenu === 'account'}
         timeout={500}
         classNames="menu-secondary"
@@ -99,13 +107,13 @@ function DropdownMenu() {
         onEnter={calcHeight}
       >
         <div className="menu">
-          <DropdownItem goToMenu="account" leftIcon={<FaArrowAltCircleLeft />}>
-            <h2>account</h2>
+          <DropdownItem goToMenu="main" leftIcon={<FaArrowAltCircleLeft />}>
+            <h2>Account</h2>
           </DropdownItem>
-          <DropdownItem leftIcon={<FaBolt />}>Sign In</DropdownItem>
-          <DropdownItem leftIcon={<FaBolt />}>Sign Out</DropdownItem>
+          <DropdownItem leftIcon={<FaBolt />}>Sign-In</DropdownItem>
+          <DropdownItem leftIcon={<FaBolt />}>Sign-Out</DropdownItem>
         </div>
-      </CSSTransition> */}
+      </CSSTransition>
     </div>
   );
 }

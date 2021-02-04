@@ -7,7 +7,6 @@ const tar = require('tar');
 const removeStaleContainer = async token => {
   try {
     const staleContainer = docker.getContainer(`${token}-container`);
-    await staleContainer.stop();
     await staleContainer.remove();
   } catch (error) {
     console.log('Error in removeStaleContainer:', error);
@@ -27,11 +26,12 @@ const makeContainer = async token => {
     });
     return container;
   } catch (error) {
-    console.log('Error in createContainer:', error);
-
     if (error.statusCode === 409) {
       // Error: container already exists
       await removeStaleContainer(token);
+      return makeContainer(token);
+    } else {
+      console.log('Error in createContainer:', error);
     }
   }
 };

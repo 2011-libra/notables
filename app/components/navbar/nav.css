@@ -1,0 +1,58 @@
+* {
+  margin: 0;
+}
+
+.header {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  background-color: #373d49;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid black;
+}
+
+.header-logo {
+  width: 50px;
+  object-fit: contain;
+  margin: 10 30px;
+  align-items: center;
+  color: white;
+  margin-left: 15px;
+}
+.header-name {
+  font-family: source sans pro, helvetica neue, Helvetica, Arial, sans-serif;
+  font-feature-settings: 'dlig' 1, 'liga' 1, 'lnum' 1, 'kern' 1;
+  font-style: normal;
+  font-weight: 600;
+  margin-left: 5px;
+  color: #a0aabf;
+}
+
+.header-option > svg {
+  font-size: 25px;
+}
+
+.header-option {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+  margin-right: 10px;
+  color: #a0aabf;
+}
+
+.header-nav {
+  align-content: flex-end;
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+.header-option > svg {
+  cursor: pointer;
+}
+
+.header-option > svg:hover {
+  color: white;
+}
