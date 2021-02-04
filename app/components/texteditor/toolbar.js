@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-const ReactDOM = require('react-dom');
-import CodeBlock from './CodeBlock';
-const hljs = window.hljs;
+import axios from 'axios'
+import { fetchCode } from '../../redux/CodeEditor';
 import {
   FaBold,
   FaItalic,
@@ -14,6 +13,7 @@ import {
 import './Texteditor.css';
 
 export default function toolbar() {
+
   //BOLD, ITALICS, UNORDERED LISTS
   function format(com, val) {
     document.execCommand(com, false, val);
@@ -64,9 +64,16 @@ export default function toolbar() {
     format('insertHTML', `<pre class='codeBlock' id='${id}' tabindex=0><button id="${id}-button"contentEditable=false >▶</button>${target} </pre>`);
     addLineAfterBlock(id);
 
-    document.getElementById(`${id}-button`).addEventListener('click', ()=>{
+    document.getElementById(`${id}-button`).addEventListener('click', async ()=>{
       const runnableCode = document.getElementById(`${id}`).innerText.slice(1)
-
+      // await dispatch(fetchCode(runnableCode, 'sample-token'));
+      const stdout = await axios.post('/code', {
+        code: runnableCode,
+        token: 'sample-token'
+      })
+      const outputNode = document.createElement('pre')
+      outputNode.innerText = stdout.data
+      document.getElementById(`${id}`).appendChild(outputNode)
     })
   }
 
