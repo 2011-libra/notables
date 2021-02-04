@@ -1,14 +1,10 @@
 import React from 'react';
 import { FaCog } from 'react-icons/fa';
 import { CgProfile } from 'react-icons/cg';
-import { MdImportExport } from 'react-icons/md';
-import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { BiExport } from 'react-icons/bi';
-import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import { BiImport } from 'react-icons/bi';
-
 import './nav.css';
 
 function Nav() {

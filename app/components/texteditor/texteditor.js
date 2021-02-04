@@ -2,21 +2,25 @@ import React from 'react';
 import './Texteditor.css';
 import Codeeditor from './codeeditor';
 import Toolbar from './toolbar';
+let TurndownService = window.TurndownService;
 
 function texteditor() {
   const downloadTxtFile = () => {
+    let innerHTML = document.getElementById('contentEditable').innerHTML;
+    let turndownService = new TurndownService();
+    let markdown = turndownService.turndown(innerHTML);
+    console.log(markdown);
+
     const element = document.createElement('a');
-    const file = new Blob(
-      [document.getElementById('contentEditable').innerText],
-      {
-        type: 'text/richtext;charset=utf-8'
-      }
-    );
+    const file = new Blob([markdown], {
+      type: 'text/richtext;charset=utf-8'
+    });
     element.href = URL.createObjectURL(file);
     element.download = 'myFile.md';
     document.body.appendChild(element);
     element.click();
   };
+
   return (
     <div className="texteditor_container">
       <div className="codeeditor_button">
@@ -29,6 +33,7 @@ function texteditor() {
         contentEditable="true"
         data-placeholder="Type your notes here!"
       ></div>
+      <div id="targetDiv"></div>
       <Codeeditor />
     </div>
   );

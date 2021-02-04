@@ -80,6 +80,7 @@ function DropdownMenu() {
           </DropdownItem>
           <DropdownItem leftIcon={<FaBolt />}>Dark Mode</DropdownItem>
           <DropdownItem leftIcon={<FaBolt />}>Word Count</DropdownItem>
+          <DropdownItem leftIcon={<FaBolt />}>Word Count</DropdownItem>
         </div>
       </CSSTransition>
 
