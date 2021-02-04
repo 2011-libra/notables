@@ -45,12 +45,8 @@ const cleanupWorkingDir = token => {
   }
 };
 
-// Need a second variable to keep track of whether we're inside a
-// string or not. If in string, ignore everything until string
-// closes with correct character. If string doesn't close, ->F.
-
-// A preprocessing step to make sure there are no unmatched
-// quotes or brackets
+// Check that brackets match and there are no floating
+// string delimiters
 const pairsMatch = string => {
   const opens = {
     '(': true,

@@ -99,7 +99,7 @@ const runContainer = async token => {
 const trimControlCharacters = string => {
   let readableOutput = '';
   for (let i = 0; i < string.length; i++) {
-    if (string.charCodeAt(i) > 31) {
+    if (string.charCodeAt(i) > 31 || string.charCodeAt(i) === 10) {
       readableOutput += string[i];
     }
   }
