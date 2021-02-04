@@ -34,7 +34,14 @@ function texteditor(props) {
         id="contentEditable"
         contentEditable="true"
         data-placeholder="Type your notes here!"
-      ></div>
+        dangerouslySetInnerHTML={
+          typeof result === 'object'
+            ? { __html: 'Type your notes here!' }
+            : { __html: result }
+        }
+      >
+        {/* {typeof result === 'object' ? 'Type your notes here!' : result} */}
+      </div>
 
       <div id="targetDiv"></div>
       <Codeeditor />
