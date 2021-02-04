@@ -3,13 +3,13 @@ import { useDropzone } from 'react-dropzone';
 import './Dropzone.css';
 
 export default function dropzone() {
-  const { acceptedFiles, getRootProps, getInputProps } = useDropzone();
+  const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
+    accept: 'text/plain'
+  });
 
   const files = acceptedFiles.map(file => (
     <li key={file.path}>
-      {console.log('files variable', file)}
-      {console.log('file.path', file.path)}
-      {console.log('file.size', file.size)}
+      {console.log('in file', file)}
       {file.path} - {file.size} bytes
     </li>
   ));

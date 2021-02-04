@@ -16,7 +16,7 @@ function texteditor() {
       type: 'text/richtext;charset=utf-8'
     });
     element.href = URL.createObjectURL(file);
-    element.download = 'myFile.md';
+    element.download = 'myFile.txt';
     document.body.appendChild(element);
     element.click();
   };
@@ -33,6 +33,7 @@ function texteditor() {
         contentEditable="true"
         data-placeholder="Type your notes here!"
       ></div>
+
       <div id="targetDiv"></div>
       <Codeeditor />
     </div>
