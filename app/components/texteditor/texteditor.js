@@ -4,7 +4,9 @@ import Codeeditor from './codeeditor';
 import Toolbar from './toolbar';
 let TurndownService = window.TurndownService;
 
-function texteditor() {
+function texteditor(props) {
+  const { result } = props;
+
   const downloadTxtFile = () => {
     let innerHTML = document.getElementById('contentEditable').innerHTML;
     let turndownService = new TurndownService();
