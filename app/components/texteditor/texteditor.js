@@ -1,6 +1,6 @@
 import React from 'react';
 import './Texteditor.css';
-import Codeeditor from './codeeditor';
+import CodeBlock from './CodeBlock';
 import Toolbar from './toolbar';
 let TurndownService = window.TurndownService;
 let md = window.markdownit();
@@ -25,9 +25,9 @@ function texteditor(props) {
 
   return (
     <div className="texteditor_container">
-      <div className="codeeditor_button">
+      {/* <div className="codeeditor_button">
         <button onClick={downloadTxtFile}>Export</button>
-      </div>
+      </div> */}
       <Toolbar />
       <div
         className="editor"
@@ -36,15 +36,14 @@ function texteditor(props) {
         data-placeholder="Type your notes here!"
         dangerouslySetInnerHTML={
           typeof result === 'object'
-            ? { __html: 'Type your notes here!' }
+            ? { __html: '' }
             : { __html: md.render(result) }
         }
       >
-        {/* {typeof result === 'object' ? 'Type your notes here!' : result} */}
       </div>
 
       <div id="targetDiv"></div>
-      <Codeeditor />
+      <CodeBlock />
     </div>
   );
 }

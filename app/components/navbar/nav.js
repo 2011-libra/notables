@@ -5,10 +5,27 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { BiExport } from 'react-icons/bi';
 import { BiImport } from 'react-icons/bi';
+let TurndownService = window.TurndownService;
 import './nav.css';
 
 function Nav() {
   const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const downloadTxtFile = () => {
+    let innerHTML = document.getElementById('contentEditable').innerHTML;
+    let turndownService = new TurndownService();
+    let markdown = turndownService.turndown(innerHTML);
+    console.log(markdown);
+
+    const element = document.createElement('a');
+    const file = new Blob([markdown], {
+      type: 'text/richtext;charset=utf-8'
+    });
+    element.href = URL.createObjectURL(file);
+    element.download = 'myFile.txt';
+    document.body.appendChild(element);
+    element.click();
+  };
 
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
@@ -24,17 +41,21 @@ function Nav() {
 
       <div className="header-nav">
         <div className="header-option">
-          <BiImport className="header-searchIcon" />
+          <BiImport title="Import" className="addMore" />
         </div>
         <div className="header-option">
-          <BiExport className="header-searchIcon" />
+          <BiExport
+            onClick={downloadTxtFile}
+            title="Export"
+            className="addMore"
+          />
         </div>
         <div className="header-option">
-          <CgProfile className="header-searchIcon" />
+          <CgProfile title="Sign In" className="addMore" />
         </div>
 
         <div className="header-option">
-          <FaCog onClick={handleClick} className="header-searchIcon" />
+          <FaCog title="Settings" onClick={handleClick} className="addMore" />
           <Menu
             id="simple-menu"
             anchorEl={anchorEl}

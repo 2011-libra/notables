@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import axios from 'axios'
+import { fetchCode } from '../../redux/CodeEditor';
 import {
   FaBold,
   FaItalic,
@@ -11,11 +13,18 @@ import {
 import './Texteditor.css';
 
 export default function toolbar() {
-  //BOLD, ITALICS, UNORDERED LISTS
+
+  /******************************/
+  /*** EXECCOMMAND FORMATTING ***/
+  /******************************/
+  //BOLD, ITALICS, UNORDERED LISTS, ETC.
   function format(com, val) {
     document.execCommand(com, false, val);
   }
-  //SUPPOSE TO ADD LINKS
+
+  /*****************/
+  /*** HYPERLINK ***/
+  /*****************/
   function addLink() {
     const show = document.getElementById('url-input');
     if (show.classList.contains('hidden')) {
@@ -24,7 +33,10 @@ export default function toolbar() {
       show.classList.add('hidden');
     }
   }
-  //SETTING URLS
+
+  /*******************/
+  /*** SETTING URL ***/
+  /*******************/
   function setUrl(e) {
     e.preventDefault();
     const url = document.getElementById('txtFormatUrl').value;
@@ -39,25 +51,69 @@ export default function toolbar() {
     show.classList.add('hidden');
   }
 
-  //CODEBLOCK (Need to fix)
+  /**********************************/
+  /*** RUNNABLE CODEBLOCK/SNIPPET ***/
+  /**********************************/
   function addCodeBlock() {
     const codeBlock = document.createElement('pre');
     const target = document.getSelection();
     if (
       target.focusNode.nodeName.includes('#text') ||
       target.focusNode.classList.contains('title') ||
-      target.focusNode.className.includes('codeBlock')
+      target.focusNode.className.includes('codeBlock') ||
+      target.focusNode.className.includes('code-blocks')
     ) {
       return;
     }
+
     const id = `codeBlock-${
       document.getElementsByClassName('codeBlock').length + 1
     }`;
     codeBlock.classList.add('codeBlock');
 
-    format('insertHTML', `<pre class='codeBlock' id='${id}'>${target}</pre>`);
+    format('insertHTML', `<pre class='codeBlock' id='${id}'><button id="${id}-button" class="run-code-button" contentEditable=false >▶</button>${target} </pre>`);
+
     addLineAfterBlock(id);
+
+    document.getElementById(`${id}-button`).addEventListener('click', async ()=>{
+      let runnableCode = document.getElementById(`${id}`).innerText.slice(1)
+
+      if(document.getElementById(`stdout-for-${id}`)){
+        let outliers= document.getElementById(`stdout-for-${id}`).innerText
+        runnableCode = runnableCode.slice(1, -outliers.length)
+      }
+
+      const today = new Date();
+
+      const stdout = await axios.post('/code', {
+        code: runnableCode,
+        token: `${Math.ceil(
+          Math.random() * (8888 - 0) + 0
+        )}${today.getFullYear()}${today.getMonth()}${today.getDate()}${today.getHours()}${today.getMinutes()}${today.getMilliseconds()}`
+        })
+
+      if(!document.getElementById(`stdout-for-${id}`)){
+        const outputNode = document.createElement('pre')
+        outputNode.innerText = stdout.data
+        outputNode.id = `stdout-for-${id}`
+        outputNode.className = 'sandbox-stdout'
+        outputNode.setAttribute('contentEditable', false)
+        document.getElementById(`${id}`).appendChild(outputNode)
+      } else {
+        document.getElementById(`stdout-for-${id}`).innerText = stdout.data
+      }
+    })
+
+    // document.getElementById(`${id}-wrapper`).addEventListener('click', (e) => {
+    //   console.log('keypressed!', e.path[0].innerHTML)
+    // })
   }
+
+
+
+  /**********************/
+  /*** ADD LINE BREAK ***/
+  /**********************/
   function addLineAfterBlock(id) {
     const block = document.getElementById(`${id}`);
     const div = document.createElement('div');
@@ -115,3 +171,4 @@ export default function toolbar() {
     </div>
   );
 }
+

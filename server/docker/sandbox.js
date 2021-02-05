@@ -16,13 +16,16 @@ const removeStaleContainer = async token => {
 const makeContainer = async token => {
   try {
     const container = await docker.createContainer({
-      Image: 'node:12-alpine',
+      Image: 'node-libra',
       AttachStdin: false,
       AttachStdout: true,
       AttachStderr: true,
       Tty: false,
-      cmd: ['node', 'code'],
-      name: `${token}-container`
+      Cmd: ['node', 'runner'],
+      name: `${token}-container`,
+      HostConfig: {
+        CapDrop: ['ALL']
+      }
     });
     return container;
   } catch (error) {
@@ -43,7 +46,7 @@ const archiveCode = async token => {
         cwd: path.join(__dirname, `/${token}`),
         file: path.join(__dirname, `/${token}/code.tar`)
       },
-      ['code.js']
+      ['code.json']
     );
   } catch (error) {
     console.log('Error in archiveCode:', error);
@@ -85,6 +88,7 @@ const runContainer = async token => {
   } catch (error) {
     console.log('Error in runContainer:', error);
   } finally {
+    // Next line will automatically kill container in 10 sec.
     await container.stop();
     await container.remove();
   }
@@ -95,7 +99,7 @@ const runContainer = async token => {
 const trimControlCharacters = string => {
   let readableOutput = '';
   for (let i = 0; i < string.length; i++) {
-    if (string.charCodeAt(i) > 31) {
+    if (string.charCodeAt(i) > 31 || string.charCodeAt(i) === 10) {
       readableOutput += string[i];
     }
   }

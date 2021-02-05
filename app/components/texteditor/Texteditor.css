@@ -22,7 +22,7 @@
 #title:empty:before,
 .editor:empty:before {
   content: attr(data-placeholder);
-  color: gray;
+  color: rgb(128, 128, 128);
 }
 
 .editor {
@@ -34,17 +34,6 @@
   margin-right: auto;
   margin-top: 20px;
   font-size: 20px;
-}
-
-.codeeditor_container > .editor {
-  background-color: black;
-  color: rgb(0, 222, 0);
-  font-family: courier;
-}
-
-.codeeditor_container > .editor::placeholder {
-  color: rgb(0, 222, 0);
-  font-family: courier;
 }
 
 .editor > li {
@@ -69,22 +58,87 @@
   content: attr(data-placeholder);
   color: gray;
 }
-.codeBlock {
-  background-color: rgb(21, 34, 75);
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 0;
-  margin-bottom: 0;
-  height: auto;
-  min-height: 39px;
-  font-family: 'Courier New', Courier, monospace;
-  overflow: auto;
-  color: white;
-  padding: 8px;
-}
 
 .codeeditor_button {
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
+/**********************************/
+/*** RUNNABLE CODEBLOCK/SNIPPET ***/
+/**********************************/
+.codeBlock {
+  background-color: rgb(222, 222, 222);
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0;
+  margin-bottom: 0;
+  height: auto;
+  min-height: 18px;
+  font-family: 'Courier New', Courier, monospace;
+  overflow: auto;
+  color: rgb(0, 0, 0);
+  padding: 8px;
+  border: .5px solid gray;
+  border-radius: 8px;
+  display: inline-block;
+  white-space: normal;
+  max-width: 680px;
+}
+
+.code-block-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sandbox-stdout {
+  color: green
+}
+
+.run-code-button {
+  border: none;
+  background-color: transparent;
+  outline: none;
+  text-shadow: 2px 2px 3px black;
+}
+
+.run-code-button:hover {
+  font-size: 18px;
+  color: red;
+}
+
+/* .pre {
+  background-color: lightgray;
+  font-family: courier;
+  padding: 0px 5px;
+  border: .5px solid gray;
+  border-radius: 8px;
+  display: inline-block;
+  color: black;
+} */
+
+.code-blocks {
+  border: solid 1px #ccc;
+  /* width: 95%; */
+  max-width: 700px;
+  min-height: 100px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  font-size: 20px;
+}
+
+.code-block-container > .code-blocks {
+  background-color: black;
+  color: rgb(0, 222, 0);
+  font-family: courier;
+}
+
+.code-block-container > .code-blocks::placeholder {
+  color: rgb(0, 222, 0);
+  font-family: courier;
+}
+
+
