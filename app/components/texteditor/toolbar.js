@@ -80,8 +80,6 @@ export default function toolbar() {
     // event listener for running the code
     document.getElementById(`${id}-button`).addEventListener('click', async ()=>{
       let runnableCode = document.getElementById(`${id}`).innerText.slice(1)
-      console.log('before cleanse::', runnableCode)
-      // await dispatch(fetchCode(runnableCode, 'sample-token'));
 
       // preprocessing string to remove outliers
       if(document.getElementById(`stdout-for-${id}`)){
