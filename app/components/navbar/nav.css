@@ -13,6 +13,14 @@
   border-bottom: 1px solid black;
 }
 
+.addMore {
+  border: none;
+  /* width: 32px;
+  height: 32px; */
+  transition: all ease-in-out 0.2s;
+  cursor: pointer;
+}
+
 .header-logo {
   width: 50px;
   object-fit: contain;
