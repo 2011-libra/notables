@@ -14,8 +14,11 @@ export default function CodeBlock (props) {
 
   async function handleSubmit(evt) {
     evt.preventDefault();
+    const today = new Date();
     const codeSnippet = document.getElementById('code-snippet').innerText;
-    await dispatch(fetchCode(codeSnippet, '12345'));
+    await dispatch(fetchCode(codeSnippet, `${Math.ceil(
+      Math.random() * (8888 - 0) + 0
+    )}${today.getFullYear()}${today.getMonth()}${today.getDate()}${today.getHours()}${today.getMinutes()}${today.getMilliseconds()}`));
   }
 
   return (
