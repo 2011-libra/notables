@@ -1,0 +1,14 @@
+{
+  "name": "libra-image",
+  "version": "1.0.0",
+  "description": "A base image for running sandboxed code",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "2011-libra",
+  "license": "ISC",
+  "dependencies": {
+    "vm2": "^3.9.2"
+  }
+}
