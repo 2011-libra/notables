@@ -71,7 +71,7 @@ export default function toolbar() {
     }`;
     codeBlock.classList.add('codeBlock');
 
-    format('insertHTML', `<pre class='codeBlock' id='${id}' tabindex=0><button id="${id}-button" class="run-code-button" contentEditable=false >▶</button>${target} </pre>`);
+    format('insertHTML', `<pre class='codeBlock' id='${id}'><button id="${id}-button" class="run-code-button" contentEditable=false >▶</button>${target} </pre>`);
 
     addLineAfterBlock(id);
 
@@ -83,9 +83,13 @@ export default function toolbar() {
         runnableCode = runnableCode.slice(1, -outliers.length)
       }
 
+      const today = new Date();
+
       const stdout = await axios.post('/code', {
         code: runnableCode,
-        token: 'sample-token'
+        token: `${Math.ceil(
+          Math.random() * (8888 - 0) + 0
+        )}${today.getFullYear()}${today.getMonth()}${today.getDate()}${today.getHours()}${today.getMinutes()}${today.getMilliseconds()}`
         })
 
       if(!document.getElementById(`stdout-for-${id}`)){
@@ -99,6 +103,10 @@ export default function toolbar() {
         document.getElementById(`stdout-for-${id}`).innerText = stdout.data
       }
     })
+
+    // document.getElementById(`${id}-wrapper`).addEventListener('click', (e) => {
+    //   console.log('keypressed!', e.path[0].innerHTML)
+    // })
   }
 
 
