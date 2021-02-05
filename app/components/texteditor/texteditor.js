@@ -3,6 +3,7 @@ import './Texteditor.css';
 import CodeBlock from './CodeBlock';
 import Toolbar from './toolbar';
 let TurndownService = window.TurndownService;
+let md = window.markdownit();
 
 function texteditor(props) {
   const { result } = props;
@@ -36,10 +37,9 @@ function texteditor(props) {
         dangerouslySetInnerHTML={
           typeof result === 'object'
             ? { __html: '' }
-            : { __html: result }
+            : { __html: md.render(result) }
         }
       >
-        {/* {typeof result === 'object' ? 'Type your notes here!' : result} */}
       </div>
 
       <div id="targetDiv"></div>
