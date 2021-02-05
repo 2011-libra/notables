@@ -36,7 +36,7 @@ function texteditor(props) {
         data-placeholder="Type your notes here!"
         dangerouslySetInnerHTML={
           typeof result === 'object'
-            ? { __html: 'Type your notes here!' }
+            ? { __html: '' }
             : { __html: result }
         }
       >
