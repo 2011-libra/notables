@@ -11,7 +11,6 @@ function texteditor(props) {
     let innerHTML = document.getElementById('contentEditable').innerHTML;
     let turndownService = new TurndownService();
     let markdown = turndownService.turndown(innerHTML);
-    console.log(markdown);
 
     const element = document.createElement('a');
     const file = new Blob([markdown], {
