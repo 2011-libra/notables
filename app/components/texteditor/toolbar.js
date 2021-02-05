@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios'
+import axios from 'axios';
 import { fetchCode } from '../../redux/CodeEditor';
 import {
   FaBold,
@@ -13,7 +13,6 @@ import {
 import './Texteditor.css';
 
 export default function toolbar() {
-
   /******************************/
   /*** EXECCOMMAND FORMATTING ***/
   /******************************/
@@ -71,45 +70,48 @@ export default function toolbar() {
     }`;
     codeBlock.classList.add('codeBlock');
 
-    format('insertHTML', `<pre class='codeBlock' id='${id}'><button id="${id}-button" class="run-code-button" contentEditable=false >▶</button>${target} </pre>`);
+    format(
+      'insertHTML',
+      `<pre class='codeBlock' id='${id}'><button id="${id}-button" class="run-code-button" contentEditable=false >▶</button>${target} </pre>`
+    );
 
     addLineAfterBlock(id);
 
-    document.getElementById(`${id}-button`).addEventListener('click', async ()=>{
-      let runnableCode = document.getElementById(`${id}`).innerText.slice(1)
+    document
+      .getElementById(`${id}-button`)
+      .addEventListener('click', async () => {
+        let runnableCode = document.getElementById(`${id}`).innerText.slice(1);
 
-      if(document.getElementById(`stdout-for-${id}`)){
-        let outliers= document.getElementById(`stdout-for-${id}`).innerText
-        runnableCode = runnableCode.slice(1, -outliers.length)
-      }
+        if (document.getElementById(`stdout-for-${id}`)) {
+          let outliers = document.getElementById(`stdout-for-${id}`).innerText;
+          runnableCode = runnableCode.slice(1, -outliers.length);
+        }
 
-      const today = new Date();
+        const today = new Date();
 
-      const stdout = await axios.post('/code', {
-        code: runnableCode,
-        token: `${Math.ceil(
-          Math.random() * (8888 - 0) + 0
-        )}${today.getFullYear()}${today.getMonth()}${today.getDate()}${today.getHours()}${today.getMinutes()}${today.getMilliseconds()}`
-        })
+        const stdout = await axios.post('/code', {
+          code: runnableCode,
+          token: `${Math.ceil(
+            Math.random() * (8888 - 0) + 0
+          )}${today.getFullYear()}${today.getMonth()}${today.getDate()}${today.getHours()}${today.getMinutes()}${today.getMilliseconds()}`
+        });
 
-      if(!document.getElementById(`stdout-for-${id}`)){
-        const outputNode = document.createElement('pre')
-        outputNode.innerText = stdout.data
-        outputNode.id = `stdout-for-${id}`
-        outputNode.className = 'sandbox-stdout'
-        outputNode.setAttribute('contentEditable', false)
-        document.getElementById(`${id}`).appendChild(outputNode)
-      } else {
-        document.getElementById(`stdout-for-${id}`).innerText = stdout.data
-      }
-    })
+        if (!document.getElementById(`stdout-for-${id}`)) {
+          const outputNode = document.createElement('pre');
+          outputNode.innerText = stdout.data;
+          outputNode.id = `stdout-for-${id}`;
+          outputNode.className = 'sandbox-stdout';
+          outputNode.setAttribute('contentEditable', false);
+          document.getElementById(`${id}`).appendChild(outputNode);
+        } else {
+          document.getElementById(`stdout-for-${id}`).innerText = stdout.data;
+        }
+      });
 
     // document.getElementById(`${id}-wrapper`).addEventListener('click', (e) => {
     //   console.log('keypressed!', e.path[0].innerHTML)
     // })
   }
-
-
 
   /**********************/
   /*** ADD LINE BREAK ***/
@@ -137,10 +139,14 @@ export default function toolbar() {
           } else if (e.target.value === '2') {
             const target = document.getSelection();
             format('insertHTML', `<h2>${target}</h2>`);
+          } else if (e.target.value === '0') {
+            const target = document.getSelection();
+            format('insertHTML', `<p>${target}</p>`);
           }
         }}
       >
         <option>Select a heading</option>
+        <option value="0">Normal</option>
         <option value="1">Heading 1</option>
         <option value="2">Heading 2</option>
       </select>
@@ -171,4 +177,3 @@ export default function toolbar() {
     </div>
   );
 }
-
