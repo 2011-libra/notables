@@ -57,7 +57,7 @@ export default function toolbar() {
   function addCodeBlock() {
     const codeBlock = document.createElement('pre');
     const target = document.getSelection();
-    if ( //prevents nesting and code block insertion inside invalid nodes
+    if (
       target.focusNode.nodeName.includes('#text') ||
       target.focusNode.classList.contains('title') ||
       target.focusNode.className.includes('codeBlock') ||
@@ -65,26 +65,28 @@ export default function toolbar() {
     ) {
       return;
     }
-    // creating unique 'id' for each code-block
+
     const id = `codeBlock-${
       document.getElementsByClassName('codeBlock').length + 1
     }`;
     codeBlock.classList.add('codeBlock');
 
-    // format and inserts html element
-    format('insertHTML', `<pre class='codeBlock' id='${id}' tabindex=0><button id="${id}-button"contentEditable=false >▶</button>${target} </pre>`);
+    format('insertHTML', `<pre class='codeBlock' id='${id}' tabindex=0><button id="${id}-button" class="run-code-button" contentEditable=false >▶</button>${target} </pre>`);
 
-    // add a line break after the code block
     addLineAfterBlock(id);
 
-    // event listener for running the code
     document.getElementById(`${id}-button`).addEventListener('click', async ()=>{
-      const runnableCode = document.getElementById(`${id}`).innerText.slice(1)
-      // await dispatch(fetchCode(runnableCode, 'sample-token'));
+      let runnableCode = document.getElementById(`${id}`).innerText.slice(1)
+
+      if(document.getElementById(`stdout-for-${id}`)){
+        let outliers= document.getElementById(`stdout-for-${id}`).innerText
+        runnableCode = runnableCode.slice(1, -outliers.length)
+      }
+
       const stdout = await axios.post('/code', {
         code: runnableCode,
         token: 'sample-token'
-      })
+        })
 
       if(!document.getElementById(`stdout-for-${id}`)){
         const outputNode = document.createElement('pre')
