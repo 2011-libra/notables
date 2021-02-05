@@ -93,6 +93,7 @@ export default function toolbar() {
         outputNode.innerText = stdout.data
         outputNode.id = `stdout-for-${id}`
         outputNode.className = 'sandbox-stdout'
+        outputNode.setAttribute('contentEditable', false)
         document.getElementById(`${id}`).appendChild(outputNode)
       } else {
         document.getElementById(`stdout-for-${id}`).innerText = stdout.data
