@@ -95,6 +95,18 @@
   color: green
 }
 
+.run-code-button {
+  border: none;
+  background-color: transparent;
+  outline: none;
+  text-shadow: 2px 2px 3px black;
+}
+
+.run-code-button:hover {
+  font-size: 18px;
+  color: red;
+}
+
 /* .pre {
   background-color: lightgray;
   font-family: courier;
@@ -126,3 +138,5 @@
   color: rgb(0, 222, 0);
   font-family: courier;
 }
+
+

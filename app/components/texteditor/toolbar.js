@@ -71,7 +71,7 @@ export default function toolbar() {
     }`;
     codeBlock.classList.add('codeBlock');
 
-    format('insertHTML', `<pre class='codeBlock' id='${id}' tabindex=0><button id="${id}-button"contentEditable=false >▶</button>${target} </pre>`);
+    format('insertHTML', `<pre class='codeBlock' id='${id}' tabindex=0><button id="${id}-button" class="run-code-button" contentEditable=false >▶</button>${target} </pre>`);
 
     addLineAfterBlock(id);
 
