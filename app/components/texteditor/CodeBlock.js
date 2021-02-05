@@ -2,37 +2,37 @@ import React, { useEffect, useState } from 'react';
 import { connect, useSelector, useDispatch } from 'react-redux';
 import { fetchCode } from '../../redux/CodeEditor';
 
-export default function codeeditor(props) {
+export default function CodeBlock (props) {
   let codeState = useSelector(state => state);
   const dispatch = useDispatch();
 
   useEffect (()=>{
-    document.getElementById('editor').innerText = codeState.stdout.stdout || ''
+    document.getElementById('code-snippet').innerText = codeState.stdout.stdout || ''
     },
     [codeState]
   )
 
   async function handleSubmit(evt) {
     evt.preventDefault();
-    const codeSnippet = document.getElementById('editor').innerText;
+    const codeSnippet = document.getElementById('code-snippet').innerText;
     await dispatch(fetchCode(codeSnippet, '12345'));
   }
 
   return (
     <div>
       <form
-        className="codeeditor_container"
+        className="code-block-container"
         onSubmit={evt => {
           handleSubmit(evt);
         }}
       >
         <div
-          className="editor"
-          id="editor"
+          className="code-blocks"
+          id="code-snippet"
           contentEditable="true"
           data-placeholder="Code here!"
         ></div>
-        <div className="codeeditor_button">
+        <div className="code-block-buttons">
           <button type="submit">Run code</button>
         </div>
       </form>
