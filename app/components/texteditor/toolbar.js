@@ -79,12 +79,21 @@ export default function toolbar() {
 
     // event listener for running the code
     document.getElementById(`${id}-button`).addEventListener('click', async ()=>{
-      const runnableCode = document.getElementById(`${id}`).innerText.slice(1)
+      let runnableCode = document.getElementById(`${id}`).innerText.slice(1)
+      console.log('before cleanse::', runnableCode)
       // await dispatch(fetchCode(runnableCode, 'sample-token'));
+
+      // preprocessing string to remove outliers
+      if(document.getElementById(`stdout-for-${id}`)){
+        let outliers= document.getElementById(`stdout-for-${id}`).innerText
+        runnableCode = runnableCode.slice(1, -outliers.length)
+      }
+
+      // sending code to docker container
       const stdout = await axios.post('/code', {
         code: runnableCode,
         token: 'sample-token'
-      })
+        })
 
       if(!document.getElementById(`stdout-for-${id}`)){
         const outputNode = document.createElement('pre')
