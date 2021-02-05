@@ -23,13 +23,11 @@ function texteditor(props) {
     element.click();
   };
 
-
-
   return (
     <div className="texteditor_container">
-      <div className="codeeditor_button">
+      {/* <div className="codeeditor_button">
         <button onClick={downloadTxtFile}>Export</button>
-      </div>
+      </div> */}
       <Toolbar />
       <div
         className="editor"
