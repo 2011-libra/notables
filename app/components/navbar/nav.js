@@ -5,7 +5,14 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { BiExport } from 'react-icons/bi';
 import { BiImport } from 'react-icons/bi';
-let TurndownService = window.TurndownService;
+const TurndownService = require('turndown').default;
+let turndownService = new TurndownService()
+turndownService.addRule('code-snippet', {
+  filter: ['pre'],
+  replacement: (content) => {
+    return '```' + content.slice(1) + '```'
+  }
+})
 import './nav.css';
 
 function Nav() {
@@ -13,9 +20,7 @@ function Nav() {
 
   const downloadTxtFile = () => {
     let innerHTML = document.getElementById('contentEditable').innerHTML;
-    let turndownService = new TurndownService();
     let markdown = turndownService.turndown(innerHTML);
-    console.log(markdown);
 
     const element = document.createElement('a');
     const file = new Blob([markdown], {
