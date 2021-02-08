@@ -39,8 +39,7 @@ function texteditor(props) {
             ? { __html: '' }
             : { __html: md.render(result) }
         }
-      >
-      </div>
+      ></div>
 
       <div id="targetDiv"></div>
       <CodeBlock />
