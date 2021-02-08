@@ -139,9 +139,15 @@ export default function toolbar() {
           } else if (e.target.value === '2') {
             const target = document.getSelection();
             format('insertHTML', `<h2>${target}</h2>`);
-          } else if (e.target.value === '0') {
-            const target = document.getSelection();
-            format('insertHTML', `<p>${target}</p>`);
+          }
+          //This code is manually changing the current tags and replacing it with p tags
+          if (e.target.value === '0') {
+            let currStr = document.getElementById('contentEditable')
+              .children[0];
+            let newStr = document.createElement('p');
+            newStr.innerHTML = currStr.innerHTML;
+            currStr.parentNode.insertBefore(newStr, currStr);
+            currStr.parentNode.removeChild(currStr);
           }
         }}
       >
