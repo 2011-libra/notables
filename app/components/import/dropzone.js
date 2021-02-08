@@ -4,7 +4,7 @@ import Texteditor from '../texteditor/texteditor';
 import './Dropzone.css';
 
 export default function dropzone() {
-  const [result, setResult] = useState({});
+  const [result, setResult] = useState('');
 
   const onDrop = useCallback(acceptedFiles => {
     acceptedFiles.forEach(file => {

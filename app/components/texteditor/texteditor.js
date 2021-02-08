@@ -1,27 +1,85 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './Texteditor.css';
 import CodeBlock from './CodeBlock';
 import Toolbar from './toolbar';
-let TurndownService = window.TurndownService;
-let md = window.markdownit();
+const TurndownService = require('turndown').default;
+// let md = window.markdownit();
+let md = require('markdown-it')();
 
 function texteditor(props) {
   const { result } = props;
+  let markdownResult = result;
+  console.log('RESULT from DROPZONE length:',result.length)
+  let snippetCount = 0
+  if(result !== ''){
+    snippetCount = result.match(/```[^*]+```/).length;
+  }
+  let idCounter = snippetCount;
+  // const [id, setId] = useState(idCounter)
+  const formatId = () => {
+    let id = idCounter
+    idCounter-1
+    return id
+  }
+  if(result === ''){
+    markdownResult = md.render(result)
+    console.log('inside empty conditional')
+  } else {
+    markdownResult = md.render(result).replace(`<p><code>`, `<pre class="codeBlock" id='${formatId()}'><button id="${formatId()}-button" class="run-code-button" contentEditable=false >▶</button>`).replace(`</code></p>`, `</pre>`)
+    console.log('markdownResult after parsing for code:', markdownResult)
+  }
 
-  const downloadTxtFile = () => {
-    let innerHTML = document.getElementById('contentEditable').innerHTML;
-    let turndownService = new TurndownService();
-    let markdown = turndownService.turndown(innerHTML);
+  // const downloadTxtFile = () => {
+  //   let innerHTML = document.getElementById('contentEditable').innerHTML;
+  //   let turndownService = new TurndownService();
+  //   let markdown = turndownService.turndown(innerHTML);
 
-    const element = document.createElement('a');
-    const file = new Blob([markdown], {
-      type: 'text/richtext;charset=utf-8'
-    });
-    element.href = URL.createObjectURL(file);
-    element.download = 'myFile.txt';
-    document.body.appendChild(element);
-    element.click();
-  };
+  //   const element = document.createElement('a');
+  //   const file = new Blob([markdown], {
+  //     type: 'text/richtext;charset=utf-8'
+  //   });
+  //   element.href = URL.createObjectURL(file);
+  //   element.download = 'myFile.txt';
+  //   document.body.appendChild(element);
+  //   element.click();
+  // };
+
+  // let snippetCount = md.render(result).match(/```[^*]+```/).length;
+  // let id = snippetCount;
+/**********************************/
+  // for(let i = 0; i < snippetCount; i++){
+  //   document
+  //     .getElementById(`${i}-button`)
+  //     .addEventListener('click', async () => {
+  //       let runnableCode = document.getElementById(`${i}`).innerText.slice(1);
+
+  //       if (document.getElementById(`stdout-for-${i}`)) {
+  //         let outliers = document.getElementById(`stdout-for-${i}`).innerText;
+  //         runnableCode = runnableCode.slice(1, -outliers.length);
+  //       }
+
+  //       const today = new Date();
+
+  //       const stdout = await axios.post('/code', {
+  //         code: runnableCode,
+  //         token: `${Math.ceil(
+  //           Math.random() * (8888 - 0) + 0
+  //         )}${today.getFullYear()}${today.getMonth()}${today.getDate()}${today.getHours()}${today.getMinutes()}${today.getMilliseconds()}`
+  //       });
+
+  //       if (!document.getElementById(`stdout-for-${i}`)) {
+  //         const outputNode = document.createElement('pre');
+  //         outputNode.innerText = stdout.data;
+  //         outputNode.id = `stdout-for-${i}`;
+  //         outputNode.className = 'sandbox-stdout';
+  //         outputNode.setAttribute('contentEditable', false);
+  //         document.getElementById(`${i}`).appendChild(outputNode);
+  //       } else {
+  //         document.getElementById(`stdout-for-${i}`).innerText = stdout.data;
+  //       }
+  //     });
+  // }
+
 
   return (
     <div className="texteditor_container">
@@ -35,9 +93,9 @@ function texteditor(props) {
         contentEditable="true"
         data-placeholder="Type your notes here!"
         dangerouslySetInnerHTML={
-          typeof result === 'object'
+          result === ''
             ? { __html: '' }
-            : { __html: md.render(result) }
+            : { __html: markdownResult}
         }
       ></div>
 
