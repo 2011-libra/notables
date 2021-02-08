@@ -2,6 +2,7 @@ const router = require('express').Router();
 const sandbox = require('./sandbox');
 const fs = require('fs');
 const path = require('path');
+const chalk = require('chalk');
 
 // const wrapCode = code => {
 //   return `
@@ -93,8 +94,9 @@ router.post('/', async (req, res, next) => {
   if (pairsMatch(code)) {
     try {
       makeWorkingDir(token, { code });
+      console.log('[API Route] sandbox()  input:', chalk.yellow(code));
       const output = await sandbox(token);
-      console.log('[API Route] sandbox() output:', output);
+      console.log('[API Route] sandbox() output:', chalk.blue(output));
 
       res.send(output);
     } catch (error) {
@@ -103,6 +105,7 @@ router.post('/', async (req, res, next) => {
       cleanupWorkingDir(token);
     }
   } else {
+    console.log('[API Route] sandbox()  input:', chalk.red(code));
     res.send('Syntax problem with input');
   }
 });
