@@ -8,13 +8,9 @@ import { getImport } from '../../redux/import';
 export default function dropzone() {
   const [result, setResult] = useState({});
 
-  let importState = useSelector(state => console.log('stateeee', state));
+  let importState = useSelector(state => state);
 
   const dispatch = useDispatch();
-
-  // dispatch()
-
-  console.log('import state!!!', importState);
 
   const onDrop = useCallback(acceptedFiles => {
     acceptedFiles.forEach(file => {
@@ -33,7 +29,7 @@ export default function dropzone() {
       reader.readAsText(file);
     });
   }, []);
-  console.log('import state!!!!!!!', importState);
+
   //Initialize dropzone:
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: 'text/plain',
@@ -58,7 +54,7 @@ export default function dropzone() {
           <ul>{files}</ul>
         </aside>
       </div>
-      <Texteditor result={result} />
+      {/* <Texteditor result={result} /> */}
     </>
   );
 }
