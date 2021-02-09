@@ -11,7 +11,8 @@ function texteditor(props) {
   let markdownResult = result;
   let snippetCount = 0;
   if (result !== '') {
-    snippetCount = result.match(/```[^*]+```/).length;
+    // snippetCount = result.match(/```[^*]+```/m).length;
+    snippetCount = (result.split('```').length - 1) / 2;
   }
   let idCounter = snippetCount;
 
