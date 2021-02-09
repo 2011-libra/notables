@@ -14,6 +14,7 @@ import IconButton from '@material-ui/core/IconButton';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import Dropzone from '../import/dropzone';
+import { Link } from 'react-router-dom';
 const drawerWidth = 500;
 
 const useStyles = makeStyles(theme => ({
@@ -155,8 +156,11 @@ function Nav() {
             className="addMore"
           />
         </div>
+
         <div className="header-option">
-          <CgProfile title="Sign In" className="addMore" />
+          <Link to="/login">
+            <CgProfile title="Sign In" className="addMore" />
+          </Link>
         </div>
 
         <div className="header-option">
