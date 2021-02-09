@@ -50,7 +50,7 @@ function texteditor(props) {
 
   // let snippetCount = md.render(result).match(/```[^*]+```/).length;
   // let id = snippetCount;
-  /**********************************/
+
   useEffect(() => {
     createCodeRunnerEvent();
   });
