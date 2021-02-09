@@ -6,7 +6,7 @@ import './Dropzone.css';
 import { getImport } from '../../redux/import';
 
 export default function dropzone() {
-  const [result, setResult] = useState({});
+  const [result, setResult] = useState('');
 
   let importState = useSelector(state => state);
 
