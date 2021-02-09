@@ -1,32 +1,36 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import './Texteditor.css';
 import CodeBlock from './CodeBlock';
 import Toolbar from './toolbar';
+const axios = require('axios');
 const TurndownService = require('turndown').default;
-// let md = window.markdownit();
 let md = require('markdown-it')();
 
 function texteditor(props) {
   const { result } = props;
   let markdownResult = result;
-  console.log('RESULT from DROPZONE length:',result.length)
-  let snippetCount = 0
-  if(result !== ''){
+  let snippetCount = 0;
+  if (result !== '') {
     snippetCount = result.match(/```[^*]+```/).length;
   }
   let idCounter = snippetCount;
-  // const [id, setId] = useState(idCounter)
+
   const formatId = () => {
-    let id = idCounter
-    idCounter-1
-    return id
-  }
-  if(result === ''){
-    markdownResult = md.render(result)
-    console.log('inside empty conditional')
+    let id = idCounter;
+    idCounter - 1;
+    return id;
+  };
+
+  if (result === '') {
+    markdownResult = md.render(result);
   } else {
-    markdownResult = md.render(result).replace(`<p><code>`, `<pre class="codeBlock" id='${formatId()}'><button id="${formatId()}-button" class="run-code-button" contentEditable=false >▶</button>`).replace(`</code></p>`, `</pre>`)
-    console.log('markdownResult after parsing for code:', markdownResult)
+    markdownResult = md
+      .render(result)
+      .replace(
+        `<p><code>`,
+        `<pre class="codeBlock" id='codeBlock-${formatId()}'><button id="codeBlock-${formatId()}-button" class="run-code-button" contentEditable=false >▶</button>`
+      )
+      .replace(`</code></p>`, `</pre>`);
   }
 
   // const downloadTxtFile = () => {
@@ -46,40 +50,58 @@ function texteditor(props) {
 
   // let snippetCount = md.render(result).match(/```[^*]+```/).length;
   // let id = snippetCount;
-/**********************************/
-  // for(let i = 0; i < snippetCount; i++){
-  //   document
-  //     .getElementById(`${i}-button`)
-  //     .addEventListener('click', async () => {
-  //       let runnableCode = document.getElementById(`${i}`).innerText.slice(1);
+  /**********************************/
+  useEffect(() => {
+    createCodeRunnerEvent();
+  });
 
-  //       if (document.getElementById(`stdout-for-${i}`)) {
-  //         let outliers = document.getElementById(`stdout-for-${i}`).innerText;
-  //         runnableCode = runnableCode.slice(1, -outliers.length);
-  //       }
+  function createCodeRunnerEvent() {
+    if (
+      document
+        .getElementById('contentEditable')
+        .innerHTML.includes('class="codeBlock"') ||
+      document
+        .getElementById('contentEditable')
+        .innerHTML.includes("class='codeBlock'")
+    ) {
+      for (let i = 1; i <= snippetCount; i++) {
+        document
+          .getElementById(`codeBlock-${i}-button`)
+          .addEventListener('click', async () => {
+            let runnableCode = document
+              .getElementById(`codeBlock-${i}`)
+              .innerText.slice(1);
 
-  //       const today = new Date();
+            if (document.getElementById(`stdout-for-${i}`)) {
+              let outliers = document.getElementById(`stdout-for-${i}`)
+                .innerText;
+              runnableCode = runnableCode.slice(1, -outliers.length);
+            }
 
-  //       const stdout = await axios.post('/code', {
-  //         code: runnableCode,
-  //         token: `${Math.ceil(
-  //           Math.random() * (8888 - 0) + 0
-  //         )}${today.getFullYear()}${today.getMonth()}${today.getDate()}${today.getHours()}${today.getMinutes()}${today.getMilliseconds()}`
-  //       });
+            const today = new Date();
 
-  //       if (!document.getElementById(`stdout-for-${i}`)) {
-  //         const outputNode = document.createElement('pre');
-  //         outputNode.innerText = stdout.data;
-  //         outputNode.id = `stdout-for-${i}`;
-  //         outputNode.className = 'sandbox-stdout';
-  //         outputNode.setAttribute('contentEditable', false);
-  //         document.getElementById(`${i}`).appendChild(outputNode);
-  //       } else {
-  //         document.getElementById(`stdout-for-${i}`).innerText = stdout.data;
-  //       }
-  //     });
-  // }
+            const stdout = await axios.post('/code', {
+              code: runnableCode,
+              token: `${Math.ceil(
+                Math.random() * (8888 - 0) + 0
+              )}${today.getFullYear()}${today.getMonth()}${today.getDate()}${today.getHours()}${today.getMinutes()}${today.getMilliseconds()}`
+            });
 
+            if (!document.getElementById(`stdout-for-${i}`)) {
+              const outputNode = document.createElement('pre');
+              outputNode.innerText = stdout.data;
+              outputNode.id = `stdout-for-${i}`;
+              outputNode.className = 'sandbox-stdout';
+              outputNode.setAttribute('contentEditable', false);
+              document.getElementById(`codeBlock-${i}`).appendChild(outputNode);
+            } else {
+              document.getElementById(`stdout-for-${i}`).innerText =
+                stdout.data;
+            }
+          });
+      }
+    }
+  }
 
   return (
     <div className="texteditor_container">
@@ -93,9 +115,7 @@ function texteditor(props) {
         contentEditable="true"
         data-placeholder="Type your notes here!"
         dangerouslySetInnerHTML={
-          result === ''
-            ? { __html: '' }
-            : { __html: markdownResult}
+          result === '' ? { __html: '' } : { __html: markdownResult }
         }
       ></div>
 
