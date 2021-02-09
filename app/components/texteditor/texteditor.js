@@ -1,12 +1,16 @@
 import React from 'react';
 import './Texteditor.css';
 import CodeBlock from './CodeBlock';
+import { useSelector } from 'react-redux';
 import Toolbar from './toolbar';
 let TurndownService = window.TurndownService;
 let md = window.markdownit();
 
 function texteditor(props) {
-  const { result } = props;
+  // const { result } = props;
+  let importState = useSelector(state => state);
+  let result = importState.import.result ? importState.import.result : '';
+  // console.log(result);
 
   const downloadTxtFile = () => {
     let innerHTML = document.getElementById('contentEditable').innerHTML;
@@ -42,7 +46,7 @@ function texteditor(props) {
       ></div>
 
       <div id="targetDiv"></div>
-      <CodeBlock />
+      {/* <CodeBlock /> */}
     </div>
   );
 }

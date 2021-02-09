@@ -1,10 +1,16 @@
-import React, { useCallback, useState } from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
+import { useSelector, useDispatch } from 'react-redux';
 import Texteditor from '../texteditor/texteditor';
 import './Dropzone.css';
+import { getImport } from '../../redux/import';
 
 export default function dropzone() {
   const [result, setResult] = useState({});
+
+  let importState = useSelector(state => state);
+
+  const dispatch = useDispatch();
 
   const onDrop = useCallback(acceptedFiles => {
     acceptedFiles.forEach(file => {
@@ -16,7 +22,8 @@ export default function dropzone() {
         //Action with file contents here:
         const fileContents = reader.result;
         //Setting state to our imported result
-        setResult(fileContents);
+        // setResult(fileContents);
+        dispatch(getImport(fileContents));
       };
       //Attach methods here onto reader
       reader.readAsText(file);
@@ -47,7 +54,7 @@ export default function dropzone() {
           <ul>{files}</ul>
         </aside>
       </div>
-      <Texteditor result={result} />
+      {/* <Texteditor result={result} /> */}
     </>
   );
 }
