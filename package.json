@@ -32,6 +32,8 @@
     "express": "^4.17.1",
     "express-session": "^1.17.1",
     "lodash": "^4.17.20",
+    "markdown-it": "^12.0.4",
+    "markdown-it-container": "^3.0.0",
     "memory-streams": "^0.1.3",
     "morgan": "^1.10.0",
     "mysql2": "^2.2.5",
