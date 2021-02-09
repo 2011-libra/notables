@@ -9,29 +9,14 @@ let md = require('markdown-it')();
 function texteditor(props) {
   const { result } = props;
   let markdownResult = result;
-  let snippetCount = 0;
-  if (result !== '') {
-    // snippetCount = result.match(/```[^*]+```/m).length;
-    snippetCount = (result.split('```').length - 1) / 2;
-  }
-  let idCounter = snippetCount;
-
-  const formatId = () => {
-    let id = idCounter;
-    idCounter - 1;
-    return id;
-  };
 
   if (result === '') {
     markdownResult = md.render(result);
   } else {
     markdownResult = md
       .render(result)
-      .replace(
-        `<p><code>`,
-        `<pre class="codeBlock" id='codeBlock-${formatId()}'><button id="codeBlock-${formatId()}-button" class="run-code-button" contentEditable=false >▶</button>`
-      )
-      .replace(`</code></p>`, `</pre>`);
+      .replace(/<p><code>/g,`<pre class="codeBlock" id='codeBlock-TBD'><button id="codeBlock-TBD-button" class="run-code-button" contentEditable=false >▶</button>`)
+      .replace(/<\/code><\/p>/g,`</pre>`);
   }
 
   // const downloadTxtFile = () => {
@@ -49,9 +34,6 @@ function texteditor(props) {
   //   element.click();
   // };
 
-  // let snippetCount = md.render(result).match(/```[^*]+```/).length;
-  // let id = snippetCount;
-
   useEffect(() => {
     createCodeRunnerEvent();
   });
@@ -65,9 +47,16 @@ function texteditor(props) {
         .getElementById('contentEditable')
         .innerHTML.includes("class='codeBlock'")
     ) {
-      for (let i = 1; i <= snippetCount; i++) {
-        document
-          .getElementById(`codeBlock-${i}-button`)
+      const allCodeBlockNode = document.getElementsByClassName('codeBlock');
+      const allRunCodeButtons = document.getElementsByClassName('run-code-button')
+
+      for (let i = 0; i < allCodeBlockNode.length; i++){
+        allCodeBlockNode[i].id = 'codeBlock-' + i
+        allRunCodeButtons[i].id = 'codeBlock-' + i + '-button'
+      }
+
+      for (let i = 0; i < allRunCodeButtons.length; i++) {
+        allRunCodeButtons[i]
           .addEventListener('click', async () => {
             let runnableCode = document
               .getElementById(`codeBlock-${i}`)
