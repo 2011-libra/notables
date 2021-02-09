@@ -204,7 +204,7 @@ function Nav() {
                 </ListItem>
               );
             })}
-            <Dropzone />
+            {/* <Dropzone /> */}
           </List>
         </Drawer>
       </div>
