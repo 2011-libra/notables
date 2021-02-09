@@ -110,27 +110,6 @@ function Nav() {
     <div className="header">
       <div className={classes.root}>
         <CssBaseline />
-        {/* <AppBar
-        position="fixed"
-        className={clsx(classes.appBar, {
-          [classes.appBarShift]: open,
-        })}
-      > */}
-        {/* <Toolbar> */}
-        {/* <IconButton
-          color="inherit"
-          aria-label="open drawer"
-          onClick={handleDrawerOpen}
-          edge="start"
-          className={clsx(classes.menuButton, open && classes.hide)}
-        >
-          <MenuIcon />
-        </IconButton> */}
-        {/* <Typography variant="h6" noWrap>
-            Persistent drawer
-          </Typography> */}
-        {/* </Toolbar> */}
-        {/* </AppBar> */}
         <Drawer
           className={classes.drawer}
           variant="persistent"
@@ -142,7 +121,6 @@ function Nav() {
         >
           <div className={classes.drawerHeader}>
             <h1>Drag 'n Drop!</h1>
-            {/* <img className="header-logo" src="./images/logo.png" alt="" /> */}
             <IconButton onClick={handleDrawerClose}>
               {theme.direction === 'ltr' ? (
                 <ChevronRightIcon />
