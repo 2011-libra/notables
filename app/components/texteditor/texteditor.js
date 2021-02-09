@@ -1,14 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import './Texteditor.css';
 import CodeBlock from './CodeBlock';
+import { useSelector } from 'react-redux';
 import Toolbar from './toolbar';
 const axios = require('axios');
 const TurndownService = require('turndown').default;
 let md = require('markdown-it')();
 
 function texteditor(props) {
-  const { result } = props;
+
+  // const { result } = props;
+  let importState = useSelector(state => state);
+  let result = importState.import.result ? importState.import.result : '';
   let markdownResult = result;
+  // console.log(result);
+
 
   if (result === '') {
     markdownResult = md.render(result);
@@ -110,7 +116,7 @@ function texteditor(props) {
       ></div>
 
       <div id="targetDiv"></div>
-      <CodeBlock />
+      {/* <CodeBlock /> */}
     </div>
   );
 }
