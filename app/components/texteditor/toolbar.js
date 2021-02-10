@@ -84,7 +84,7 @@ export default function toolbar() {
 
         if (document.getElementById(`stdout-for-${id}`)) {
           let outliers = document.getElementById(`stdout-for-${id}`).innerText;
-          runnableCode = runnableCode.slice(1, -outliers.length);
+          runnableCode = runnableCode.replace('▶', '').slice(0, -outliers.length);
         }
 
         const today = new Date();

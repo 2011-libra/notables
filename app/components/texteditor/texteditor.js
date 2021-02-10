@@ -72,7 +72,7 @@ function texteditor(props) {
 
           if (document.getElementById(`stdout-for-${i}`)) {
             let outliers = document.getElementById(`stdout-for-${i}`).innerText;
-            runnableCode = runnableCode.slice(1, -outliers.length);
+            runnableCode = runnableCode.replace('▶', '').slice(0, -outliers.length);
           }
 
           const today = new Date();
