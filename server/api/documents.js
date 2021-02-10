@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { db, User, Document, UserDocument } = require('../db');
+const { User, Document, UserDocument } = require('../db');
 const DMP = require('diff-match-patch');
 const dmp = new DMP();
 
@@ -17,6 +17,11 @@ router.post('/', async function (req, res, next) {
       contents: req.body.contents
     });
     await user.addDocument(newDocument.id);
+    // set user's role to "owner" in through table
+    // await UserDocument.update(
+    // { role: 'owner' },
+    // { where: { id: newDocument.id } }
+    // );
 
     res.sendStatus(201);
   } catch (error) {

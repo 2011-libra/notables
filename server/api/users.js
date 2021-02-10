@@ -4,6 +4,9 @@ const { db, User, Document, UserDocument } = require('../db');
 /* ::::: PLEASE NOTE ::::: */
 /* Passport's req.user should be used instead of "id". */
 /* For testing purposes, req.params.id is being utilized for initial development purposes. */
+
+// Mounted on /api/users
+
 // router.get('/', async (req, res, next) => {
 //   try {
 //     const users = await User.findAll({
@@ -15,18 +18,18 @@ const { db, User, Document, UserDocument } = require('../db');
 //   }
 // });
 
-// Mounted on /api/users
-
 // POST /api/users/ - Create new user
 router.post('/', async function (req, res, next) {
   try {
-    const user = await User.findOne({ where: { id: req.params.id } });
-    const newDocument = await Document.create(req.body);
-    // await Document.update({role: 'owner'}, {where: {id: newDocument.id}})
-    await user.addDocument(newDocument.id);
-
-    res.sendStatus(200);
+    const user = await User.create(req.body);
+    res.status(201).send({
+      id: user.id,
+      email: user.email
+    });
   } catch (error) {
+    if (error.errors[0].validatorKey === 'not_unique') {
+      error.message = 'An account using this e-mail address already exists.';
+    }
     next(error);
   }
 });
@@ -34,7 +37,7 @@ router.post('/', async function (req, res, next) {
 // GET /api/users/:id - Retrieve user data
 router.get('/:id', async function (req, res, next) {
   try {
-    const userData = await User.findOne({
+    const user = await User.findOne({
       where: {
         id: req.params.id
       },
@@ -43,7 +46,7 @@ router.get('/:id', async function (req, res, next) {
       },
       attributes: ['id', 'email']
     });
-    res.json(userData);
+    res.json(user);
   } catch (error) {
     next(error);
   }
@@ -53,36 +56,35 @@ router.get('/:id', async function (req, res, next) {
 router.put('/:id', async function (req, res, next) {
   // Need to refactor this to signify updating user info
   try {
-    const targetDocument = await Document.findOne({
-      where: { token: req.params.token }
+    const user = await User.findOne({
+      where: { id: req.params.id },
+      attributes: ['id', 'email']
     });
-    const oldDocument = targetDocument.contents;
-    const incomingDocument = req.body.contents; // Need to check this from form.
-    const patches = dmp.patch_make(oldDocument, incomingDocument);
-    const [newDocument, [success]] = dmp.patch_apply(patches, oldDocument);
-    if (success) {
-      await targetDocument.update({ contents: newDocument });
-      res.sendStatus(200);
-    } else {
-      res.sendStatus(500);
-    }
+    await user.update(req.body);
+    res.send({
+      id: user.id,
+      email: user.email
+    });
   } catch (error) {
+    if (error.errors[0].validatorKey === 'not_unique') {
+      error.message = 'An account using this e-mail address already exists.';
+    }
     next(error);
   }
 });
 
 // DELETE /api/users/:id - Remove user data
-router.delete('/:id/:documentId', async function (req, res, next) {
+router.delete('/:id', async function (req, res, next) {
   try {
-    await Document.destroy({
+    await User.destroy({
       where: {
-        id: req.params.documentId
+        id: req.params.id
       },
       include: {
         model: UserDocument
       }
     });
-    res.sendStatus(200);
+    res.sendStatus(204);
   } catch (error) {
     next(error);
   }
