@@ -51,13 +51,13 @@ function texteditor(props) {
         .addEventListener('keydown', keyCounter)
       setComponentMounted(true)
     }
+    socket.on(`${docToken}`, (message) => {
+      //setState? Update the result
+      //convert the message back using 'markdown-it'
+      console.log('FE: Updated Document Received')
+    })
+    console.log('socket mounted')
   });
-
-  socket.on(docToken, (message) => {
-    //setState? Update the result
-    //convert the message back using 'markdown-it'
-    console.log('FE: Updated Document Received')
-  })
 
   function keyCounter () {
     if(keystroke < 10){

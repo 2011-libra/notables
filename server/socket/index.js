@@ -3,13 +3,13 @@ module.exports = io => {
     console.log(`A socket connection has been made: ${socket.id}`)
 
     socket.on('update-document', async (message)=>{
-      const {docToken, contents} = message;
+      let {token, contents} = message;
       console.log('Socket Received a new Message:', message)
       // ASYNC PUT request to database goes here
       let updatedDocument = 'Response from PUT update goes here';
-
+      console.log(token)
       // Broadcast Response to all participants connected to the token ID path
-      socket.broadcast.emit(docToken, updatedDocument);
+      socket.emit(`${token}`, updatedDocument);
     })
 
     socket.on('disconnect', () => {
