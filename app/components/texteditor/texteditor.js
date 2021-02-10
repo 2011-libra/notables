@@ -3,6 +3,10 @@ import './Texteditor.css';
 import CodeBlock from './CodeBlock';
 import { useSelector } from 'react-redux';
 import Toolbar from './toolbar';
+import socket from '../../socket'
+let md = require('markdown-it')();
+const DMP = require('diff-match-patch')
+const dmp = new DMP()
 const axios = require('axios');
 const TurndownService = require('turndown').default;
 let turndownService = new TurndownService();
@@ -12,8 +16,6 @@ turndownService.addRule('code-snippet', {
     return '```' + content.slice(1) + '```';
   }
 });
-let md = require('markdown-it')();
-import socket from '../../socket'
 
 function texteditor(props) {
   let keystroke = 0
@@ -56,11 +58,19 @@ function texteditor(props) {
 
   socket.on(`${docToken}`, (message) => {
     let {contents} = message;
-    result = contents;
-    markdownResult = convertFromMD()
-    // Diff & Patch before setting the html
-    document.getElementById('contentEditable').innerHTML = markdownResult
-    createCodeRunnerEvent()
+    console.log('before patch:', contents)
+    const oldDocument = contents;
+    const currDocument = convertToMD();
+    const patches = dmp.patch_make(currDocument, oldDocument);
+    const [newDocument, [success]] = dmp.patch_apply(patches, currDocument)
+
+    if(success){
+      result = newDocument;
+      console.log('after patch:', newDocument)
+      markdownResult = convertFromMD()
+      document.getElementById('contentEditable').innerHTML = markdownResult
+      createCodeRunnerEvent()
+    }
   })
 
   function keyCounter () {
