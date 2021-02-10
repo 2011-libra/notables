@@ -2,29 +2,19 @@ const router = require('express').Router();
 const sandbox = require('./sandbox');
 const fs = require('fs');
 const path = require('path');
-
-// const wrapCode = code => {
-//   return `
-//   let code = () => {};
-//   try {
-//     code = () => ${code};
-//   } catch (error) {
-//     console.log(error.toString());
-//   }
-//   module.exports = code`;
-// };
+const chalk = require('chalk');
+const rimraf = require('rimraf');
 
 const makeWorkingDir = (token, codeObj) => {
   try {
-    fs.mkdirSync(path.join(__dirname, `/${token}`));
+    fs.mkdirSync(path.join(__dirname, `/tmp/${token}`));
   } catch (error) {
     console.log('Error in mkDir:', error);
   }
 
   try {
-    // const wrappedCode = wrapCode(code);
     fs.writeFileSync(
-      path.join(__dirname, `/${token}/code.json`),
+      path.join(__dirname, `/tmp/${token}/code.json`),
       JSON.stringify(codeObj)
     );
   } catch (error) {
@@ -34,7 +24,9 @@ const makeWorkingDir = (token, codeObj) => {
 
 const cleanupWorkingDir = token => {
   try {
-    fs.rmdirSync(path.join(__dirname, `/${token}`), { recursive: true });
+    // Not Node-10 compatible:
+    // fs.rmdirSync(path.join(__dirname, `/tmp/${token}`), { recursive: true });
+    rimraf.sync(path.join(__dirname, `./tmp/${token}`));
   } catch (error) {
     console.log('Error in cleanupWorkingDir:', error);
   }
@@ -93,8 +85,9 @@ router.post('/', async (req, res, next) => {
   if (pairsMatch(code)) {
     try {
       makeWorkingDir(token, { code });
+      console.log('[API Route] sandbox()  input:', chalk.yellow(code));
       const output = await sandbox(token);
-      console.log('[API Route] sandbox() output:', output);
+      console.log('[API Route] sandbox() output:', chalk.blue(output));
 
       res.send(output);
     } catch (error) {
@@ -103,6 +96,7 @@ router.post('/', async (req, res, next) => {
       cleanupWorkingDir(token);
     }
   } else {
+    console.log('[API Route] sandbox()  input:', chalk.red(code));
     res.send('Syntax problem with input');
   }
 });
