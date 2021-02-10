@@ -5,28 +5,16 @@ const path = require('path');
 const chalk = require('chalk');
 const rimraf = require('rimraf');
 
-// const wrapCode = code => {
-//   return `
-//   let code = () => {};
-//   try {
-//     code = () => ${code};
-//   } catch (error) {
-//     console.log(error.toString());
-//   }
-//   module.exports = code`;
-// };
-
 const makeWorkingDir = (token, codeObj) => {
   try {
-    fs.mkdirSync(path.join(__dirname, `/${token}`));
+    fs.mkdirSync(path.join(__dirname, `/tmp/${token}`));
   } catch (error) {
     console.log('Error in mkDir:', error);
   }
 
   try {
-    // const wrappedCode = wrapCode(code);
     fs.writeFileSync(
-      path.join(__dirname, `/${token}/code.json`),
+      path.join(__dirname, `/tmp/${token}/code.json`),
       JSON.stringify(codeObj)
     );
   } catch (error) {
@@ -37,8 +25,8 @@ const makeWorkingDir = (token, codeObj) => {
 const cleanupWorkingDir = token => {
   try {
     // Not Node-10 compatible:
-    // fs.rmdirSync(path.join(__dirname, `/${token}`), { recursive: true });
-    rimraf.sync(path.join(__dirname, `./${token}`));
+    // fs.rmdirSync(path.join(__dirname, `/tmp/${token}`), { recursive: true });
+    rimraf.sync(path.join(__dirname, `./tmp/${token}`));
   } catch (error) {
     console.log('Error in cleanupWorkingDir:', error);
   }

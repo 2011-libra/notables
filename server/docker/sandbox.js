@@ -43,8 +43,8 @@ const archiveCode = async token => {
   try {
     await tar.create(
       {
-        cwd: path.join(__dirname, `/${token}`),
-        file: path.join(__dirname, `/${token}/code.tar`)
+        cwd: path.join(__dirname, `/tmp/${token}`),
+        file: path.join(__dirname, `/tmp/${token}/code.tar`)
       },
       ['code.json']
     );
@@ -55,7 +55,7 @@ const archiveCode = async token => {
 
 const putCodeInContainer = async (container, token) => {
   try {
-    await container.putArchive(path.join(__dirname, `/${token}/code.tar`), {
+    await container.putArchive(path.join(__dirname, `/tmp/${token}/code.tar`), {
       path: '/'
     });
   } catch (error) {
