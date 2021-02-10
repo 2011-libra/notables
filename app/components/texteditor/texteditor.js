@@ -33,20 +33,12 @@ function texteditor(props) {
       .replace(/<\/code><\/p>/g, `</pre>`);
   }
 
-  // const downloadTxtFile = () => {
-  //   let innerHTML = document.getElementById('contentEditable').innerHTML;
-  //   let turndownService = new TurndownService();
-  //   let markdown = turndownService.turndown(innerHTML);
-
-  //   const element = document.createElement('a');
-  //   const file = new Blob([markdown], {
-  //     type: 'text/richtext;charset=utf-8'
-  //   });
-  //   element.href = URL.createObjectURL(file);
-  //   element.download = 'myFile.txt';
-  //   document.body.appendChild(element);
-  //   element.click();
-  // };
+  const convertToMD = () => {
+    let innerHTML = document.getElementById('contentEditable').innerHTML;
+    let turndownService = new TurndownService();
+    let markdown = turndownService.turndown(innerHTML);
+    return markdown
+  };
 
   useEffect(() => {
     if(!eventAdded){
@@ -61,15 +53,18 @@ function texteditor(props) {
     }
   });
 
-  // useEffect(()=>{
-  //   console.log('new UseEffect:', keystroke)
-  // }, [keystroke])
+  socket.on(docToken, (message) => {
+    //setState? Update the result
+    //convert the message back using 'markdown-it'
+    console.log('FE: Updated Document Received')
+  })
 
   function keyCounter () {
     if(keystroke < 10){
       keystroke++
     } else {
-      let message = {content: 'loremipsum', token: docToken}
+      let updatedContent = convertToMD()
+      let message = {contents: updatedContent, token: docToken}
       socket.emit('update-document', message)
       keystroke = 0
     }
