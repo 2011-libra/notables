@@ -1,5 +1,7 @@
 const router = require('express').Router();
 const { db, User, Document, UserDocument } = require('../db');
+const DMP = require('diff-match-patch');
+const dmp = new DMP();
 
 /* ::::: PLEASE NOTE ::::: */
 /* Passport's req.user should be used instead of "id". */
@@ -46,14 +48,22 @@ router.post('/:id', async function (req, res, next) {
   }
 });
 
-// matches PUT requests to /api/user/:id
+// matches PUT requests to /api/user/:token
 router.put('/:token', async function (req, res, next) {
   try {
     const targetDocument = await Document.findOne({
       where: { token: req.params.token }
     });
-    await targetDocument.update(req.body);
-    res.sendStatus(200);
+    const oldDocument = targetDocument.contents;
+    const incomingDocument = req.body.contents; // Need to check this from form.
+    const patches = dmp.patch_make(oldDocument, incomingDocument);
+    const [newDocument, [success]] = dmp.patch_apply(patches, oldDocument);
+    if (success) {
+      await targetDocument.update({ contents: newDocument });
+      res.sendStatus(200);
+    } else {
+      res.sendStatus(500);
+    }
   } catch (error) {
     next(error);
   }

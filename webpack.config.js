@@ -1,4 +1,4 @@
-
+const path = require('path');
 module.exports = {
   entry: './app/main.js', // assumes your entry point is the index.js in the root of your project folder
   mode: 'development',
@@ -18,14 +18,14 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: [
-          'style-loader',
-          'css-loader'
-        ]
+        use: ['style-loader', 'css-loader']
       }
     ]
   },
   resolve: {
-    extensions: ['*', '.js', '.jsx'],
+    extensions: ['*', '.js', '.jsx']
+  },
+  watchOptions: {
+    ignored: [path.resolve(__dirname, 'server', 'docker', 'tmp')]
   }
-}
+};
