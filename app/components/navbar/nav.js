@@ -134,9 +134,12 @@ function Nav() {
           <Dropzone />
         </Drawer>
       </div>
-      <img className="header-logo" src="./images/logo.png" alt="" />
-      <div className="header-name">NOTEABLES</div>
-
+      <div className="header_container">
+        <Link to="/">
+          <img className="header-logo" src="./images/logo.png" alt="" />
+        </Link>
+        <div className="header-name">NOTEABLES</div>
+      </div>
       <div className="header-nav">
         <div className="header-option">
           <IconButton

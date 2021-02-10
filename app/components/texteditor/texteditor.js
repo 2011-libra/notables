@@ -8,21 +8,22 @@ const TurndownService = require('turndown').default;
 let md = require('markdown-it')();
 
 function texteditor(props) {
-
   // const { result } = props;
   let importState = useSelector(state => state);
   let result = importState.import.result ? importState.import.result : '';
   let markdownResult = result;
   // console.log(result);
 
-
   if (result === '') {
     markdownResult = md.render(result);
   } else {
     markdownResult = md
       .render(result)
-      .replace(/<p><code>/g,`<pre class="codeBlock" id='codeBlock-TBD'><button id="codeBlock-TBD-button" class="run-code-button" contentEditable=false >▶</button>`)
-      .replace(/<\/code><\/p>/g,`</pre>`);
+      .replace(
+        /<p><code>/g,
+        `<pre class="codeBlock" id='codeBlock-TBD'><button id="codeBlock-TBD-button" class="run-code-button" contentEditable=false >▶</button>`
+      )
+      .replace(/<\/code><\/p>/g, `</pre>`);
   }
 
   // const downloadTxtFile = () => {
@@ -54,47 +55,46 @@ function texteditor(props) {
         .innerHTML.includes("class='codeBlock'")
     ) {
       const allCodeBlockNode = document.getElementsByClassName('codeBlock');
-      const allRunCodeButtons = document.getElementsByClassName('run-code-button')
+      const allRunCodeButtons = document.getElementsByClassName(
+        'run-code-button'
+      );
 
-      for (let i = 0; i < allCodeBlockNode.length; i++){
-        allCodeBlockNode[i].id = 'codeBlock-' + i
-        allRunCodeButtons[i].id = 'codeBlock-' + i + '-button'
+      for (let i = 0; i < allCodeBlockNode.length; i++) {
+        allCodeBlockNode[i].id = 'codeBlock-' + i;
+        allRunCodeButtons[i].id = 'codeBlock-' + i + '-button';
       }
 
       for (let i = 0; i < allRunCodeButtons.length; i++) {
-        allRunCodeButtons[i]
-          .addEventListener('click', async () => {
-            let runnableCode = document
-              .getElementById(`codeBlock-${i}`)
-              .innerText.slice(1);
+        allRunCodeButtons[i].addEventListener('click', async () => {
+          let runnableCode = document
+            .getElementById(`codeBlock-${i}`)
+            .innerText.slice(1);
 
-            if (document.getElementById(`stdout-for-${i}`)) {
-              let outliers = document.getElementById(`stdout-for-${i}`)
-                .innerText;
-              runnableCode = runnableCode.slice(1, -outliers.length);
-            }
+          if (document.getElementById(`stdout-for-${i}`)) {
+            let outliers = document.getElementById(`stdout-for-${i}`).innerText;
+            runnableCode = runnableCode.slice(1, -outliers.length);
+          }
 
-            const today = new Date();
+          const today = new Date();
 
-            const stdout = await axios.post('/code', {
-              code: runnableCode,
-              token: `${Math.ceil(
-                Math.random() * (8888 - 0) + 0
-              )}${today.getFullYear()}${today.getMonth()}${today.getDate()}${today.getHours()}${today.getMinutes()}${today.getMilliseconds()}`
-            });
-
-            if (!document.getElementById(`stdout-for-${i}`)) {
-              const outputNode = document.createElement('pre');
-              outputNode.innerText = stdout.data;
-              outputNode.id = `stdout-for-${i}`;
-              outputNode.className = 'sandbox-stdout';
-              outputNode.setAttribute('contentEditable', false);
-              document.getElementById(`codeBlock-${i}`).appendChild(outputNode);
-            } else {
-              document.getElementById(`stdout-for-${i}`).innerText =
-                stdout.data;
-            }
+          const stdout = await axios.post('/code', {
+            code: runnableCode,
+            token: `${Math.ceil(
+              Math.random() * (8888 - 0) + 0
+            )}${today.getFullYear()}${today.getMonth()}${today.getDate()}${today.getHours()}${today.getMinutes()}${today.getMilliseconds()}`
           });
+
+          if (!document.getElementById(`stdout-for-${i}`)) {
+            const outputNode = document.createElement('pre');
+            outputNode.innerText = stdout.data;
+            outputNode.id = `stdout-for-${i}`;
+            outputNode.className = 'sandbox-stdout';
+            outputNode.setAttribute('contentEditable', false);
+            document.getElementById(`codeBlock-${i}`).appendChild(outputNode);
+          } else {
+            document.getElementById(`stdout-for-${i}`).innerText = stdout.data;
+          }
+        });
       }
     }
   }
