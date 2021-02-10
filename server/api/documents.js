@@ -10,13 +10,13 @@ const dmp = new DMP();
 // POST /api/documents/ - Create new document
 router.post('/', async function (req, res, next) {
   try {
-    const user = await User.findOne({
-      where: { id: req.params.id }
-    });
+    // const user = await User.findOne({
+    // where: { id: req.params.id }
+    // });
     const newDocument = await Document.create({
       contents: req.body.contents
     });
-    await user.addDocument(newDocument.id);
+    // await user.addDocument(newDocument.id);
     // set user's role to "owner" in through table
     // await UserDocument.update(
     // { role: 'owner' },
@@ -53,7 +53,7 @@ router.put('/:token', async function (req, res, next) {
     const [newDocument, [success]] = dmp.patch_apply(patches, oldDocument);
     if (success) {
       await targetDocument.update({ contents: newDocument });
-      res.sendStatus(200);
+      res.send(newDocument);
     } else {
       throw new Error('Failed to update document, please try again');
     }

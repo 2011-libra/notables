@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { db, User, Document, UserDocument } = require('../db');
+const { User, Document, UserDocument } = require('../db');
 
 /* ::::: PLEASE NOTE ::::: */
 /* Passport's req.user should be used instead of "id". */
