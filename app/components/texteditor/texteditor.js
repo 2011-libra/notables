@@ -5,59 +5,63 @@ import { useSelector } from 'react-redux';
 import Toolbar from './toolbar';
 const axios = require('axios');
 const TurndownService = require('turndown').default;
+let turndownService = new TurndownService();
+turndownService.addRule('code-snippet', {
+  filter: ['pre'],
+  replacement: content => {
+    return '```' + content.slice(1) + '```';
+  }
+});
 let md = require('markdown-it')();
 import socket from '../../socket'
 
 function texteditor(props) {
-  // const { result } = props;
+  let keystroke = 0
+  const [docToken, setDocToken] = useState(`insertTokenHere`)
+
   let importState = useSelector(state => state);
   let result = importState.import.result ? importState.import.result : '';
   let markdownResult = result;
-  // console.log(result);
-  let keystroke = 0
-  const [eventAdded, setEventAdded] = useState(false)
-  const [componentMounted, setComponentMounted] = useState(false)
-  const [docToken, setDocToken] = useState(`insertTokenHere`)
 
+  const convertFromMD = () => {
+    return md
+          .render(result)
+          .replace(
+            /<p><code>/g,
+            `<pre class="codeBlock" id='codeBlock-TBD'><button id="codeBlock-TBD-button" class="run-code-button" contentEditable=false >▶</button>`
+          )
+          .replace(/<\/code><\/p>/g, `</pre>`);
+  }
 
   if (result === '') {
     markdownResult = md.render(result);
   } else {
-    setEventAdded(false)
-    markdownResult = md
-      .render(result)
-      .replace(
-        /<p><code>/g,
-        `<pre class="codeBlock" id='codeBlock-TBD'><button id="codeBlock-TBD-button" class="run-code-button" contentEditable=false >▶</button>`
-      )
-      .replace(/<\/code><\/p>/g, `</pre>`);
+    markdownResult = convertFromMD()
   }
 
   const convertToMD = () => {
     let innerHTML = document.getElementById('contentEditable').innerHTML;
-    let turndownService = new TurndownService();
     let markdown = turndownService.turndown(innerHTML);
     return markdown
   };
 
   useEffect(() => {
-    if(!eventAdded){
       createCodeRunnerEvent();
-    }
 
-    if(!componentMounted){
       document
         .getElementById('contentEditable')
         .addEventListener('keydown', keyCounter)
-      setComponentMounted(true)
-    }
-    socket.on(`${docToken}`, (message) => {
-      //setState? Update the result
-      //convert the message back using 'markdown-it'
-      console.log('FE: Updated Document Received')
-    })
-    console.log('socket mounted')
+
   });
+
+  socket.on(`${docToken}`, (message) => {
+    let {contents} = message;
+    result = contents;
+    markdownResult = convertFromMD()
+    // Diff & Patch before setting the html
+    document.getElementById('contentEditable').innerHTML = markdownResult
+    createCodeRunnerEvent()
+  })
 
   function keyCounter () {
     if(keystroke < 10){
@@ -79,7 +83,6 @@ function texteditor(props) {
         .getElementById('contentEditable')
         .innerHTML.includes("class='codeBlock'")
     ) {
-      setEventAdded(true)
       const allCodeBlockNode = document.getElementsByClassName('codeBlock');
       const allRunCodeButtons = document.getElementsByClassName(
         'run-code-button'
