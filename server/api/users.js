@@ -1,7 +1,5 @@
 const router = require('express').Router();
 const { db, User, Document, UserDocument } = require('../db');
-const DMP = require('diff-match-patch');
-const dmp = new DMP();
 
 /* ::::: PLEASE NOTE ::::: */
 /* Passport's req.user should be used instead of "id". */
@@ -16,7 +14,24 @@ const dmp = new DMP();
 //     next(err);
 //   }
 // });
-// matches GET requests to /api/user
+
+// Mounted on /api/users
+
+// POST /api/users/ - Create new user
+router.post('/', async function (req, res, next) {
+  try {
+    const user = await User.findOne({ where: { id: req.params.id } });
+    const newDocument = await Document.create(req.body);
+    // await Document.update({role: 'owner'}, {where: {id: newDocument.id}})
+    await user.addDocument(newDocument.id);
+
+    res.sendStatus(200);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// GET /api/users/:id - Retrieve user data
 router.get('/:id', async function (req, res, next) {
   try {
     const userData = await User.findOne({
@@ -34,22 +49,9 @@ router.get('/:id', async function (req, res, next) {
   }
 });
 
-// matches POST requests to /api/user/:id
-router.post('/:id', async function (req, res, next) {
-  try {
-    const user = await User.findOne({ where: { id: req.params.id } });
-    const newDocument = await Document.create(req.body);
-    // await Document.update({role: 'owner'}, {where: {id: newDocument.id}})
-    await user.addDocument(newDocument.id);
-
-    res.sendStatus(200);
-  } catch (error) {
-    next(error);
-  }
-});
-
-// matches PUT requests to /api/user/:token
-router.put('/:token', async function (req, res, next) {
+// PUT /api/users/:id - Update user data
+router.put('/:id', async function (req, res, next) {
+  // Need to refactor this to signify updating user info
   try {
     const targetDocument = await Document.findOne({
       where: { token: req.params.token }
@@ -69,7 +71,7 @@ router.put('/:token', async function (req, res, next) {
   }
 });
 
-// matches DELETE requests to /api/user/:id/:documentId
+// DELETE /api/users/:id - Remove user data
 router.delete('/:id/:documentId', async function (req, res, next) {
   try {
     await Document.destroy({
