@@ -3,6 +3,7 @@ const sandbox = require('./sandbox');
 const fs = require('fs');
 const path = require('path');
 const chalk = require('chalk');
+const rimraf = require('rimraf');
 
 // const wrapCode = code => {
 //   return `
@@ -35,7 +36,9 @@ const makeWorkingDir = (token, codeObj) => {
 
 const cleanupWorkingDir = token => {
   try {
-    fs.rmdirSync(path.join(__dirname, `/${token}`), { recursive: true });
+    // Not Node-10 compatible:
+    // fs.rmdirSync(path.join(__dirname, `/${token}`), { recursive: true });
+    rimraf.sync(path.join(__dirname, `./${token}`));
   } catch (error) {
     console.log('Error in cleanupWorkingDir:', error);
   }
