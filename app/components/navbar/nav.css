@@ -3,6 +3,7 @@
 } */
 .header_container {
   margin: -500px;
+  display: flex;
 }
 
 .header {
@@ -31,14 +32,16 @@
   align-items: center;
   color: white;
   margin-left: 15px;
+  filter: invert(100);
 }
 .header-name {
   font-family: source sans pro, helvetica neue, Helvetica, Arial, sans-serif;
   font-feature-settings: 'dlig' 1, 'liga' 1, 'lnum' 1, 'kern' 1;
-  font-style: normal;
+  font-style: bold;
   font-weight: 600;
   margin-left: 5px;
-  color: #a0aabf;
+  margin-top: 20px;
+  color: white;
 }
 
 .header-option > svg {
