@@ -1,14 +1,16 @@
 .texteditor_container {
   width: 95%;
 }
+/* Need to figure out how to make this fixed 
+and not go into text editor */
 .toolbar {
   border: solid 1px #ddd;
   background: #f4f4f4;
   padding: 5px;
-  margin-top: 95px;
+  margin-top: 85px;
   margin-left: 25%;
   border-radius: 3px;
-  /* position: fixed; */
+  position: fixed;
   top: 50px;
   width: 50%;
   display: flex;
@@ -27,12 +29,12 @@
 
 .editor {
   border: solid 1px #ccc;
-  /* width: 95%; */
-  max-width: 700px;
-  min-height: 100px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 20px;
+  width: 95%;
+  max-width: 80vw;
+  min-height: 75vh;
+  margin-left: 10vw;
+  margin-right: 10vw;
+  margin-top: 120px;
   font-size: 20px;
 }
 
@@ -80,7 +82,7 @@
   overflow: auto;
   color: rgb(0, 0, 0);
   padding: 8px;
-  border: .5px solid gray;
+  border: 0.5px solid gray;
   border-radius: 8px;
   display: inline-block;
   white-space: normal;
@@ -94,7 +96,7 @@
 }
 
 .sandbox-stdout {
-  color: green
+  color: green;
 }
 
 .run-code-button {
@@ -140,5 +142,3 @@
   color: rgb(0, 222, 0);
   font-family: courier;
 }
-
-
