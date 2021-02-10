@@ -68,7 +68,7 @@ function texteditor(props) {
         allRunCodeButtons[i].addEventListener('click', async () => {
           let runnableCode = document
             .getElementById(`codeBlock-${i}`)
-            .innerText.slice(1);
+            .innerText.replace('▶', '');
 
           if (document.getElementById(`stdout-for-${i}`)) {
             let outliers = document.getElementById(`stdout-for-${i}`).innerText;

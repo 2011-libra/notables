@@ -80,7 +80,7 @@ export default function toolbar() {
     document
       .getElementById(`${id}-button`)
       .addEventListener('click', async () => {
-        let runnableCode = document.getElementById(`${id}`).innerText.slice(1);
+        let runnableCode = document.getElementById(`${id}`).innerText.replace('▶', '');
 
         if (document.getElementById(`stdout-for-${id}`)) {
           let outliers = document.getElementById(`stdout-for-${id}`).innerText;
