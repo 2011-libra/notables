@@ -7,12 +7,11 @@ and not go into text editor */
   border: solid 1px #ddd;
   background: #f4f4f4;
   padding: 5px;
-  margin-top: 85px;
-  margin-left: 25%;
+  margin-top: 10px;
   border-radius: 3px;
   position: fixed;
   top: 50px;
-  width: 50%;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
@@ -34,7 +33,7 @@ and not go into text editor */
   min-height: 75vh;
   margin-left: 10vw;
   margin-right: 10vw;
-  margin-top: 120px;
+  margin-top: 75px;
   font-size: 20px;
 }
 
