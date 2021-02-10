@@ -6,6 +6,7 @@ import Toolbar from './toolbar';
 const axios = require('axios');
 const TurndownService = require('turndown').default;
 let md = require('markdown-it')();
+import socket from '../../socket'
 
 function texteditor(props) {
   // const { result } = props;
@@ -13,10 +14,16 @@ function texteditor(props) {
   let result = importState.import.result ? importState.import.result : '';
   let markdownResult = result;
   // console.log(result);
+  let keystroke = 0
+  const [eventAdded, setEventAdded] = useState(false)
+  const [componentMounted, setComponentMounted] = useState(false)
+  const [docToken, setDocToken] = useState(`insertTokenHere`)
+
 
   if (result === '') {
     markdownResult = md.render(result);
   } else {
+    setEventAdded(false)
     markdownResult = md
       .render(result)
       .replace(
@@ -42,8 +49,31 @@ function texteditor(props) {
   // };
 
   useEffect(() => {
-    createCodeRunnerEvent();
+    if(!eventAdded){
+      createCodeRunnerEvent();
+    }
+
+    if(!componentMounted){
+      document
+        .getElementById('contentEditable')
+        .addEventListener('keydown', keyCounter)
+      setComponentMounted(true)
+    }
   });
+
+  // useEffect(()=>{
+  //   console.log('new UseEffect:', keystroke)
+  // }, [keystroke])
+
+  function keyCounter () {
+    if(keystroke < 10){
+      keystroke++
+    } else {
+      let message = {content: 'loremipsum', token: docToken}
+      socket.emit('update-document', message)
+      keystroke = 0
+    }
+  }
 
   function createCodeRunnerEvent() {
     if (
@@ -54,6 +84,7 @@ function texteditor(props) {
         .getElementById('contentEditable')
         .innerHTML.includes("class='codeBlock'")
     ) {
+      setEventAdded(true)
       const allCodeBlockNode = document.getElementsByClassName('codeBlock');
       const allRunCodeButtons = document.getElementsByClassName(
         'run-code-button'
