@@ -31,7 +31,7 @@
   margin: 10px 10px;
   align-items: center;
   color: white;
-  margin-left: 20px;
+  margin-left: 280px;
   filter: invert(100);
 }
 .header-name {
@@ -44,7 +44,7 @@
   text-decoration: none;
   position: fixed;
   left: 88px;
-  top: 20px
+  top: 14px;
 }
 
 .header-logo:hover {
@@ -78,6 +78,36 @@
   color: white;
 }
 
-#app > div.header > div.header-nav > div:nth-child(1) > button > span.MuiIconButton-label > svg:hover {
+#app
+  > div.header
+  > div.header-nav
+  > div:nth-child(1)
+  > button
+  > span.MuiIconButton-label
+  > svg:hover {
+  color: white;
+}
+.drawer-divider {
+  top: 598px;
+  /* padding-bottom: 1px; */
+}
+
+.drawer {
+  display: flex;
+  background-color: #373d49;
+  width: 100%;
+  align-items: center;
+  border-bottom: 1px solid black;
+}
+.drawer > h1 {
+  font-family: source sans pro, helvetica neue, Helvetica, Arial, sans-serif;
+  /* font-size: 20px; */
+  margin-left: 14px;
+  font-style: bold;
+  font-weight: 600;
+  color: white;
+}
+
+.MuiSvgIcon-root {
   color: white;
 }
