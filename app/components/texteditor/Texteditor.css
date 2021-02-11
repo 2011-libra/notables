@@ -58,6 +58,7 @@ select {
   margin-right: 10vw;
   margin-top: 75px;
   font-size: 20px;
+  box-shadow: 3px 3px 8px lightgray;
 }
 
 .editor > li {
