@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { fetchCode } from '../../redux/CodeEditor';
 import {
@@ -13,6 +13,18 @@ import {
 import './Texteditor.css';
 
 export default function toolbar() {
+  let hyperlinkSelection = '';
+
+  useEffect(
+    () => {
+      if(document.getElementById('txtFormatUrl')){
+        document.getElementById('txtFormatUrl').addEventListener('keydown', (e) => {
+          if(e.key === 'Enter'){setUrl(e)}
+        })
+      }
+    }
+  )
+
   /******************************/
   /*** EXECCOMMAND FORMATTING ***/
   /******************************/
@@ -25,14 +37,16 @@ export default function toolbar() {
   /*** HYPERLINK ***/
   /*****************/
   function addLink() {
+    hyperlinkSelection = document.getSelection().anchorNode
     if (document.getSelection().anchorNode.parentElement.localName === 'pre') {
+      console.alert("You can't add a hyperlink inside a code block")
       return;
     }
-    const show = document.getElementById('url-input');
-    if (show.classList.contains('hidden')) {
-      show.classList.remove('hidden');
+    const hypNode = document.getElementById('url-input');
+    if (hypNode.classList.contains('hidden')) {
+      hypNode.classList.remove('hidden');
     } else {
-      show.classList.add('hidden');
+      hypNode.classList.add('hidden');
     }
   }
 
@@ -44,16 +58,25 @@ export default function toolbar() {
     if (document.getSelection().anchorNode.parentElement.localName === 'pre') {
       return;
     }
+    document.getElementById('url-input').className = 'hidden'
     const url = document.getElementById('txtFormatUrl').value;
-    const show = document.getElementById('url-input');
-    const text = document.getSelection();
-    format(
-      'insertHTML',
-      `<a href='${url}' target='_blank'>${text}
-    </a>`
-    );
-    document.getElementById('txtFormatUrl').value = '';
-    show.classList.add('hidden');
+
+    if(url.includes(!'https://')){
+      url = `https://${url}`
+    }
+
+    let currSelection = hyperlinkSelection
+    let currStr = currSelection.data;
+    let newHyperlink = document.createElement('a');
+    newHyperlink.innerText = currStr;
+    newHyperlink.href = url;
+    newHyperlink.target = '_blank';
+    newHyperlink.addEventListener('click', (e) => {
+      console.log(e)
+      window.location.href = url
+    })
+    currSelection.parentNode.insertBefore(newHyperlink, currSelection)
+    currSelection.parentNode.removeChild(currSelection)
   }
 
   /**********************************/
@@ -228,7 +251,7 @@ export default function toolbar() {
       </button>
       <div id="url-input" className="hidden">
         <input id="txtFormatUrl" placeholder="url" />
-        <button onClick={e => setUrl(e)}>Create Link</button>
+        <button id="create-link-button" onClick={e => setUrl(e)}>Create Link</button>
       </div>
 
       <button onClick={e => addCodeBlock()}>
