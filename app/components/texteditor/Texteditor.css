@@ -1,8 +1,7 @@
 .texteditor_container {
   width: 95%;
 }
-/* Need to figure out how to make this fixed
-and not go into text editor */
+
 .toolbar {
   border: solid 1px #ddd;
   background: #f4f4f4;
