@@ -1,8 +1,7 @@
 .texteditor_container {
   width: 95%;
 }
-/* Need to figure out how to make this fixed
-and not go into text editor */
+
 .toolbar {
   border: solid 1px #ddd;
   background: #f4f4f4;
@@ -189,17 +188,17 @@ select {
 }
 
 #contentEditable > h2 {
-  margin: 5px 0px
+  margin: 5px 0px;
 }
 
 #contentEditable > h1 {
-  margin: 5px 0px
+  margin: 5px 0px;
 }
 
 #contentEditable > div {
-  margin: 5px 0px
+  margin: 5px 0px;
 }
 
 #contentEditable > div > * {
-  margin: 5px 0px
+  margin: 5px 0px;
 }
