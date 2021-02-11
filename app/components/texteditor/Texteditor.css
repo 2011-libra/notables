@@ -83,9 +83,9 @@ and not go into text editor */
   padding: 8px;
   border: 0.5px solid gray;
   border-radius: 8px;
-  display: inline-block;
+  /* display: inline-block; */
   white-space: normal;
-  max-width: 680px;
+  /* max-width: 680px; */
 }
 
 .code-block-buttons {
