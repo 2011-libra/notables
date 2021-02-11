@@ -1,3 +1,8 @@
 body {
   padding-bottom: 30px;
 }
+
+p {
+  font-size: .6em;
+  margin: 1px 0px
+}

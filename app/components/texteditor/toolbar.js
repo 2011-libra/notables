@@ -25,6 +25,9 @@ export default function toolbar() {
   /*** HYPERLINK ***/
   /*****************/
   function addLink() {
+    if (document.getSelection().anchorNode.parentElement.localName === 'pre') {
+      return;
+    }
     const show = document.getElementById('url-input');
     if (show.classList.contains('hidden')) {
       show.classList.remove('hidden');
@@ -38,6 +41,9 @@ export default function toolbar() {
   /*******************/
   function setUrl(e) {
     e.preventDefault();
+    if (document.getSelection().anchorNode.parentElement.localName === 'pre') {
+      return;
+    }
     const url = document.getElementById('txtFormatUrl').value;
     const show = document.getElementById('url-input');
     const text = document.getSelection();
@@ -80,11 +86,15 @@ export default function toolbar() {
     document
       .getElementById(`${id}-button`)
       .addEventListener('click', async () => {
-        let runnableCode = document.getElementById(`${id}`).innerText.replace('▶', '');
+        let runnableCode = document
+          .getElementById(`${id}`)
+          .innerText.replace('▶', '');
 
         if (document.getElementById(`stdout-for-${id}`)) {
           let outliers = document.getElementById(`stdout-for-${id}`).innerText;
-          runnableCode = runnableCode.replace('▶', '').slice(0, -outliers.length);
+          runnableCode = runnableCode
+            .replace('▶', '')
+            .slice(0, -outliers.length);
         }
 
         const today = new Date();
@@ -133,6 +143,9 @@ export default function toolbar() {
     <div className="toolbar">
       <select
         onChange={e => {
+          if(document.getSelection().anchorNode.parentElement.localName === 'pre'){
+            return;
+          }
           if (e.target.value === '1') {
             const target = document.getSelection();
             format('insertHTML', `<h1>${target}</h1>`);
@@ -142,12 +155,13 @@ export default function toolbar() {
           }
           //This code is manually changing the current tags and replacing it with p tags
           if (e.target.value === '0') {
-            let currStr = document.getElementById('contentEditable')
-              .children[0];
+            let currSelection = document.getSelection();
+            let currStr = document.getSelection().anchorNode.data;
             let newStr = document.createElement('p');
-            newStr.innerHTML = currStr.innerHTML;
-            currStr.parentNode.insertBefore(newStr, currStr);
-            currStr.parentNode.removeChild(currStr);
+            newStr.innerText = currStr;
+            console.log(newStr)
+            currSelection.anchorNode.parentNode.insertBefore(newStr, currSelection.anchorNode)
+            currSelection.anchorNode.parentNode.removeChild(currSelection.anchorNode)
           }
         }}
       >
@@ -157,16 +171,56 @@ export default function toolbar() {
         <option value="2">Heading 2</option>
       </select>
 
-      <button onClick={e => format('bold')}>
+      <button
+        onClick={e => {
+          if (
+            document.getSelection().anchorNode.parentElement.localName === 'pre'
+          ) {
+            return;
+          } else {
+            format('bold');
+          }
+        }}
+      >
         <FaBold />
       </button>
-      <button onClick={e => format('italic')}>
+      <button
+        onClick={e => {
+          if (
+            document.getSelection().anchorNode.parentElement.localName === 'pre'
+          ) {
+            return;
+          } else {
+            format('italic');
+          }
+        }}
+      >
         <FaItalic />
       </button>
-      <button onClick={e => format('insertUnorderedList')}>
+      <button
+        onClick={e => {
+          if (
+            document.getSelection().anchorNode.parentElement.localName === 'pre'
+          ) {
+            return;
+          } else {
+            format('insertUnorderedList');
+          }
+        }}
+      >
         <FaListUl />
       </button>
-      <button onClick={e => format('insertOrderedList')}>
+      <button
+        onClick={e => {
+          if (
+            document.getSelection().anchorNode.parentElement.localName === 'pre'
+          ) {
+            return;
+          } else {
+            format('insertOrderedList');
+          }
+        }}
+      >
         <FaListOl />
       </button>
       <button onClick={e => addLink()}>
