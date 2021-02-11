@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Popover from '@material-ui/core/Popover';
+
 import axios from 'axios';
 import { fetchCode } from '../../redux/CodeEditor';
 import {
@@ -199,12 +199,12 @@ export default function toolbar() {
             let newStr = document.createElement('p');
             newStr.innerText = currStr;
             console.log(newStr);
-            currSelection.anchorNode.parentNode.insertBefore(
+            currSelection.anchorNode.parentNode.parentNode.insertBefore(
               newStr,
-              currSelection.anchorNode
+              currSelection.anchorNode.parentNode
             );
-            currSelection.anchorNode.parentNode.removeChild(
-              currSelection.anchorNode
+            currSelection.anchorNode.parentNode.parentNode.removeChild(
+              currSelection.anchorNode.parentNode
             );
             document.querySelector('select').selectedIndex = 0;
           }
@@ -281,20 +281,6 @@ export default function toolbar() {
       <button onClick={e => addCodeBlock()}>
         <FaCode />
       </button>
-      <div>
-        <Popover
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'left'
-          }}
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'left'
-          }}
-        >
-          The content of the Popover.
-        </Popover>
-      </div>
     </div>
   );
 }

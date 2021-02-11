@@ -87,10 +87,14 @@ export default function CustomizedDialogs() {
             In Notables, you are able to write plain text while styling it, once
             you are happy with your work, you can click on the "Export" button.
             This will create a file called "myFile" onto your local machine as a
-            .txt file. If you take a look in the .txt file, it is in complete
+            .md file. If you take a look in the .md file, it is in complete
             markdown! Your regular text is now in markdown! Wow!!!
           </Typography>
           <br />
+          <Typography gutterBottom>
+            If you choose to upload a file, you can only upload .md or .txt
+            files.
+          </Typography>
           <Typography gutterBottom>
             While you are typing, you may give an code snippet example. Did you
             ever wish you could RUN that code to see if you wrote it properly?
