@@ -30,8 +30,7 @@ select {
 }
 
 .toolbar > button:hover {
-  border: 3px solid steelblue;
-  border-radius: 5px;
+  box-shadow: 3px 3px 8px lightgray;
 }
 
 .toolbar > button > svg {
@@ -40,7 +39,7 @@ select {
 }
 
 .toolbar > button > svg:hover {
-  color: steelblue;
+  box-shadow: 3px 3px 8px lightgray;
 }
 
 #title:empty:before,
