@@ -43,7 +43,7 @@ Users can now navigate to the server on port 8080 using a browser. The landing p
 
 # Development
 
-If you wish to fork and develop this repository, the development environment can be started with `npm run start-dev`. Note that this will disable the code snippets from executing. If you wish to test that function as well, run `npm run start-dev-code`. In this case, webpack will not run in watch mode, so the server will need to be restarted manually when the repository code is amended.
+If you wish to fork and develop this repository, the development environment can be started with `npm run start-dev`.
 
 # Acknowledgements
 
