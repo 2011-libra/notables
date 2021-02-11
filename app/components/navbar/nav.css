@@ -40,10 +40,11 @@
   font-size: 20px;
   font-style: bold;
   font-weight: 600;
-  margin-left: 5px;
-  margin-top: 20px;
   color: white;
   text-decoration: none;
+  position: fixed;
+  left: 88px;
+  top: 20px
 }
 
 .header-logo:hover {
