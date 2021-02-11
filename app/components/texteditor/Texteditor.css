@@ -175,17 +175,17 @@ select {
 }
 
 #contentEditable > h2 {
-  margin: 5px 0px
+  margin: 5px 0px;
 }
 
 #contentEditable > h1 {
-  margin: 5px 0px
+  margin: 5px 0px;
 }
 
 #contentEditable > div {
-  margin: 5px 0px
+  margin: 5px 0px;
 }
 
 #contentEditable > div > * {
-  margin: 5px 0px
+  margin: 5px 0px;
 }
