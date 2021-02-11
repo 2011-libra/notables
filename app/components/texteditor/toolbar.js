@@ -42,11 +42,7 @@ export default function toolbar() {
       document.getSelection().anchorNode === null ||
       document.getSelection().anchorNode.innerText === ''
     ) {
-      console.log('condition is met');
-      <Popover>
-        {console.log('inside popover')}The content of the Popover.
-      </Popover>;
-      console.log('after popover');
+      alert('uh oh!');
       return;
     }
 
@@ -276,6 +272,20 @@ export default function toolbar() {
       <button onClick={e => addCodeBlock()}>
         <FaCode />
       </button>
+      <div>
+        <Popover
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left'
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'left'
+          }}
+        >
+          The content of the Popover.
+        </Popover>
+      </div>
     </div>
   );
 }
