@@ -84,9 +84,11 @@ export default function toolbar() {
   function addCodeBlock() {
     const codeBlock = document.createElement('pre');
     const target = document.getSelection();
+    console.log(target)
     if (
+      // target.anchorNode.localName === 'div' ||
       target.anchorNode === null ||
-      target.focusNode.id !== 'contentEditable' ||
+      target.anchorNode.localName === 'a' ||
       target.focusNode.nodeName.includes('#text') ||
       target.focusNode.classList.contains('title') ||
       target.focusNode.className.includes('codeBlock') ||
@@ -170,9 +172,11 @@ export default function toolbar() {
           if (e.target.value === '1') {
             const target = document.getSelection();
             format('insertHTML', `<h1>${target}</h1>`);
+            document.querySelector('select').selectedIndex = 0
           } else if (e.target.value === '2') {
             const target = document.getSelection();
             format('insertHTML', `<h2>${target}</h2>`);
+            document.querySelector('select').selectedIndex = 0
           }
           //This code is manually changing the current tags and replacing it with p tags
           if (e.target.value === '0') {
@@ -183,6 +187,7 @@ export default function toolbar() {
             console.log(newStr)
             currSelection.anchorNode.parentNode.insertBefore(newStr, currSelection.anchorNode)
             currSelection.anchorNode.parentNode.removeChild(currSelection.anchorNode)
+            document.querySelector('select').selectedIndex = 0
           }
         }}
       >
