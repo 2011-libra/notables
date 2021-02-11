@@ -15,7 +15,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import Dropzone from '../import/dropzone';
 import { Link } from 'react-router-dom';
-const drawerWidth = 500;
+const drawerWidth = 250;
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -38,10 +38,11 @@ const useStyles = makeStyles(theme => ({
   drawerHeader: {
     display: 'flex',
     alignItems: 'center',
-    padding: theme.spacing(0, 1),
+    padding: theme.spacing(0, 0, 0, 0),
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
-    justifyContent: 'flex-end'
+    justifyContent: 'flex-end',
+    backgoundColor: '#373d49'
   },
   content: {
     flexGrow: 1,
@@ -121,16 +122,18 @@ function Nav() {
           }}
         >
           <div className={classes.drawerHeader}>
-            <h1>Drag 'n Drop!</h1>
-            <IconButton onClick={handleDrawerClose}>
-              {theme.direction === 'ltr' ? (
-                <ChevronRightIcon />
-              ) : (
-                <ChevronLeftIcon />
-              )}
-            </IconButton>
+            <div className="drawer">
+              <h1>Drag 'n Drop!</h1>
+              <IconButton onClick={handleDrawerClose}>
+                {theme.direction === 'ltr' ? (
+                  <ChevronRightIcon />
+                ) : (
+                  <ChevronLeftIcon />
+                )}
+              </IconButton>
+            </div>
           </div>
-          <Divider />
+          <Divider className="drawer-divider" />
           <Dropzone />
         </Drawer>
       </div>
@@ -138,8 +141,8 @@ function Nav() {
         <Link to="/">
           <img className="header-logo" src="./images/logo.png" alt="" />
         </Link>
-        <Link to="/" className="header-name">
-        <div>NOTABLES</div>
+        <Link to="/">
+          <div className="header-name">NOTABLES</div>
         </Link>
       </div>
       <div className="header-nav">
