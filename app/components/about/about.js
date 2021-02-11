@@ -95,6 +95,7 @@ export default function CustomizedDialogs() {
             If you choose to upload a file, you can only upload .md or .txt
             files.
           </Typography>
+          <br />
           <Typography gutterBottom>
             While you are typing, you may give an code snippet example. Did you
             ever wish you could RUN that code to see if you wrote it properly?
