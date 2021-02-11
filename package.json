@@ -10,7 +10,7 @@
     "lint-fix": "npm run lint -- --fix",
     "seed": "node script/seed",
     "start": "node main",
-    "start-dev": "webpack -w & nodemon main",
+    "start-dev": "webpack -w & nodemon main --ignore server/docker/tmp/",
     "build-watch": "webpack -w"
   },
   "lint-staged": {
