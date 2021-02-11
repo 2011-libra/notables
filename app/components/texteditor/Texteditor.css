@@ -126,19 +126,21 @@ select {
 }
 
 .sandbox-stdout {
-  color: green;
+  color: rgb(0, 255, 0);
   margin: 5px;
   background-color: rgb(0, 0, 0);
-  padding: 2px 10px;
+  padding: 3px 12px;
+  border-radius: 8px;
 }
 
 .run-code-button {
   border: none;
   background-color: transparent;
   outline: none;
-  text-shadow: 2px 2px 3px black;
+  text-shadow: 2px 2px 3px gray;
   font-size: 12px;
   float: right;
+  font-weight: bold;
 }
 
 .run-code-button:hover {
