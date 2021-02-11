@@ -11,7 +11,6 @@
     "seed": "node script/seed",
     "start": "node main",
     "start-dev": "webpack -w & nodemon main",
-    "start-dev-code": "webpack && node main",
     "build-watch": "webpack -w"
   },
   "lint-staged": {
