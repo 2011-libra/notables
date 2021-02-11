@@ -3,8 +3,11 @@ import { FaCog } from 'react-icons/fa';
 import { CgProfile } from 'react-icons/cg';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import { BiExport } from 'react-icons/bi';
-import { BiImport } from 'react-icons/bi';
+
+import { BiCloudDownload, BiCloudUpload } from 'react-icons/bi';
+
+// import { BiExport } from 'react-icons/bi';
+// import { BiImport } from 'react-icons/bi';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -151,15 +154,17 @@ function Nav() {
             edge="start"
             className={clsx(classes.menuButton, open && classes.hide)}
           >
-            <BiImport title="Import" className="addMore" />
+            <BiCloudUpload title="Import" className="addMore" />
           </IconButton>
+          Upload
         </div>
         <div className="header-option">
-          <BiExport
+          <BiCloudDownload
             onClick={downloadTxtFile}
             title="Export"
             className="addMore"
           />
+          Export
         </div>
 
         {/* <div className="header-option">
@@ -169,10 +174,12 @@ function Nav() {
         </div> */}
         <div className="header-option">
           <About title="What is Notables?" />
+          About us
         </div>
 
-        <div className="header-option">
+        {/* <div className="header-option">
           <FaCog title="Settings" onClick={handleClick} className="addMore" />
+          Settings
           <Menu
             id="simple-menu"
             anchorEl={anchorEl}
@@ -183,7 +190,7 @@ function Nav() {
             <MenuItem onClick={handleClose}>Dark Mode</MenuItem>
             <MenuItem onClick={handleClose}>Word Count</MenuItem>
           </Menu>
-        </div>
+        </div> */}
       </div>
     </div>
   );
