@@ -1,7 +1,7 @@
 .texteditor_container {
   width: 95%;
 }
-/* Need to figure out how to make this fixed 
+/* Need to figure out how to make this fixed
 and not go into text editor */
 .toolbar {
   border: solid 1px #ddd;
@@ -140,4 +140,28 @@ and not go into text editor */
 .code-block-container > .code-blocks::placeholder {
   color: rgb(0, 222, 0);
   font-family: courier;
+}
+
+/*****************************/
+/*** CONTENT EDITABLE AREA ***/
+/*****************************/
+
+#contentEditable {
+  padding: 20px 18px;
+}
+
+#contentEditable > h2 {
+  margin: 5px 0px
+}
+
+#contentEditable > h1 {
+  margin: 5px 0px
+}
+
+#contentEditable > div {
+  margin: 5px 0px
+}
+
+#contentEditable > div > * {
+  margin: 5px 0px
 }
