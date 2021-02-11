@@ -15,7 +15,7 @@ import './Texteditor.css';
 
 export default function toolbar() {
   let hyperlinkSelection = '';
-  
+
   useEffect(() => {
     if (document.getElementById('txtFormatUrl')) {
       document.getElementById('txtFormatUrl').addEventListener('keydown', e => {
@@ -89,7 +89,6 @@ export default function toolbar() {
   function addCodeBlock() {
     const codeBlock = document.createElement('pre');
     const target = document.getSelection();
-    console.log(target)
     if (
       // target.anchorNode.localName === 'div' ||
       target.anchorNode === null ||
@@ -113,7 +112,7 @@ export default function toolbar() {
 
     format(
       'insertHTML',
-      `<pre class='codeBlock' id='${id}'>${target} </pre><button id="${id}-button" class="run-code-button" contentEditable=false placeholder="add your code here...">▶ Run Code</button>`
+      `<pre class='codeBlock' id='${id}' placeholder="add your code here...">${target}</pre><button id="${id}-button" class="run-code-button" contentEditable=false >▶ Run Code</button>`
     );
 
     addLineAfterBlock(`${id}-button`);
@@ -123,16 +122,30 @@ export default function toolbar() {
       .addEventListener('click', async () => {
         let runnableCode = document
           .getElementById(`${id}`)
-          .innerText.replace('▶', '');
+          .innerText
+
+        if(
+          document.getElementById(`${id}`).innerText.trim() === '' ||
+          document.getElementById(`${id}`).innerText.length < 2
+        ){
+          alert('Unable to "Run Code" if code block is empty, or less than 2 charaters long.')
+          return;
+        }
 
         if (document.getElementById(`stdout-for-${id}`)) {
           let outliers = document.getElementById(`stdout-for-${id}`).innerText;
           runnableCode = runnableCode
-            .replace('▶', '')
             .slice(0, -outliers.length);
         }
 
         const today = new Date();
+
+        document.getElementById(`${id}-button`).disabled = true;
+
+        setTimeout(() => {
+          // fail-safe
+          document.getElementById(`${id}-button`).disabled = false;
+        }, 8000)
 
         const stdout = await axios.post('/code', {
           code: runnableCode,
@@ -151,6 +164,9 @@ export default function toolbar() {
         } else {
           document.getElementById(`stdout-for-${id}`).innerText = stdout.data;
         }
+        setTimeout(() => {
+          document.getElementById(`${id}-button`).disabled = false;
+        }, 2000)
       });
   }
 

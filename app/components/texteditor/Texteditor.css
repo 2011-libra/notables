@@ -143,8 +143,8 @@ select {
 }
 
 .run-code-button:hover {
-  font-size: 12px;
-  color: red;
+  font-size: 13px;
+  /* color: red; */
 }
 
 /* .pre {
