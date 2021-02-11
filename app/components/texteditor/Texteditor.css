@@ -105,7 +105,7 @@ select {
   margin-top: 0;
   margin-bottom: 0;
   height: auto;
-  min-height: 18px;
+  min-height: 44px;
   font-family: 'Courier New', Courier, monospace !important;
   overflow: auto;
   color: rgb(0, 0, 0);
@@ -127,6 +127,9 @@ select {
 
 .sandbox-stdout {
   color: green;
+  margin: 5px;
+  background-color: rgb(0, 0, 0);
+  padding: 2px 10px;
 }
 
 .run-code-button {
@@ -134,10 +137,12 @@ select {
   background-color: transparent;
   outline: none;
   text-shadow: 2px 2px 3px black;
+  font-size: 12px;
+  float: right;
 }
 
 .run-code-button:hover {
-  font-size: 18px;
+  font-size: 12px;
   color: red;
 }
 

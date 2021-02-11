@@ -105,10 +105,10 @@ export default function toolbar() {
 
     format(
       'insertHTML',
-      `<pre class='codeBlock' id='${id}'><button id="${id}-button" class="run-code-button" contentEditable=false placeholder="add your code here...">▶</button>${target} </pre>`
+      `<pre class='codeBlock' id='${id}'>${target} </pre><button id="${id}-button" class="run-code-button" contentEditable=false placeholder="add your code here...">▶ Run Code</button>`
     );
 
-    addLineAfterBlock(id);
+    addLineAfterBlock(`${id}-button`);
 
     document
       .getElementById(`${id}-button`)
