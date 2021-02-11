@@ -44,7 +44,7 @@ npm run start
 Users can now navigate to `localhost:8080` using a browser.
 
 # Authors
-- Brad Gersh
-- Jonathan Hualoto
-- Matthew Leng
-- Vincent Pang
+- Brad Gersh [GitHub](https://github.com/bradley-gersh)
+- Jonathan Hualoto [GitHub](https://github.com/JHualoto)
+- Matthew Leng [GitHub](https://github.com/Mleng89)
+- Vincent Pang [GitHub](https://github.com/dev-vp)

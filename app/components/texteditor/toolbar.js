@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { fetchCode } from '../../redux/CodeEditor';
 import {
@@ -13,6 +13,18 @@ import {
 import './Texteditor.css';
 
 export default function toolbar() {
+  let hyperlinkSelection = '';
+
+  useEffect(
+    () => {
+      if(document.getElementById('txtFormatUrl')){
+        document.getElementById('txtFormatUrl').addEventListener('keydown', (e) => {
+          if(e.key === 'Enter'){setUrl(e)}
+        })
+      }
+    }
+  )
+
   /******************************/
   /*** EXECCOMMAND FORMATTING ***/
   /******************************/
@@ -25,11 +37,22 @@ export default function toolbar() {
   /*** HYPERLINK ***/
   /*****************/
   function addLink() {
-    const show = document.getElementById('url-input');
-    if (show.classList.contains('hidden')) {
-      show.classList.remove('hidden');
+    if (document.getSelection().anchorNode === null || document.getSelection().anchorNode.innerText === '') {
+      alert("Please select/highlight the text you are intending to hyperlink first.")
+      return;
+    }
+
+    hyperlinkSelection = document.getSelection().anchorNode
+    if (document.getSelection().anchorNode.parentElement.localName === 'pre') {
+      alert("You can not add a hyperlink inside a code block")
+      return;
+    }
+
+    const hypNode = document.getElementById('url-input');
+    if (hypNode.classList.contains('hidden')) {
+      hypNode.classList.remove('hidden');
     } else {
-      show.classList.add('hidden');
+      hypNode.classList.add('hidden');
     }
   }
 
@@ -38,16 +61,21 @@ export default function toolbar() {
   /*******************/
   function setUrl(e) {
     e.preventDefault();
+    if (document.getSelection().anchorNode.parentElement.localName === 'pre') {
+      return;
+    }
+    document.getElementById('url-input').className = 'hidden'
     const url = document.getElementById('txtFormatUrl').value;
-    const show = document.getElementById('url-input');
-    const text = document.getSelection();
-    format(
-      'insertHTML',
-      `<a href='${url}' target='_blank'>${text}
-    </a>`
-    );
-    document.getElementById('txtFormatUrl').value = '';
-    show.classList.add('hidden');
+
+    let currSelection = hyperlinkSelection
+    let currStr = currSelection.data;
+    let newHyperlink = document.createElement('a');
+    newHyperlink.innerText = currStr;
+    newHyperlink.href = `https://${url}`;
+    newHyperlink.target = '_blank';
+    newHyperlink.contentEditable = false;
+    currSelection.parentNode.insertBefore(newHyperlink, currSelection)
+    currSelection.parentNode.removeChild(currSelection)
   }
 
   /**********************************/
@@ -57,12 +85,15 @@ export default function toolbar() {
     const codeBlock = document.createElement('pre');
     const target = document.getSelection();
     if (
+      target.anchorNode === null ||
+      target.focusNode.id !== 'contentEditable' ||
       target.focusNode.nodeName.includes('#text') ||
       target.focusNode.classList.contains('title') ||
       target.focusNode.className.includes('codeBlock') ||
       target.focusNode.className.includes('code-blocks')
     ) {
-      return;
+      alert('To add a code block, please start on a new line inside the text area. NOTE: Inline code blocks are not premitted.')
+      return
     }
 
     const id = `codeBlock-${
@@ -72,7 +103,7 @@ export default function toolbar() {
 
     format(
       'insertHTML',
-      `<pre class='codeBlock' id='${id}'><button id="${id}-button" class="run-code-button" contentEditable=false >▶</button>${target} </pre>`
+      `<pre class='codeBlock' id='${id}'><button id="${id}-button" class="run-code-button" contentEditable=false placeholder="add your code here...">▶</button>${target} </pre>`
     );
 
     addLineAfterBlock(id);
@@ -80,11 +111,15 @@ export default function toolbar() {
     document
       .getElementById(`${id}-button`)
       .addEventListener('click', async () => {
-        let runnableCode = document.getElementById(`${id}`).innerText.replace('▶', '');
+        let runnableCode = document
+          .getElementById(`${id}`)
+          .innerText.replace('▶', '');
 
         if (document.getElementById(`stdout-for-${id}`)) {
           let outliers = document.getElementById(`stdout-for-${id}`).innerText;
-          runnableCode = runnableCode.replace('▶', '').slice(0, -outliers.length);
+          runnableCode = runnableCode
+            .replace('▶', '')
+            .slice(0, -outliers.length);
         }
 
         const today = new Date();
@@ -107,10 +142,6 @@ export default function toolbar() {
           document.getElementById(`stdout-for-${id}`).innerText = stdout.data;
         }
       });
-
-    // document.getElementById(`${id}-wrapper`).addEventListener('click', (e) => {
-    //   console.log('keypressed!', e.path[0].innerHTML)
-    // })
   }
 
   /**********************/
@@ -133,6 +164,9 @@ export default function toolbar() {
     <div className="toolbar">
       <select
         onChange={e => {
+          if(document.getSelection().anchorNode.parentElement.localName === 'pre'){
+            return;
+          }
           if (e.target.value === '1') {
             const target = document.getSelection();
             format('insertHTML', `<h1>${target}</h1>`);
@@ -142,12 +176,13 @@ export default function toolbar() {
           }
           //This code is manually changing the current tags and replacing it with p tags
           if (e.target.value === '0') {
-            let currStr = document.getElementById('contentEditable')
-              .children[0];
+            let currSelection = document.getSelection();
+            let currStr = document.getSelection().anchorNode.data;
             let newStr = document.createElement('p');
-            newStr.innerHTML = currStr.innerHTML;
-            currStr.parentNode.insertBefore(newStr, currStr);
-            currStr.parentNode.removeChild(currStr);
+            newStr.innerText = currStr;
+            console.log(newStr)
+            currSelection.anchorNode.parentNode.insertBefore(newStr, currSelection.anchorNode)
+            currSelection.anchorNode.parentNode.removeChild(currSelection.anchorNode)
           }
         }}
       >
@@ -157,24 +192,64 @@ export default function toolbar() {
         <option value="2">Heading 2</option>
       </select>
 
-      <button onClick={e => format('bold')}>
+      <button
+        onClick={e => {
+          if (
+            document.getSelection().anchorNode.parentElement.localName === 'pre'
+          ) {
+            return;
+          } else {
+            format('bold');
+          }
+        }}
+      >
         <FaBold />
       </button>
-      <button onClick={e => format('italic')}>
+      <button
+        onClick={e => {
+          if (
+            document.getSelection().anchorNode.parentElement.localName === 'pre'
+          ) {
+            return;
+          } else {
+            format('italic');
+          }
+        }}
+      >
         <FaItalic />
       </button>
-      <button onClick={e => format('insertUnorderedList')}>
+      <button
+        onClick={e => {
+          if (
+            document.getSelection().anchorNode.parentElement.localName === 'pre'
+          ) {
+            return;
+          } else {
+            format('insertUnorderedList');
+          }
+        }}
+      >
         <FaListUl />
       </button>
-      <button onClick={e => format('insertOrderedList')}>
+      <button
+        onClick={e => {
+          if (
+            document.getSelection().anchorNode.parentElement.localName === 'pre'
+          ) {
+            return;
+          } else {
+            format('insertOrderedList');
+          }
+        }}
+      >
         <FaListOl />
       </button>
       <button onClick={e => addLink()}>
         <FaLink />
       </button>
       <div id="url-input" className="hidden">
-        <input id="txtFormatUrl" placeholder="url" />
-        <button onClick={e => setUrl(e)}>Create Link</button>
+        <input id="txtFormatUrl" placeholder="https://www.example.com"/>
+        <button id="create-link-button" onClick={e => setUrl(e)}>Create Link</button>
       </div>
 
       <button onClick={e => addCodeBlock()}>

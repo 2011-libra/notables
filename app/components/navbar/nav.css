@@ -28,20 +28,27 @@
 .header-logo {
   width: 50px;
   object-fit: contain;
-  margin: 10 30px;
+  margin: 10px 10px;
   align-items: center;
   color: white;
-  margin-left: 15px;
+  margin-left: 20px;
   filter: invert(100);
 }
 .header-name {
   font-family: source sans pro, helvetica neue, Helvetica, Arial, sans-serif;
   font-feature-settings: 'dlig' 1, 'liga' 1, 'lnum' 1, 'kern' 1;
+  font-size: 20px;
   font-style: bold;
   font-weight: 600;
-  margin-left: 5px;
-  margin-top: 20px;
   color: white;
+  text-decoration: none;
+  position: fixed;
+  left: 88px;
+  top: 20px
+}
+
+.header-logo:hover {
+  width: 55px;
 }
 
 .header-option > svg {
@@ -68,5 +75,9 @@
 }
 
 .header-option > svg:hover {
+  color: white;
+}
+
+#app > div.header > div.header-nav > div:nth-child(1) > button > span.MuiIconButton-label > svg:hover {
   color: white;
 }
