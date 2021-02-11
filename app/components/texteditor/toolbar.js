@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Popover from '@material-ui/core/Popover';
 import axios from 'axios';
 import { fetchCode } from '../../redux/CodeEditor';
 import {
@@ -14,16 +15,16 @@ import './Texteditor.css';
 
 export default function toolbar() {
   let hyperlinkSelection = '';
-
-  useEffect(
-    () => {
-      if(document.getElementById('txtFormatUrl')){
-        document.getElementById('txtFormatUrl').addEventListener('keydown', (e) => {
-          if(e.key === 'Enter'){setUrl(e)}
-        })
-      }
+  
+  useEffect(() => {
+    if (document.getElementById('txtFormatUrl')) {
+      document.getElementById('txtFormatUrl').addEventListener('keydown', e => {
+        if (e.key === 'Enter') {
+          setUrl(e);
+        }
+      });
     }
-  )
+  });
 
   /******************************/
   /*** EXECCOMMAND FORMATTING ***/
@@ -64,18 +65,22 @@ export default function toolbar() {
     if (document.getSelection().anchorNode.parentElement.localName === 'pre') {
       return;
     }
-    document.getElementById('url-input').className = 'hidden'
-    const url = document.getElementById('txtFormatUrl').value;
 
-    let currSelection = hyperlinkSelection
+    document.getElementById('url-input').className = 'hidden';
+    const url = document.getElementById('txtFormatUrl').value;
+    if (url === '') {
+      return;
+    }
+    let currSelection = hyperlinkSelection;
     let currStr = currSelection.data;
     let newHyperlink = document.createElement('a');
     newHyperlink.innerText = currStr;
     newHyperlink.href = `https://${url}`;
     newHyperlink.target = '_blank';
     newHyperlink.contentEditable = false;
-    currSelection.parentNode.insertBefore(newHyperlink, currSelection)
-    currSelection.parentNode.removeChild(currSelection)
+
+    currSelection.parentNode.insertBefore(newHyperlink, currSelection);
+    currSelection.parentNode.removeChild(currSelection);
   }
 
   /**********************************/
@@ -84,16 +89,21 @@ export default function toolbar() {
   function addCodeBlock() {
     const codeBlock = document.createElement('pre');
     const target = document.getSelection();
+    console.log(target)
     if (
+      // target.anchorNode.localName === 'div' ||
       target.anchorNode === null ||
-      target.focusNode.id !== 'contentEditable' ||
+      target.anchorNode.localName === 'a' ||
       target.focusNode.nodeName.includes('#text') ||
       target.focusNode.classList.contains('title') ||
       target.focusNode.className.includes('codeBlock') ||
       target.focusNode.className.includes('code-blocks')
     ) {
-      alert('To add a code block, please start on a new line inside the text area. NOTE: Inline code blocks are not premitted.')
-      return
+
+      alert(
+        'To add a code block, please start on a new line inside the text area. NOTE: Inline code blocks are not premitted.'
+      );
+      return;
     }
 
     const id = `codeBlock-${
@@ -103,10 +113,10 @@ export default function toolbar() {
 
     format(
       'insertHTML',
-      `<pre class='codeBlock' id='${id}'><button id="${id}-button" class="run-code-button" contentEditable=false placeholder="add your code here...">▶</button>${target} </pre>`
+      `<pre class='codeBlock' id='${id}'>${target} </pre><button id="${id}-button" class="run-code-button" contentEditable=false placeholder="add your code here...">▶ Run Code</button>`
     );
 
-    addLineAfterBlock(id);
+    addLineAfterBlock(`${id}-button`);
 
     document
       .getElementById(`${id}-button`)
@@ -164,15 +174,19 @@ export default function toolbar() {
     <div className="toolbar">
       <select
         onChange={e => {
-          if(document.getSelection().anchorNode.parentElement.localName === 'pre'){
+          if (
+            document.getSelection().anchorNode.parentElement.localName === 'pre'
+          ) {
             return;
           }
           if (e.target.value === '1') {
             const target = document.getSelection();
             format('insertHTML', `<h1>${target}</h1>`);
+            document.querySelector('select').selectedIndex = 0
           } else if (e.target.value === '2') {
             const target = document.getSelection();
             format('insertHTML', `<h2>${target}</h2>`);
+            document.querySelector('select').selectedIndex = 0
           }
           //This code is manually changing the current tags and replacing it with p tags
           if (e.target.value === '0') {
@@ -180,9 +194,15 @@ export default function toolbar() {
             let currStr = document.getSelection().anchorNode.data;
             let newStr = document.createElement('p');
             newStr.innerText = currStr;
-            console.log(newStr)
-            currSelection.anchorNode.parentNode.insertBefore(newStr, currSelection.anchorNode)
-            currSelection.anchorNode.parentNode.removeChild(currSelection.anchorNode)
+            console.log(newStr);
+            currSelection.anchorNode.parentNode.insertBefore(
+              newStr,
+              currSelection.anchorNode
+            );
+            currSelection.anchorNode.parentNode.removeChild(
+              currSelection.anchorNode
+            );
+            document.querySelector('select').selectedIndex = 0;
           }
         }}
       >
@@ -248,8 +268,10 @@ export default function toolbar() {
         <FaLink />
       </button>
       <div id="url-input" className="hidden">
-        <input id="txtFormatUrl" placeholder="https://www.example.com"/>
-        <button id="create-link-button" onClick={e => setUrl(e)}>Create Link</button>
+        <input id="txtFormatUrl" placeholder="https://www.example.com" />
+        <button id="create-link-button" onClick={e => setUrl(e)}>
+          Create Link
+        </button>
       </div>
 
       <button onClick={e => addCodeBlock()}>

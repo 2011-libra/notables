@@ -3,8 +3,11 @@ import { FaCog } from 'react-icons/fa';
 import { CgProfile } from 'react-icons/cg';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import { BiExport } from 'react-icons/bi';
-import { BiImport } from 'react-icons/bi';
+
+import { BiCloudDownload, BiCloudUpload } from 'react-icons/bi';
+
+// import { BiExport } from 'react-icons/bi';
+// import { BiImport } from 'react-icons/bi';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -15,7 +18,11 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import Dropzone from '../import/dropzone';
 import { Link } from 'react-router-dom';
-const drawerWidth = 500;
+import createCodeRunnerEvent from '../../utils/createCodeRunnerEvent'
+import About from '../about/about';
+import HelpIcon from '@material-ui/icons/Help';
+
+const drawerWidth = 250;
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -38,10 +45,11 @@ const useStyles = makeStyles(theme => ({
   drawerHeader: {
     display: 'flex',
     alignItems: 'center',
-    padding: theme.spacing(0, 1),
+    padding: theme.spacing(0, 0, 0, 0),
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
-    justifyContent: 'flex-end'
+    justifyContent: 'flex-end',
+    backgoundColor: '#373d49'
   },
   content: {
     flexGrow: 1,
@@ -66,7 +74,7 @@ let turndownService = new TurndownService();
 turndownService.addRule('code-snippet', {
   filter: ['pre'],
   replacement: content => {
-    return '```' + content.slice(1) + '```';
+    return '```' + content + '```';
   }
 });
 import './nav.css';
@@ -78,7 +86,18 @@ function Nav() {
   const [open, setOpen] = React.useState(false);
 
   const downloadTxtFile = () => {
+    let stdoutNodeList = document.getElementsByClassName('sandbox-stdout');
+    let runButtonNodeList = document.getElementsByClassName('run-code-button')
+    for(let i = stdoutNodeList.length-1; i >= 0; i--){
+      stdoutNodeList[i].remove()
+    }
+    // for(let i = runButtonNodeList.length-1; i >= 0; i--){
+    //   runButtonNodeList[i].remove()
+    // }
+
     let innerHTML = document.getElementById('contentEditable').innerHTML;
+    innerHTML = innerHTML.replace(/▶.Run.Code/g, '')
+
     let markdown = turndownService.turndown(innerHTML);
 
     const element = document.createElement('a');
@@ -89,6 +108,7 @@ function Nav() {
     element.download = 'myFile.txt';
     document.body.appendChild(element);
     element.click();
+    createCodeRunnerEvent();
   };
 
   const handleClick = event => {
@@ -121,16 +141,18 @@ function Nav() {
           }}
         >
           <div className={classes.drawerHeader}>
-            <h1>Drag 'n Drop!</h1>
-            <IconButton onClick={handleDrawerClose}>
-              {theme.direction === 'ltr' ? (
-                <ChevronRightIcon />
-              ) : (
-                <ChevronLeftIcon />
-              )}
-            </IconButton>
+            <div className="drawer">
+              <h1>Drag 'n Drop!</h1>
+              <IconButton onClick={handleDrawerClose}>
+                {theme.direction === 'ltr' ? (
+                  <ChevronRightIcon />
+                ) : (
+                  <ChevronLeftIcon />
+                )}
+              </IconButton>
+            </div>
           </div>
-          <Divider />
+          <Divider className="drawer-divider" />
           <Dropzone />
         </Drawer>
       </div>
@@ -138,8 +160,8 @@ function Nav() {
         <Link to="/">
           <img className="header-logo" src="./images/logo.png" alt="" />
         </Link>
-        <Link to="/" className="header-name">
-        <div>NOTABLES</div>
+        <Link to="/">
+          <div className="header-name">NOTABLES</div>
         </Link>
       </div>
       <div className="header-nav">
@@ -151,25 +173,32 @@ function Nav() {
             edge="start"
             className={clsx(classes.menuButton, open && classes.hide)}
           >
-            <BiImport title="Import" className="addMore" />
+            <BiCloudUpload title="Import" className="addMore" />
           </IconButton>
+          Upload
         </div>
         <div className="header-option">
-          <BiExport
+          <BiCloudDownload
             onClick={downloadTxtFile}
             title="Export"
             className="addMore"
           />
+          Export
         </div>
 
-        <div className="header-option">
+        {/* <div className="header-option">
           <Link to="/login">
             <CgProfile title="Sign In" className="addMore" />
           </Link>
+        </div> */}
+        <div className="header-option">
+          <About title="What is Notables?" />
+          About us
         </div>
 
-        <div className="header-option">
+        {/* <div className="header-option">
           <FaCog title="Settings" onClick={handleClick} className="addMore" />
+          Settings
           <Menu
             id="simple-menu"
             anchorEl={anchorEl}
@@ -180,7 +209,7 @@ function Nav() {
             <MenuItem onClick={handleClose}>Dark Mode</MenuItem>
             <MenuItem onClick={handleClose}>Word Count</MenuItem>
           </Menu>
-        </div>
+        </div> */}
       </div>
     </div>
   );
