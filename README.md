@@ -1,37 +1,35 @@
+# About
+
+This software-as-a-service application allows guest users to write, import, and export Markdown files with a toolbar interface. It also allows users to execute Node.js code blocks from directly within the rendered Markdown file. User code is containerized by Docker and VM2 for security on the server side.
+
+Feel free to fork, test, develop, and share!
+
 # Usage
 
-## Before the first run
-1. ~~**Installing the database.** This project uses MySQL for the database, which will need to be installed separately.~~
-  ~~* If you are using Homebrew for Mac, you can run `brew install mysql`, then `mysql.server start` to start the server.~~
- ~~* If you are using Macports, run `port install mysql8-server`, then `sudo port load mysql8-server` to start the server.~~
-  
-  ~~When MySQL installs, it gives you a temporary password to use for the root user. Note this down for the first time you run `mysql -u root -p`.~~
-  
-  ~~Confirm that MySQL is available for connections on port 3306. To do this, log in to MySQL (`mysql -u root -p`), and run `SHOW VARIABLES LIKE 'port'`. If `port` has value 3306, the connection will work. If `port` is set to 0, you may need to edit your my.conf file to ensure that networking is on; see details [here](https://trac.macports.org/wiki/howto/MySQL). If you are using Macports, ensure that `/opt/local/etc/mysql8/my.cnf/` includes a line that says `[mysqld]` and, below it, `skip-networking=OFF`.~~
+## Features
 
-  
-2. ~~**Connecting to the database.** For testing purposes at the present, this project connects to your MySQL database through a `guest` account that you will need to set up. Log in to MySQL as an administrator (`mysql -u root -p`) then add a guest user with full access(!) for now:~~
+- Clean, toolbar-based interface for users unfamiliar with Markdown format.
+- Rendered text is exported into Markdown using `markdown-it`. (Note that if the user enters input directly in Markdown format, it will be treated as static text and not rendered.)
+- Users can drag-and-drop Markdown files into the editor for revision.
+- Executable code blocks can be added using the button on the far right of the toolbar. Once Node-compatible JavaScript code is in the block, it can be executed by clicking the "run" button.
 
-Disregard for now:
+## Installation
+
+These steps are only necessary when installing or updating Notables on the server.
+
+1. **Node.** The server code is compatible with Node 10 and up.
+
+2. **Docker.** Be sure that Docker is installed and running on the server. (On a Mac, [Docker Desktop](https://www.docker.com/products/docker-desktop) should be installed and running.) You can test this by checking that the command `docker run hello-world` successfully executes. It is not necessary to create or log in to a Docker Hub account for the server to run. You will need to create a custom image for the Docker containers:
+
 ```
-CREATE USER 'guest'@'localhost' IDENTIFIED BY 'password';
-GRANT ALL PRIVILEGES ON * . * TO 'newuser'@'localhost';
-FLUSH PRIVILEGES;
+npm run docker
 ```
 
-~~It should now be possible to log in to MySQL via `mysql -u guest -p` with password `password`. (This will be secured using an environment variable soon, and the privileges to the account will be more restricted to only the tables we need to access.)~~
+3. **Dependencies.** Install the NPM dependencies:
 
-3. **Docker.** Be sure that Docker is installed and running on the server. (On a Mac, [Docker Desktop](https://www.docker.com/products/docker-desktop) should be installed and running.) The `node:12-alpine` Docker image needs to be locally available, which can be done with `docker pull node:12-alpine` or
-
-  ```
-  npm run docker
-  ```
-
-4. **Dependencies.** Install the NPM dependencies
-
-  ```
-  npm install
-  ```
+```
+npm install
+```
 
 ## Running the server
 
@@ -41,10 +39,21 @@ Start the server with
 npm run start
 ```
 
-Users can now navigate to `localhost:8080` using a browser.
+Users can now navigate to the server on port 8080 using a browser. The landing page includes instructions on how to use the application from the client side.
+
+# Development
+
+If you wish to fork and develop this repository, the development environment can be started with `npm run start-dev`.
+
+# Acknowledgements
+
+The approach to server security used here is based on an article by [Tim Nolet](https://www.freecodecamp.org/news/running-untrusted-javascript-as-a-saas-is-hard-this-is-how-i-tamed-the-demons-973870f76e1c/).
 
 # Authors
-- Brad Gersh [GitHub](https://github.com/bradley-gersh)
-- Jonathan Hualoto [GitHub](https://github.com/JHualoto)
-- Matthew Leng [GitHub](https://github.com/Mleng89)
-- Vincent Pang [GitHub](https://github.com/dev-vp)
+
+- Brad Gersh ([GitHub](https://github.com/bradley-gersh))
+- Jonathan Hualoto ([GitHub](https://github.com/JHualoto))
+- Matthew Leng ([GitHub](https://github.com/Mleng89))
+- Vincent Pang ([GitHub](https://github.com/dev-vp))
+
+Please contact us with any questions, comments, or feedback. Thank you!

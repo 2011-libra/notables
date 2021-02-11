@@ -21,9 +21,9 @@ function texteditor(props) {
       .render(result)
       .replace(
         /<p><code>/g,
-        `<pre class="codeBlock" id='codeBlock-TBD'><button id="codeBlock-TBD-button" class="run-code-button" contentEditable=false >▶</button>`
+        `<pre class="codeBlock" id='codeBlock-TBD'>`
       )
-      .replace(/<\/code><\/p>/g, `</pre>`);
+      .replace(/<\/code><\/p>/g, `</pre><button id="TBD-button" class="run-code-button" contentEditable=false placeholder="add your code here...">▶ Run Code</button>`);
   }
 
   // const downloadTxtFile = () => {

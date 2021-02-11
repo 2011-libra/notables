@@ -32,7 +32,7 @@ export default function dropzone() {
 
   //Initialize dropzone:
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
-    accept: 'text/plain',
+    accept: 'text/markdown',
     onDrop
   });
 
@@ -47,12 +47,14 @@ export default function dropzone() {
       <div className="dropzone_container">
         <div {...getRootProps({ className: 'dropzone_drop' })}>
           <input {...getInputProps()} />
-          <p>Drag 'n' drop some files here, or click to select files</p>
+          <p>Drop or Select .md files here!</p>
         </div>
-        <aside>
-          <h4>Files</h4>
-          <ul>{files}</ul>
-        </aside>
+        <div>
+          <aside>
+            <h4>My Files:</h4>
+            <ul>{files}</ul>
+          </aside>
+        </div>
       </div>
       {/* <Texteditor result={result} /> */}
     </>

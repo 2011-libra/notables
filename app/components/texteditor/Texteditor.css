@@ -1,9 +1,6 @@
 .texteditor_container {
   width: 95%;
 }
-[contenteditable] {
-  padding: 12px;
-}
 
 .toolbar {
   border: solid 1px #ddd;
@@ -24,20 +21,26 @@
 
 select {
   font-size: 18px;
-  padding: 2px 5px;
+  padding: 3px 8px;
+  outline: none;
+  border: 1px solid lightgray;
 }
 
 .toolbar > button {
-  padding: 3px 5px;
+  padding: 3px 10px;
+  border: none;
+  outline: none;
+  background-color: transparent;
 }
 
 .toolbar > button:hover {
+  border: 1px solid lightgray;
   box-shadow: 3px 3px 8px lightgray;
 }
 
 .toolbar > button > svg {
-  height: 18px;
-  width: 18px;
+  height: 17px;
+  width: 17px;
 }
 
 .toolbar > button > svg:hover {
@@ -101,7 +104,7 @@ select {
   margin-top: 0;
   margin-bottom: 0;
   height: auto;
-  min-height: 18px;
+  min-height: 44px;
   font-family: 'Courier New', Courier, monospace !important;
   overflow: auto;
   color: rgb(0, 0, 0);
@@ -122,18 +125,25 @@ select {
 }
 
 .sandbox-stdout {
-  color: green;
+  color: rgb(0, 255, 0);
+  margin: 5px;
+  background-color: rgb(0, 0, 0);
+  padding: 3px 12px;
+  border-radius: 8px;
 }
 
 .run-code-button {
   border: none;
   background-color: transparent;
   outline: none;
-  text-shadow: 2px 2px 3px black;
+  text-shadow: 2px 2px 3px gray;
+  font-size: 12px;
+  float: right;
+  font-weight: bold;
 }
 
 .run-code-button:hover {
-  font-size: 18px;
+  font-size: 12px;
   color: red;
 }
 
