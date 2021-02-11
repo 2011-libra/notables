@@ -18,6 +18,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import Dropzone from '../import/dropzone';
 import { Link } from 'react-router-dom';
+import createCodeRunnerEvent from '../../utils/createCodeRunnerEvent'
 import About from '../about/about';
 import HelpIcon from '@material-ui/icons/Help';
 
@@ -73,7 +74,7 @@ let turndownService = new TurndownService();
 turndownService.addRule('code-snippet', {
   filter: ['pre'],
   replacement: content => {
-    return '```' + content.slice(1) + '```';
+    return '```' + content + '```';
   }
 });
 import './nav.css';
@@ -85,7 +86,18 @@ function Nav() {
   const [open, setOpen] = React.useState(false);
 
   const downloadTxtFile = () => {
+    let stdoutNodeList = document.getElementsByClassName('sandbox-stdout');
+    let runButtonNodeList = document.getElementsByClassName('run-code-button')
+    for(let i = stdoutNodeList.length-1; i >= 0; i--){
+      stdoutNodeList[i].remove()
+    }
+    // for(let i = runButtonNodeList.length-1; i >= 0; i--){
+    //   runButtonNodeList[i].remove()
+    // }
+
     let innerHTML = document.getElementById('contentEditable').innerHTML;
+    innerHTML = innerHTML.replace(/▶.Run.Code/g, '')
+
     let markdown = turndownService.turndown(innerHTML);
 
     const element = document.createElement('a');
@@ -96,6 +108,7 @@ function Nav() {
     element.download = 'myFile.txt';
     document.body.appendChild(element);
     element.click();
+    createCodeRunnerEvent();
   };
 
   const handleClick = event => {
