@@ -138,7 +138,9 @@ function Nav() {
         <Link to="/">
           <img className="header-logo" src="./images/logo.png" alt="" />
         </Link>
-        <div className="header-name">NOTEABLES</div>
+        <Link to="/" className="header-name">
+        <div>NOTEABLES</div>
+        </Link>
       </div>
       <div className="header-nav">
         <div className="header-option">
