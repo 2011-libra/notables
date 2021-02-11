@@ -75,6 +75,7 @@ function texteditor(props) {
             runnableCode = runnableCode.replace('▶', '').slice(0, -outliers.length);
           }
 
+
           const today = new Date();
 
           const stdout = await axios.post('/code', {

@@ -22,6 +22,28 @@
   display: none;
 }
 
+select {
+  font-size: 18px;
+  padding: 2px 5px;
+}
+
+.toolbar > button {
+  padding: 3px 5px;
+}
+
+.toolbar > button:hover {
+  box-shadow: 3px 3px 8px lightgray;
+}
+
+.toolbar > button > svg {
+  height: 18px;
+  width: 18px;
+}
+
+.toolbar > button > svg:hover {
+  box-shadow: 3px 3px 8px lightgray;
+}
+
 #title:empty:before,
 .editor:empty:before {
   content: attr(data-placeholder);
@@ -37,6 +59,7 @@
   margin-right: 10vw;
   margin-top: 75px;
   font-size: 20px;
+  box-shadow: 3px 3px 8px lightgray;
 }
 
 .editor > li {
@@ -79,15 +102,17 @@
   margin-bottom: 0;
   height: auto;
   min-height: 18px;
-  font-family: 'Courier New', Courier, monospace;
+  font-family: 'Courier New', Courier, monospace !important;
   overflow: auto;
   color: rgb(0, 0, 0);
   padding: 8px;
   border: 0.5px solid gray;
   border-radius: 8px;
-  display: inline-block;
+  /* display: inline-block; */
   white-space: normal;
-  max-width: 680px;
+  /* max-width: 680px; */
+  font-size: 18px !important;
+  font-style: none !important;
 }
 
 .code-block-buttons {
@@ -142,4 +167,28 @@
 .code-block-container > .code-blocks::placeholder {
   color: rgb(0, 222, 0);
   font-family: courier;
+}
+
+/*****************************/
+/*** CONTENT EDITABLE AREA ***/
+/*****************************/
+
+#contentEditable {
+  padding: 20px 18px;
+}
+
+#contentEditable > h2 {
+  margin: 5px 0px;
+}
+
+#contentEditable > h1 {
+  margin: 5px 0px;
+}
+
+#contentEditable > div {
+  margin: 5px 0px;
+}
+
+#contentEditable > div > * {
+  margin: 5px 0px;
 }
