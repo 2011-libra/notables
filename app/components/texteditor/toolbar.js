@@ -85,12 +85,15 @@ export default function toolbar() {
     const codeBlock = document.createElement('pre');
     const target = document.getSelection();
     if (
+      target.anchorNode === null ||
+      target.focusNode.id !== 'contentEditable' ||
       target.focusNode.nodeName.includes('#text') ||
       target.focusNode.classList.contains('title') ||
       target.focusNode.className.includes('codeBlock') ||
       target.focusNode.className.includes('code-blocks')
     ) {
-      return;
+      alert('To add a code block, please start on a new line inside the text area. NOTE: Inline code blocks are not premitted.')
+      return
     }
 
     const id = `codeBlock-${

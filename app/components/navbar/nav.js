@@ -139,7 +139,7 @@ function Nav() {
           <img className="header-logo" src="./images/logo.png" alt="" />
         </Link>
         <Link to="/" className="header-name">
-        <div>NOTEABLES</div>
+        <div>NOTABLES</div>
         </Link>
       </div>
       <div className="header-nav">

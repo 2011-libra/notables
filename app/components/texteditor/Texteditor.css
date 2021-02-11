@@ -20,6 +20,29 @@ and not go into text editor */
   display: none;
 }
 
+select {
+  font-size: 18px;
+  padding: 2px 5px;
+}
+
+.toolbar > button {
+  padding: 3px 5px;
+}
+
+.toolbar > button:hover {
+  border: 3px solid steelblue;
+  border-radius: 5px;
+}
+
+.toolbar > button > svg {
+  height: 18px;
+  width: 18px;
+}
+
+.toolbar > button > svg:hover {
+  color: steelblue;
+}
+
 #title:empty:before,
 .editor:empty:before {
   content: attr(data-placeholder);
@@ -77,7 +100,7 @@ and not go into text editor */
   margin-bottom: 0;
   height: auto;
   min-height: 18px;
-  font-family: 'Courier New', Courier, monospace;
+  font-family: 'Courier New', Courier, monospace !important;
   overflow: auto;
   color: rgb(0, 0, 0);
   padding: 8px;
@@ -86,6 +109,8 @@ and not go into text editor */
   /* display: inline-block; */
   white-space: normal;
   /* max-width: 680px; */
+  font-size: 18px !important;
+  font-style: none !important;
 }
 
 .code-block-buttons {
