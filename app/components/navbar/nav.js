@@ -15,6 +15,8 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import Dropzone from '../import/dropzone';
 import { Link } from 'react-router-dom';
+import About from '../about/about';
+import HelpIcon from '@material-ui/icons/Help';
 const drawerWidth = 500;
 
 const useStyles = makeStyles(theme => ({
@@ -138,7 +140,7 @@ function Nav() {
         <Link to="/">
           <img className="header-logo" src="./images/logo.png" alt="" />
         </Link>
-        <div className="header-name">NOTEABLES</div>
+        <div className="header-name">NOTABLES</div>
       </div>
       <div className="header-nav">
         <div className="header-option">
@@ -160,10 +162,13 @@ function Nav() {
           />
         </div>
 
-        <div className="header-option">
+        {/* <div className="header-option">
           <Link to="/login">
             <CgProfile title="Sign In" className="addMore" />
           </Link>
+        </div> */}
+        <div className="header-option">
+          <About title="What is Notables?" />
         </div>
 
         <div className="header-option">
