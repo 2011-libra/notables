@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Popover from './popover';
 import axios from 'axios';
 import { fetchCode } from '../../redux/CodeEditor';
 import {
@@ -15,15 +16,15 @@ import './Texteditor.css';
 export default function toolbar() {
   let hyperlinkSelection = '';
 
-  useEffect(
-    () => {
-      if(document.getElementById('txtFormatUrl')){
-        document.getElementById('txtFormatUrl').addEventListener('keydown', (e) => {
-          if(e.key === 'Enter'){setUrl(e)}
-        })
-      }
+  useEffect(() => {
+    if (document.getElementById('txtFormatUrl')) {
+      document.getElementById('txtFormatUrl').addEventListener('keydown', e => {
+        if (e.key === 'Enter') {
+          setUrl(e);
+        }
+      });
     }
-  )
+  });
 
   /******************************/
   /*** EXECCOMMAND FORMATTING ***/
@@ -37,14 +38,21 @@ export default function toolbar() {
   /*** HYPERLINK ***/
   /*****************/
   function addLink() {
-    if (document.getSelection().anchorNode === null || document.getSelection().anchorNode.innerText === '') {
-      alert("Please select/highlight the text you are intending to hyperlink first.")
+    if (
+      document.getSelection().anchorNode === null ||
+      document.getSelection().anchorNode.innerText === ''
+    ) {
+      console.log('condition is met');
+      <Popover>
+        {console.log('inside popover')}The content of the Popover.
+      </Popover>;
+      console.log('after popover');
       return;
     }
 
-    hyperlinkSelection = document.getSelection().anchorNode
+    hyperlinkSelection = document.getSelection().anchorNode;
     if (document.getSelection().anchorNode.parentElement.localName === 'pre') {
-      alert("You can not add a hyperlink inside a code block")
+      alert('You can not add a hyperlink inside a code block');
       return;
     }
 
@@ -64,18 +72,20 @@ export default function toolbar() {
     if (document.getSelection().anchorNode.parentElement.localName === 'pre') {
       return;
     }
-    document.getElementById('url-input').className = 'hidden'
+    document.getElementById('url-input').className = 'hidden';
     const url = document.getElementById('txtFormatUrl').value;
-
-    let currSelection = hyperlinkSelection
+    if (url === '') {
+      return;
+    }
+    let currSelection = hyperlinkSelection;
     let currStr = currSelection.data;
     let newHyperlink = document.createElement('a');
     newHyperlink.innerText = currStr;
     newHyperlink.href = `https://${url}`;
     newHyperlink.target = '_blank';
     newHyperlink.contentEditable = false;
-    currSelection.parentNode.insertBefore(newHyperlink, currSelection)
-    currSelection.parentNode.removeChild(currSelection)
+    currSelection.parentNode.insertBefore(newHyperlink, currSelection);
+    currSelection.parentNode.removeChild(currSelection);
   }
 
   /**********************************/
@@ -92,8 +102,10 @@ export default function toolbar() {
       target.focusNode.className.includes('codeBlock') ||
       target.focusNode.className.includes('code-blocks')
     ) {
-      alert('To add a code block, please start on a new line inside the text area. NOTE: Inline code blocks are not premitted.')
-      return
+      alert(
+        'To add a code block, please start on a new line inside the text area. NOTE: Inline code blocks are not premitted.'
+      );
+      return;
     }
 
     const id = `codeBlock-${
@@ -164,7 +176,9 @@ export default function toolbar() {
     <div className="toolbar">
       <select
         onChange={e => {
-          if(document.getSelection().anchorNode.parentElement.localName === 'pre'){
+          if (
+            document.getSelection().anchorNode.parentElement.localName === 'pre'
+          ) {
             return;
           }
           if (e.target.value === '1') {
@@ -180,9 +194,14 @@ export default function toolbar() {
             let currStr = document.getSelection().anchorNode.data;
             let newStr = document.createElement('p');
             newStr.innerText = currStr;
-            console.log(newStr)
-            currSelection.anchorNode.parentNode.insertBefore(newStr, currSelection.anchorNode)
-            currSelection.anchorNode.parentNode.removeChild(currSelection.anchorNode)
+            console.log(newStr);
+            currSelection.anchorNode.parentNode.insertBefore(
+              newStr,
+              currSelection.anchorNode
+            );
+            currSelection.anchorNode.parentNode.removeChild(
+              currSelection.anchorNode
+            );
           }
         }}
       >
@@ -248,8 +267,10 @@ export default function toolbar() {
         <FaLink />
       </button>
       <div id="url-input" className="hidden">
-        <input id="txtFormatUrl" placeholder="https://www.example.com"/>
-        <button id="create-link-button" onClick={e => setUrl(e)}>Create Link</button>
+        <input id="txtFormatUrl" placeholder="https://www.example.com" />
+        <button id="create-link-button" onClick={e => setUrl(e)}>
+          Create Link
+        </button>
       </div>
 
       <button onClick={e => addCodeBlock()}>
