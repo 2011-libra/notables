@@ -1,9 +1,6 @@
 .texteditor_container {
   width: 95%;
 }
-[contenteditable] {
-  padding: 12px;
-}
 
 .toolbar {
   border: solid 1px #ddd;

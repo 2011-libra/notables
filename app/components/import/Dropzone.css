@@ -1,9 +1,9 @@
 .dropzone_container {
-  background: cornflowerblue;
+  /* background: cornflowerblue; */
   margin: auto;
-  height: 30vh;
-  width: 100vh;
-  border: grey 3px solid;
+  height: 20vh;
+  width: 250px;
+  /* border: grey 3px solid; */
 }
 
 .dropzone_drop {
@@ -12,6 +12,9 @@
   flex-direction: column;
   align-items: center;
   padding: 20px;
+  height: 20vh;
+  margin-top: -300px;
+  padding-top: 65px;
   border-width: 2;
   border-radius: 2;
   border-color: black;
@@ -20,4 +23,8 @@
   color: #5e5e5e;
   outline: none;
   transition: border 0.24s ease-in-out;
+}
+
+.dropzone_drop > p {
+  font-size: medium;
 }
