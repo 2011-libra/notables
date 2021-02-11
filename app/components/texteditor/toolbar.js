@@ -37,11 +37,17 @@ export default function toolbar() {
   /*** HYPERLINK ***/
   /*****************/
   function addLink() {
-    hyperlinkSelection = document.getSelection().anchorNode
-    if (document.getSelection().anchorNode.parentElement.localName === 'pre') {
-      console.alert("You can't add a hyperlink inside a code block")
+    if (document.getSelection().anchorNode === null || document.getSelection().anchorNode.innerText === '') {
+      alert("Please select/highlight the text you are intending to hyperlink first.")
       return;
     }
+
+    hyperlinkSelection = document.getSelection().anchorNode
+    if (document.getSelection().anchorNode.parentElement.localName === 'pre') {
+      alert("You can not add a hyperlink inside a code block")
+      return;
+    }
+
     const hypNode = document.getElementById('url-input');
     if (hypNode.classList.contains('hidden')) {
       hypNode.classList.remove('hidden');
@@ -61,20 +67,13 @@ export default function toolbar() {
     document.getElementById('url-input').className = 'hidden'
     const url = document.getElementById('txtFormatUrl').value;
 
-    if(url.includes(!'https://')){
-      url = `https://${url}`
-    }
-
     let currSelection = hyperlinkSelection
     let currStr = currSelection.data;
     let newHyperlink = document.createElement('a');
     newHyperlink.innerText = currStr;
-    newHyperlink.href = url;
+    newHyperlink.href = `https://${url}`;
     newHyperlink.target = '_blank';
-    newHyperlink.addEventListener('click', (e) => {
-      console.log(e)
-      window.location.href = url
-    })
+    newHyperlink.contentEditable = false;
     currSelection.parentNode.insertBefore(newHyperlink, currSelection)
     currSelection.parentNode.removeChild(currSelection)
   }
@@ -140,10 +139,6 @@ export default function toolbar() {
           document.getElementById(`stdout-for-${id}`).innerText = stdout.data;
         }
       });
-
-    // document.getElementById(`${id}-wrapper`).addEventListener('click', (e) => {
-    //   console.log('keypressed!', e.path[0].innerHTML)
-    // })
   }
 
   /**********************/
@@ -250,7 +245,7 @@ export default function toolbar() {
         <FaLink />
       </button>
       <div id="url-input" className="hidden">
-        <input id="txtFormatUrl" placeholder="url" />
+        <input id="txtFormatUrl" placeholder="https://www.example.com"/>
         <button id="create-link-button" onClick={e => setUrl(e)}>Create Link</button>
       </div>
 
