@@ -7,24 +7,75 @@
 }
 
 .dropzone_drop {
-  flex: 1;
+  position: fixed;
+  top: 100px;
+  right: 15px;
+  height: 70vh;
+  width: 220px;
+  transition: border 0.24s ease-in-out;
+  text-align: center;
+  border: 2px dashed #b0b0b0;
+  background-color: #dedede;
+  padding: 0 18px;
+  padding-top: 15vh;
+  z-index: -1;
+  /* flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
-  height: 20vh;
-  margin-top: -300px;
-  padding-top: 65px;
+  margin-bottom: -300px;
+  padding-top: 20vh;
   border-width: 2;
   border-radius: 2;
   border-color: black;
-  border-style: dashed;
-  background-color: #fafafa;
+  border: 2px dashed #b0b0b0;
+  background-color: #dedede;
   color: #5e5e5e;
   outline: none;
   transition: border 0.24s ease-in-out;
+  margin-left: 10px;
+  margin-right: 10px;
+  text-align: center; */
+}
+
+.dropzone_drop:hover {
+  border: 3px solid cornflowerblue;
+  color: cornflowerblue;
+  font-weight: bold;
 }
 
 .dropzone_drop > p {
   font-size: medium;
+  font-style: italic;
+  display: block;
+  /* font-weight: bold; */
+}
+
+#app > div.header > div.makeStyles-root-1 > div > div > div.makeStyles-drawerHeader-5 > div > h1 {
+  font-size: 20px;
+  font-family: Helvetica;
+}
+
+#app > div.header > div.makeStyles-root-1 > div > div > div.makeStyles-drawerHeader-5 > div > h1:hover {
+  color: lightgray
+}
+
+#app > div.header > div.makeStyles-root-1 > div > div > div.makeStyles-drawerHeader-5 > div {
+  height: 100%;
+}
+
+#app > div.header > div.makeStyles-root-1 > div > div > div.dropzone_container > div:nth-child(2) > aside {
+  z-index: 1;
+  padding: 0px 25px
+}
+
+#app > div.header > div.makeStyles-root-1 > div > div > div.dropzone_container > div:nth-child(2) > aside > h4 {
+  text-align: center;
+}
+
+#app > div.header > div.makeStyles-root-1 > div > div > div.dropzone_container > div:nth-child(2) > aside > div > ul {
+  padding: 2px 8px;
+  text-align: center;
+  color: cornflowerblue;
+  list-style-type: none;
 }

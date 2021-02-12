@@ -142,7 +142,7 @@ function Nav() {
         >
           <div className={classes.drawerHeader}>
             <div className="drawer">
-              <h1>Drag 'n Drop!</h1>
+              <h1>Upload A File</h1>
               <IconButton onClick={handleDrawerClose}>
                 {theme.direction === 'ltr' ? (
                   <ChevronRightIcon />
