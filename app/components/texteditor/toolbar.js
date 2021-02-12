@@ -45,7 +45,9 @@ export default function toolbar() {
   function addLink() {
     if (
       document.getSelection().anchorNode === null ||
-      document.getSelection().anchorNode.innerText === ''
+      document.getSelection().anchorNode.innerText === '' ||
+      document.getSelection().anchorNode.className === 'toolbar' ||
+      document.getSelection().anchorNode.nodeValue === 'About us'
     ) {
       alert(
         'Please select/highlight the text you are intending to hyperlink first.'
