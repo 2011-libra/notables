@@ -32,7 +32,7 @@ export default function dropzone() {
 
   //Initialize dropzone:
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
-    accept: 'text/markdown',
+    accept: '.md, .txt',
     onDrop
   });
 

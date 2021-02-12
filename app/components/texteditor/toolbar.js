@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Popover from '@material-ui/core/Popover';
+
 import axios from 'axios';
 import { fetchCode } from '../../redux/CodeEditor';
 import {
@@ -15,7 +15,7 @@ import './Texteditor.css';
 
 export default function toolbar() {
   let hyperlinkSelection = '';
-  
+
   useEffect(() => {
     if (document.getElementById('txtFormatUrl')) {
       document.getElementById('txtFormatUrl').addEventListener('keydown', e => {
@@ -38,14 +38,19 @@ export default function toolbar() {
   /*** HYPERLINK ***/
   /*****************/
   function addLink() {
-    if (document.getSelection().anchorNode === null || document.getSelection().anchorNode.innerText === '') {
-      alert("Please select/highlight the text you are intending to hyperlink first.")
+    if (
+      document.getSelection().anchorNode === null ||
+      document.getSelection().anchorNode.innerText === ''
+    ) {
+      alert(
+        'Please select/highlight the text you are intending to hyperlink first.'
+      );
       return;
     }
 
-    hyperlinkSelection = document.getSelection().anchorNode
+    hyperlinkSelection = document.getSelection().anchorNode;
     if (document.getSelection().anchorNode.parentElement.localName === 'pre') {
-      alert("You can not add a hyperlink inside a code block")
+      alert('You can not add a hyperlink inside a code block');
       return;
     }
 
@@ -89,7 +94,7 @@ export default function toolbar() {
   function addCodeBlock() {
     const codeBlock = document.createElement('pre');
     const target = document.getSelection();
-    console.log(target)
+    console.log(target);
     if (
       // target.anchorNode.localName === 'div' ||
       target.anchorNode === null ||
@@ -99,7 +104,6 @@ export default function toolbar() {
       target.focusNode.className.includes('codeBlock') ||
       target.focusNode.className.includes('code-blocks')
     ) {
-
       alert(
         'To add a code block, please start on a new line inside the text area. NOTE: Inline code blocks are not premitted.'
       );
@@ -182,11 +186,11 @@ export default function toolbar() {
           if (e.target.value === '1') {
             const target = document.getSelection();
             format('insertHTML', `<h1>${target}</h1>`);
-            document.querySelector('select').selectedIndex = 0
+            document.querySelector('select').selectedIndex = 0;
           } else if (e.target.value === '2') {
             const target = document.getSelection();
             format('insertHTML', `<h2>${target}</h2>`);
-            document.querySelector('select').selectedIndex = 0
+            document.querySelector('select').selectedIndex = 0;
           }
           //This code is manually changing the current tags and replacing it with p tags
           if (e.target.value === '0') {
@@ -195,12 +199,12 @@ export default function toolbar() {
             let newStr = document.createElement('p');
             newStr.innerText = currStr;
             console.log(newStr);
-            currSelection.anchorNode.parentNode.insertBefore(
+            currSelection.anchorNode.parentNode.parentNode.insertBefore(
               newStr,
-              currSelection.anchorNode
+              currSelection.anchorNode.parentNode
             );
-            currSelection.anchorNode.parentNode.removeChild(
-              currSelection.anchorNode
+            currSelection.anchorNode.parentNode.parentNode.removeChild(
+              currSelection.anchorNode.parentNode
             );
             document.querySelector('select').selectedIndex = 0;
           }

@@ -105,7 +105,7 @@ function Nav() {
       type: 'text/richtext;charset=utf-8'
     });
     element.href = URL.createObjectURL(file);
-    element.download = 'myFile.txt';
+    element.download = 'myFile.md';
     document.body.appendChild(element);
     element.click();
     createCodeRunnerEvent();
