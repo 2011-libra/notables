@@ -1,7 +1,5 @@
 import React from 'react';
-
 import { BiCloudDownload, BiCloudUpload } from 'react-icons/bi';
-
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -14,7 +12,6 @@ import Dropzone from '../import/dropzone';
 import { Link } from 'react-router-dom';
 import createCodeRunnerEvent from '../../utils/createCodeRunnerEvent';
 import About from '../about/about';
-import HelpIcon from '@material-ui/icons/Help';
 import Darkmode from 'darkmode-js';
 new Darkmode().showWidget();
 
@@ -116,10 +113,11 @@ function Nav() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  //Uncomment below for extra dark mode options!
 
+  //***DARK MODE***//
+  //Uncomment below for extra dark mode options!
   const options = {
-    bottom: '64px', // default: '32px'
+    bottom: '32px', // default: '32px'
     right: 'unset', // default: '32px'
     left: '32px', // default: 'unset'
     time: '0.5s', // default: '0.3s'
@@ -128,8 +126,8 @@ function Nav() {
     buttonColorDark: '#100f2c', // default: '#100f2c'
     buttonColorLight: '#fff', // default: '#fff'
     saveInCookies: false, // default: true,
-    label: '🌓', // default: ''
-    autoMatchOsTheme: true // default: true
+    label: '🔆', // default: ''
+    autoMatchOsTheme: false // default: true
   };
 
   const darkmode = new Darkmode(options);
@@ -140,7 +138,6 @@ function Nav() {
         <CssBaseline />
         <Drawer
           className={classes.drawer}
-          // variant="persistent"
           variant="temporary"
           onEscapeKeyDown={handleDrawerClose}
           onBackdropClick={handleDrawerClose}
