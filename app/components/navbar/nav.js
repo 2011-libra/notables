@@ -1,13 +1,7 @@
 import React from 'react';
-import { FaCog } from 'react-icons/fa';
-import { CgProfile } from 'react-icons/cg';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
 
 import { BiCloudDownload, BiCloudUpload } from 'react-icons/bi';
 
-// import { BiExport } from 'react-icons/bi';
-// import { BiImport } from 'react-icons/bi';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -30,9 +24,6 @@ const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex'
   },
-  // menuButton: {
-  //   marginRight: theme.spacing(2)
-  // },
   hide: {
     display: 'none'
   },
@@ -93,9 +84,6 @@ function Nav() {
     for (let i = stdoutNodeList.length - 1; i >= 0; i--) {
       stdoutNodeList[i].remove();
     }
-    // for(let i = runButtonNodeList.length-1; i >= 0; i--){
-    //   runButtonNodeList[i].remove()
-    // }
 
     let innerHTML = document.getElementById('contentEditable').innerHTML;
     innerHTML = innerHTML.replace(/▶.Run.Code/g, '');
@@ -193,45 +181,19 @@ function Nav() {
             onClick={handleDrawerOpen}
             edge="start"
             className={clsx(classes.menuButton, open && classes.hide)}
-            // title="Import"
-            // className="addMore"
           />
 
           <span className="header-optionLineOne">Upload</span>
         </div>
         <div className="header-option">
-          <BiCloudDownload
-            onClick={downloadTxtFile}
-            // title="Export"
-            // className="addMore"
-          />
+          <BiCloudDownload onClick={downloadTxtFile} />
           <span className="header-optionLineOne">Download</span>
         </div>
 
-        {/* <div className="header-option">
-          <Link to="/login">
-            <CgProfile title="Sign In" className="addMore" />
-          </Link>
-        </div> */}
         <div className="header-option">
           <About title="What is Notables?" />
           <span className="header-optionLineOne">About us</span>
         </div>
-
-        {/* <div className="header-option">
-          <FaCog title="Settings" onClick={handleClick} className="addMore" />
-          Settings
-          <Menu
-            id="simple-menu"
-            anchorEl={anchorEl}
-            keepMounted
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-          >
-            <MenuItem onClick={handleClose}>Dark Mode</MenuItem>
-            <MenuItem onClick={handleClose}>Word Count</MenuItem>
-          </Menu>
-        </div> */}
       </div>
     </div>
   );
