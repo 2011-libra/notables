@@ -1,55 +1,24 @@
-const md = require('markdown-it')();
-const TurndownService = require('turndown').default;
-let turndownService = new TurndownService();
-turndownService.addRule('code-snippet', {
-  filter: ['pre'],
-  replacement: content => {
-    return '```' + content + '```';
-  }
-})
-import createCodeRunnerEvent from '../utils/createCodeRunnerEvent';
+const axios = require('axios')
 
 export default function autoSave (){
-  console.log('autoSave() triggered!')
-  const convertToMD = () => {
+
+  setInterval(()=>{
+    let currDoc = document.getElementById('contentEditable').innerHTML;
+    window.localStorage.setItem('savedDoc', currDoc)
+  }, 10000)
+
+  setInterval(()=>{
     let stdoutNodeList = document.getElementsByClassName('sandbox-stdout');
     for (let i = stdoutNodeList.length - 1; i >= 0; i--) {
       stdoutNodeList[i].remove();
     }
+  }, 60000)
 
-    let innerHTML = document.getElementById('contentEditable').innerHTML;
-    innerHTML = innerHTML.replace(/▶.Run.Code/g, '');
+  if(window.localStorage.getItem('savedDoc')){
+    let savedDoc = window.localStorage.getItem('savedDoc');
 
-    createCodeRunnerEvent();
-    let markdown = turndownService.turndown(innerHTML);
+    document.getElementById('contentEditable').innerHTML = savedDoc;
 
-    return markdown
-  };
-
-  setInterval(()=>{
-    //convert content to MD
-    let currDocMD = convertToMD()
-    //store in localstorage
-    window.localStorage.setItem('savedDoc', currDocMD)
-
-    console.log('Document has been auto saved.')
-  }, 10000)
-
-  if(window.localStorage.savedDoc){
-    //get local storage
-    let savedDoc = window.localStorage.getItem('sessionDoc');
-    //convert from MD > HTML
-    markdown = md
-          .render(savedDoc)
-          .replace(
-            /<p><code>/g,
-            `<pre class="codeBlock" id='codeBlock-TBD'>`
-          )
-          .replace(/<\/code><\/p>/g, `</pre><button id="TBD-button" class="run-code-button" contentEditable=false placeholder="add your code here...">▶ Run Code</button>`);
-    //then use it to render
-    document.getElementById('contentEditable').innerHTML = markdown;
-
-    //create run code buttons
     if (
       document
         .getElementById('contentEditable')
@@ -66,6 +35,7 @@ export default function autoSave (){
       for (let i = 0; i < allCodeBlockNode.length; i++) {
         allCodeBlockNode[i].id = 'codeBlock-' + i;
         allRunCodeButtons[i].id = 'codeBlock-' + i + '-button';
+        allRunCodeButtons[i].disabled = false;
       }
 
       for (let i = 0; i < allRunCodeButtons.length; i++) {
