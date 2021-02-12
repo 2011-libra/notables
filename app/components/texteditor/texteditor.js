@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import './Texteditor.css';
 import CodeBlock from './CodeBlock';
 import { useSelector } from 'react-redux';
@@ -8,53 +8,46 @@ const TurndownService = require('turndown').default;
 let md = require('markdown-it')();
 
 function texteditor(props) {
-  // const { result } = props;
   let importState = useSelector(state => state);
   let result = importState.import.result ? importState.import.result : '';
   let markdownResult = result;
-  // console.log(result);
 
   if (result === '') {
     markdownResult = md.render(result);
   } else {
     markdownResult = md
       .render(result)
+      .replace(/<p><code>/g, `<pre class="codeBlock" id='codeBlock-TBD'>`)
       .replace(
-        /<p><code>/g,
-        `<pre class="codeBlock" id='codeBlock-TBD'>`
-      )
-      .replace(/<\/code><\/p>/g, `</pre><button id="TBD-button" class="run-code-button" contentEditable=false placeholder="add your code here...">▶ Run Code</button>`);
+        /<\/code><\/p>/g,
+        `</pre><button id="TBD-button" class="run-code-button" contentEditable=false placeholder="add your code here...">▶ Run Code</button>`
+      );
   }
-
-  // const downloadTxtFile = () => {
-  //   let innerHTML = document.getElementById('contentEditable').innerHTML;
-  //   let turndownService = new TurndownService();
-  //   let markdown = turndownService.turndown(innerHTML);
-
-  //   const element = document.createElement('a');
-  //   const file = new Blob([markdown], {
-  //     type: 'text/richtext;charset=utf-8'
-  //   });
-  //   element.href = URL.createObjectURL(file);
-  //   element.download = 'myFile.txt';
-  //   document.body.appendChild(element);
-  //   element.click();
-  // };
 
   useEffect(() => {
     createCodeRunnerEvent();
 
-    onkeydown = (e) => {
-      if(document.getSelection().anchorNode.parentElement.localName === 'pre' ||
-      document.getSelection().anchorNode.localName === 'pre'
-      ){
-        if(e.key === 'Enter' || e.code === 'Enter'){
-          e.preventDefault()
+    onkeydown = e => {
+      if (
+        document.getSelection().anchorNode.parentElement.localName === 'pre' ||
+        document.getSelection().anchorNode.localName === 'pre'
+      ) {
+        if (e.key === 'Enter' || e.code === 'Enter') {
+          e.preventDefault();
           return;
         }
       }
-    }
+    };
   });
+
+  //**//**//**//**//**//**
+  //** LOCAL STORAGE//**
+  //**//**//**//**//**
+  // let localDoc = document.getElementById('contentEditable');
+
+  setInterval(function () {
+    localStorage['doc'] = document.getElementById('contentEditable').innerHTML;
+  }, 1000);
 
   function createCodeRunnerEvent() {
     if (
@@ -77,11 +70,13 @@ function texteditor(props) {
 
       for (let i = 0; i < allRunCodeButtons.length; i++) {
         allRunCodeButtons[i].addEventListener('click', async () => {
-          if(
+          if (
             document.getElementById(`codeBlock-${i}`).innerText.trim() === '' ||
             document.getElementById(`codeBlock-${i}`).innerText.length < 2
-          ){
-            alert('Unable to "Run Code" if code block is empty, or less than 2 charaters long.')
+          ) {
+            alert(
+              'Unable to "Run Code" if code block is empty, or less than 2 charaters long.'
+            );
             return;
           }
 
@@ -91,7 +86,9 @@ function texteditor(props) {
 
           if (document.getElementById(`stdout-for-${i}`)) {
             let outliers = document.getElementById(`stdout-for-${i}`).innerText;
-            runnableCode = runnableCode.replace('▶', '').slice(0, -outliers.length);
+            runnableCode = runnableCode
+              .replace('▶', '')
+              .slice(0, -outliers.length);
           }
 
           const today = new Date();
@@ -101,7 +98,7 @@ function texteditor(props) {
           setTimeout(() => {
             // fail-safe
             document.getElementById(`codeBlock-${i}-button`).disabled = false;
-          }, 8000)
+          }, 8000);
 
           const stdout = await axios.post('/code', {
             code: runnableCode,
@@ -122,7 +119,7 @@ function texteditor(props) {
           }
           setTimeout(() => {
             document.getElementById(`codeBlock-${i}-button`).disabled = false;
-          }, 2000)
+          }, 2000);
         });
       }
     }
@@ -130,9 +127,6 @@ function texteditor(props) {
 
   return (
     <div className="texteditor_container">
-      {/* <div className="codeeditor_button">
-        <button onClick={downloadTxtFile}>Export</button>
-      </div> */}
       <Toolbar />
       <div
         className="editor"
@@ -140,7 +134,9 @@ function texteditor(props) {
         contentEditable="true"
         data-placeholder="Type your notes here!"
         dangerouslySetInnerHTML={
-          result === '' ? { __html: '' } : { __html: markdownResult }
+          result === ''
+            ? { __html: localStorage.doc }
+            : { __html: markdownResult }
         }
       ></div>
 
