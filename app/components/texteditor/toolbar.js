@@ -12,6 +12,7 @@ import {
   FaCode
 } from 'react-icons/fa';
 import './Texteditor.css';
+import { set } from 'lodash';
 
 export default function toolbar() {
   let hyperlinkSelection = '';
@@ -115,6 +116,15 @@ export default function toolbar() {
     );
 
     addLineAfterBlock(`${id}-button`);
+
+    //set caret position here
+    let setPosition = document.createRange();
+    let targetPosition = document.getElementById(`${id}`)
+    setPosition.setStart(targetPosition, 0)
+    setPosition.collapse(true)
+    target.removeAllRanges()
+    target.addRange(setPosition)
+    targetPosition.focus()
 
     document
       .getElementById(`${id}-button`)
