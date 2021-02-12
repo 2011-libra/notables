@@ -51,7 +51,7 @@ function texteditor(props) {
       if(document.getSelection().anchorNode.parentElement.localName === 'pre' ||
       document.getSelection().anchorNode.localName === 'pre'
       ){
-        if(e.key === 'ArrowDown'){
+        if(e.key === 'ArrowDown' && !document.getSelection().anchorNode.nextSibling){
             const target = document.getElementById('contentEditable')
             const br = document.createElement('br');
             target.appendChild(br);
