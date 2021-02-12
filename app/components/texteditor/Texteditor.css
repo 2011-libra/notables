@@ -3,6 +3,7 @@
 }
 
 .toolbar {
+  z-index: 2;
   border: solid 1px #ddd;
   background: #e9e3e3;
   padding: 5px;
@@ -15,8 +16,36 @@
   align-items: center;
   justify-content: space-evenly;
 }
-.hidden {
-  display: none;
+
+.float {
+  position: relative;
+  left: 30px;
+}
+
+#url-input {
+  top: 88px;
+}
+
+#url-input.hidden {
+  top: 35px;
+}
+
+.link-bar {
+  z-index: 1;
+  border-style: none;
+  position: fixed;
+  background-color: transparent;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 0.2fr;
+  transition: all 0.1s linear;
+}
+
+.link-drawer {
+  border: solid 1px #ddd;
+  background-color: #e9e3e3;
+  padding: 5px;
+  grid-column-start: 4;
+  width: 200px;
 }
 
 select {
@@ -54,6 +83,7 @@ select {
 }
 
 .editor {
+  z-index: 0;
   border: solid 1px #ccc;
   width: 95%;
   max-width: 80vw;
@@ -189,17 +219,17 @@ select {
 }
 
 #contentEditable > h2 {
-  margin: 5px 0px;
+  margin: 0px 0px;
 }
 
 #contentEditable > h1 {
-  margin: 5px 0px;
+  margin: 0px 0px;
 }
 
 #contentEditable > div {
-  margin: 5px 0px;
+  margin: 0px 0px;
 }
 
 #contentEditable > div > * {
-  margin: 5px 0px;
+  margin: 0px 0px;
 }
