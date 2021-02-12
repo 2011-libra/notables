@@ -33,6 +33,9 @@ export default function autoSave (){
       );
 
       for (let i = 0; i < allCodeBlockNode.length; i++) {
+        if(allCodeBlockNode[i] === undefined || allRunCodeButtons[i] === undefined){
+          return;
+        }
         allCodeBlockNode[i].id = 'codeBlock-' + i;
         allRunCodeButtons[i].id = 'codeBlock-' + i + '-button';
         allRunCodeButtons[i].disabled = false;
