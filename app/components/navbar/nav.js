@@ -14,6 +14,9 @@ import Dropzone from '../import/dropzone';
 import { Link } from 'react-router-dom';
 import createCodeRunnerEvent from '../../utils/createCodeRunnerEvent';
 import About from '../about/about';
+import HelpIcon from '@material-ui/icons/Help';
+import Darkmode from 'darkmode-js';
+new Darkmode().showWidget();
 
 const drawerWidth = 250;
 
@@ -113,14 +116,34 @@ function Nav() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+  //Uncomment below for extra dark mode options!
 
+  const options = {
+    bottom: '64px', // default: '32px'
+    right: 'unset', // default: '32px'
+    left: '32px', // default: 'unset'
+    time: '0.5s', // default: '0.3s'
+    mixColor: '#FFFFFF', // default: '#fff'
+    backgroundColor: '#fff', // default: '#fff'
+    buttonColorDark: '#100f2c', // default: '#100f2c'
+    buttonColorLight: '#fff', // default: '#fff'
+    saveInCookies: false, // default: true,
+    label: '🌓', // default: ''
+    autoMatchOsTheme: true // default: true
+  };
+
+  const darkmode = new Darkmode(options);
+  darkmode.showWidget();
   return (
     <div className="header">
       <div className={classes.root}>
         <CssBaseline />
         <Drawer
           className={classes.drawer}
-          variant="persistent"
+          // variant="persistent"
+          variant="temporary"
+          onEscapeKeyDown={handleDrawerClose}
+          onBackdropClick={handleDrawerClose}
           anchor="right"
           open={open}
           classes={{
@@ -164,7 +187,7 @@ function Nav() {
         </div>
         <div className="header-option">
           <BiCloudDownload onClick={downloadTxtFile} />
-          <span className="header-optionLineOne">Export</span>
+          <span className="header-optionLineOne">Download</span>
         </div>
 
         <div className="header-option">

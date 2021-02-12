@@ -1,20 +1,19 @@
-const axios = require('axios')
+const axios = require('axios');
 
-export default function autoSave (){
-
-  setInterval(()=>{
+export default function autoSave() {
+  setInterval(() => {
     let currDoc = document.getElementById('contentEditable').innerHTML;
-    window.localStorage.setItem('savedDoc', currDoc)
-  }, 10000)
+    window.localStorage.setItem('savedDoc', currDoc);
+  }, 1000);
 
-  setInterval(()=>{
+  setInterval(() => {
     let stdoutNodeList = document.getElementsByClassName('sandbox-stdout');
     for (let i = stdoutNodeList.length - 1; i >= 0; i--) {
       stdoutNodeList[i].remove();
     }
-  }, 60000)
+  }, 60000);
 
-  if(window.localStorage.getItem('savedDoc')){
+  if (window.localStorage.getItem('savedDoc')) {
     let savedDoc = window.localStorage.getItem('savedDoc');
 
     document.getElementById('contentEditable').innerHTML = savedDoc;
@@ -33,6 +32,9 @@ export default function autoSave (){
       );
 
       for (let i = 0; i < allCodeBlockNode.length; i++) {
+        if(allCodeBlockNode[i] === undefined || allRunCodeButtons[i] === undefined){
+          return;
+        }
         allCodeBlockNode[i].id = 'codeBlock-' + i;
         allRunCodeButtons[i].id = 'codeBlock-' + i + '-button';
         allRunCodeButtons[i].disabled = false;
@@ -40,11 +42,13 @@ export default function autoSave (){
 
       for (let i = 0; i < allRunCodeButtons.length; i++) {
         allRunCodeButtons[i].addEventListener('click', async () => {
-          if(
+          if (
             document.getElementById(`codeBlock-${i}`).innerText.trim() === '' ||
             document.getElementById(`codeBlock-${i}`).innerText.length < 2
-          ){
-            alert('Unable to "Run Code" if code block is empty, or less than 2 charaters long.')
+          ) {
+            alert(
+              'Unable to "Run Code" if code block is empty, or less than 2 charaters long.'
+            );
             return;
           }
 
@@ -54,7 +58,9 @@ export default function autoSave (){
 
           if (document.getElementById(`stdout-for-${i}`)) {
             let outliers = document.getElementById(`stdout-for-${i}`).innerText;
-            runnableCode = runnableCode.replace('▶', '').slice(0, -outliers.length);
+            runnableCode = runnableCode
+              .replace('▶', '')
+              .slice(0, -outliers.length);
           }
 
           const today = new Date();
@@ -64,7 +70,7 @@ export default function autoSave (){
           setTimeout(() => {
             // fail-safe
             document.getElementById(`codeBlock-${i}-button`).disabled = false;
-          }, 8000)
+          }, 8000);
 
           const stdout = await axios.post('/code', {
             code: runnableCode,
@@ -85,7 +91,7 @@ export default function autoSave (){
           }
           setTimeout(() => {
             document.getElementById(`codeBlock-${i}-button`).disabled = false;
-          }, 2000)
+          }, 2000);
         });
       }
     }
