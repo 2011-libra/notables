@@ -35,6 +35,10 @@ export default function toolbar() {
     document.execCommand(com, false, val);
   }
 
+  function insertAfter(newNode, existingNode) {
+    existingNode.parentNode.insertBefore(newNode, existingNode.nextSibling);
+  }
+
   /*****************/
   /*** HYPERLINK ***/
   /*****************/
@@ -117,39 +121,44 @@ export default function toolbar() {
 
     format(
       'insertHTML',
-      `<pre class='codeBlock' id='${id}' placeholder="add your code here...">${target}</pre><button id="${id}-button" class="run-code-button" contentEditable=false >▶ Run Code</button>`
+      `<pre class='codeBlock' id='${id}' placeholder="add your code here...">${target}</pre>`
     );
-
+    let newCodeBlock = document.getElementById(id);
+    let runButton = document.createElement('button');
+    runButton.id = `${id}-button`;
+    runButton.className = 'run-code-button';
+    runButton.contentEditable = false;
+    runButton.innerText = '▶ Run Code';
+    insertAfter(runButton, newCodeBlock);
     addLineAfterBlock(`${id}-button`);
 
     //set caret position here
     let setPosition = document.createRange();
-    let targetPosition = document.getElementById(`${id}`)
-    setPosition.setStart(targetPosition, 0)
-    setPosition.collapse(true)
-    target.removeAllRanges()
-    target.addRange(setPosition)
-    targetPosition.focus()
+    let targetPosition = document.getElementById(`${id}`);
+    setPosition.setStart(targetPosition, 0);
+    setPosition.collapse(true);
+    target.removeAllRanges();
+    target.addRange(setPosition);
+    targetPosition.focus();
 
     document
       .getElementById(`${id}-button`)
       .addEventListener('click', async () => {
-        let runnableCode = document
-          .getElementById(`${id}`)
-          .innerText
+        let runnableCode = document.getElementById(`${id}`).innerText;
 
-        if(
+        if (
           document.getElementById(`${id}`).innerText.trim() === '' ||
           document.getElementById(`${id}`).innerText.length < 2
-        ){
-          alert('Unable to "Run Code" if code block is empty, or less than 2 charaters long.')
+        ) {
+          alert(
+            'Unable to "Run Code" if code block is empty, or less than 2 charaters long.'
+          );
           return;
         }
 
         if (document.getElementById(`stdout-for-${id}`)) {
           let outliers = document.getElementById(`stdout-for-${id}`).innerText;
-          runnableCode = runnableCode
-            .slice(0, -outliers.length);
+          runnableCode = runnableCode.slice(0, -outliers.length);
         }
 
         const today = new Date();
@@ -159,7 +168,7 @@ export default function toolbar() {
         setTimeout(() => {
           // fail-safe
           document.getElementById(`${id}-button`).disabled = false;
-        }, 8000)
+        }, 8000);
 
         const stdout = await axios.post('/code', {
           code: runnableCode,
@@ -180,7 +189,7 @@ export default function toolbar() {
         }
         setTimeout(() => {
           document.getElementById(`${id}-button`).disabled = false;
-        }, 2000)
+        }, 2000);
       });
   }
 
@@ -220,9 +229,9 @@ export default function toolbar() {
           }
           //This code is manually changing the current tags and replacing it with p tags
           if (e.target.value === '0') {
-            if(document.getSelection().anchorNode.data === undefined){
+            if (document.getSelection().anchorNode.data === undefined) {
               document.querySelector('select').selectedIndex = 0;
-              return
+              return;
             }
 
             let currSelection = document.getSelection();
