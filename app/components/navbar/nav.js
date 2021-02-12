@@ -183,7 +183,7 @@ function Nav() {
             // title="Export"
             // className="addMore"
           />
-          <span className="header-optionLineOne">Export</span>
+          <span className="header-optionLineOne">Download</span>
         </div>
 
         {/* <div className="header-option">
