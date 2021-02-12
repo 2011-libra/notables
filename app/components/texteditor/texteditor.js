@@ -50,6 +50,7 @@ function texteditor(props) {
       if(document.getSelection().anchorNode.parentElement.localName === 'pre' ||
       document.getSelection().anchorNode.localName === 'pre'
       ){
+        console.log(e)
         if(e.key === 'Enter' && e.shiftKey === true){
           return;
         }
@@ -60,7 +61,21 @@ function texteditor(props) {
         }
       }
     }
+
+    onkeydown = (e) => {
+      if(document.getSelection().anchorNode.parentElement.localName === 'pre' ||
+      document.getSelection().anchorNode.localName === 'pre'
+      ){
+        if(e.key === 'ArrowDown'){
+            const target = document.getElementById('contentEditable')
+            const br = document.createElement('br');
+            target.appendChild(br);
+        }
+      }
+    }
   });
+
+
 
   function createCodeRunnerEvent() {
     if (
