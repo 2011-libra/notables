@@ -17,13 +17,13 @@
   border-bottom: 1px solid black;
 }
 
-.addMore {
+/* .addMore {
   border: none;
-  /* width: 32px;
-  height: 32px; */
+  width: 32px;
+  height: 32px;
   transition: all ease-in-out 0.2s;
   cursor: pointer;
-}
+} */
 
 .header-logo {
   width: 50px;
@@ -60,7 +60,8 @@
   flex-direction: column;
   margin-left: 10px;
   margin-right: 10px;
-  color: #a0aabf;
+  color: white;
+  align-items: center;
 }
 
 .header-nav {
@@ -75,7 +76,7 @@
 }
 
 .header-option > svg:hover {
-  color: white;
+  color: gray;
 }
 
 #app

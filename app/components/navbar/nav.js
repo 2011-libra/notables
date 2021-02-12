@@ -18,7 +18,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import Dropzone from '../import/dropzone';
 import { Link } from 'react-router-dom';
-import createCodeRunnerEvent from '../../utils/createCodeRunnerEvent'
+import createCodeRunnerEvent from '../../utils/createCodeRunnerEvent';
 import About from '../about/about';
 import HelpIcon from '@material-ui/icons/Help';
 
@@ -28,9 +28,9 @@ const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex'
   },
-  menuButton: {
-    marginRight: theme.spacing(2)
-  },
+  // menuButton: {
+  //   marginRight: theme.spacing(2)
+  // },
   hide: {
     display: 'none'
   },
@@ -87,16 +87,16 @@ function Nav() {
 
   const downloadTxtFile = () => {
     let stdoutNodeList = document.getElementsByClassName('sandbox-stdout');
-    let runButtonNodeList = document.getElementsByClassName('run-code-button')
-    for(let i = stdoutNodeList.length-1; i >= 0; i--){
-      stdoutNodeList[i].remove()
+    let runButtonNodeList = document.getElementsByClassName('run-code-button');
+    for (let i = stdoutNodeList.length - 1; i >= 0; i--) {
+      stdoutNodeList[i].remove();
     }
     // for(let i = runButtonNodeList.length-1; i >= 0; i--){
     //   runButtonNodeList[i].remove()
     // }
 
     let innerHTML = document.getElementById('contentEditable').innerHTML;
-    innerHTML = innerHTML.replace(/▶.Run.Code/g, '')
+    innerHTML = innerHTML.replace(/▶.Run.Code/g, '');
 
     let markdown = turndownService.turndown(innerHTML);
 
@@ -166,24 +166,24 @@ function Nav() {
       </div>
       <div className="header-nav">
         <div className="header-option">
-          <IconButton
-            color="inherit"
+          <BiCloudUpload
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
             className={clsx(classes.menuButton, open && classes.hide)}
-          >
-            <BiCloudUpload title="Import" className="addMore" />
-          </IconButton>
-          Upload
+            // title="Import"
+            // className="addMore"
+          />
+
+          <span className="header-optionLineOne">Upload</span>
         </div>
         <div className="header-option">
           <BiCloudDownload
             onClick={downloadTxtFile}
-            title="Export"
-            className="addMore"
+            // title="Export"
+            // className="addMore"
           />
-          Export
+          <span className="header-optionLineOne">Export</span>
         </div>
 
         {/* <div className="header-option">
@@ -193,7 +193,7 @@ function Nav() {
         </div> */}
         <div className="header-option">
           <About title="What is Notables?" />
-          About us
+          <span className="header-optionLineOne">About us</span>
         </div>
 
         {/* <div className="header-option">
