@@ -48,11 +48,12 @@ export default function dropzone() {
       <div className="dropzone_container">
         <div {...getRootProps({ className: 'dropzone_drop' })}>
           <input {...getInputProps()} />
-          <p>Drop or Select .md files here!</p>
+          <p>DROP or SELECT</p>
+          <p>a file (.md)</p>
         </div>
         <div>
           <aside>
-            <h4>My Files:</h4>
+            <h4>My File:</h4>
             <ul>{files}</ul>
           </aside>
         </div>
