@@ -21,9 +21,8 @@ import { Link } from 'react-router-dom';
 import createCodeRunnerEvent from '../../utils/createCodeRunnerEvent';
 import About from '../about/about';
 import HelpIcon from '@material-ui/icons/Help';
-//Dark mode
-// import Darkmode from 'darkmode-js';
-// new Darkmode().showWidget();
+import Darkmode from 'darkmode-js';
+new Darkmode().showWidget();
 
 const drawerWidth = 250;
 
@@ -131,22 +130,22 @@ function Nav() {
   };
   //Uncomment below for extra dark mode options!
 
-  // const options = {
-  //   bottom: '64px', // default: '32px'
-  //   right: 'unset', // default: '32px'
-  //   left: '32px', // default: 'unset'
-  //   time: '0.5s', // default: '0.3s'
-  //   mixColor: '#FFFFFF', // default: '#fff'
-  //   backgroundColor: '#323232', // default: '#fff'
-  //   buttonColorDark: '#100f2c', // default: '#100f2c'
-  //   buttonColorLight: '#fff', // default: '#fff'
-  //   saveInCookies: false, // default: true,
-  //   label: '🌓', // default: ''
-  //   autoMatchOsTheme: true // default: true
-  // };
+  const options = {
+    bottom: '64px', // default: '32px'
+    right: 'unset', // default: '32px'
+    left: '32px', // default: 'unset'
+    time: '0.5s', // default: '0.3s'
+    mixColor: '#FFFFFF', // default: '#fff'
+    backgroundColor: '#fff', // default: '#fff'
+    buttonColorDark: '#100f2c', // default: '#100f2c'
+    buttonColorLight: '#fff', // default: '#fff'
+    saveInCookies: false, // default: true,
+    label: '🌓', // default: ''
+    autoMatchOsTheme: true // default: true
+  };
 
-  // const darkmode = new Darkmode(options);
-  // darkmode.showWidget();
+  const darkmode = new Darkmode(options);
+  darkmode.showWidget();
   return (
     <div className="header">
       <div className={classes.root}>
