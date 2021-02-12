@@ -50,6 +50,7 @@ function texteditor(props) {
       ){
         if(e.key === 'Enter' || e.code === 'Enter'){
           e.preventDefault()
+          return;
         }
       }
     }
