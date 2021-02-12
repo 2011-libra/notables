@@ -35,10 +35,11 @@ export default function dropzone() {
     accept: '.md, .txt',
     onDrop
   });
-
+  const timeElapsed = Date.now();
+  const today = new Date(timeElapsed);
   const files = acceptedFiles.map(file => (
     <li key={file.path}>
-      {file.path} - {file.size} bytes
+      {file.path} - {file.size} bytes {today.toLocaleString()}
     </li>
   ));
 
