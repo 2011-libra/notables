@@ -205,6 +205,11 @@ export default function toolbar() {
           }
           //This code is manually changing the current tags and replacing it with p tags
           if (e.target.value === '0') {
+            if(document.getSelection().anchorNode.data === undefined){
+              document.querySelector('select').selectedIndex = 0;
+              return
+            }
+
             let currSelection = document.getSelection();
             let currStr = document.getSelection().anchorNode.data;
             let newStr = document.createElement('p');
