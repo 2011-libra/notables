@@ -37,11 +37,24 @@ export default function dropzone() {
   });
   const timeElapsed = Date.now();
   const today = new Date(timeElapsed);
-  const files = acceptedFiles.map(file => (
-    <li key={file.path}>
-      {file.path} - {file.size} bytes {today.toLocaleString()}
-    </li>
-  ));
+  const files = acceptedFiles.map((file, idx) => {
+    return (
+      <ul key={file.path + '-detail'}>
+        <li key="uploaded" style={{fontWeight: "bold", color: "gray"}}>
+          File has been uploaded:
+        </li>
+        <li key="file-name">
+          {file.path}
+        </li>
+        <li key="file-size" style={{fontSize: "10px", color: "gray"}}>
+          {file.size} bytes
+        </li>
+        <li key="time-stamp" style={{fontSize: "10px", color: "gray"}}>
+          {today.toLocaleString()}
+        </li>
+      </ul>
+    );
+  });
 
   return (
     <>
@@ -53,8 +66,8 @@ export default function dropzone() {
         </div>
         <div>
           <aside>
-            <h4>My File:</h4>
-            <ul>{files}</ul>
+            <h4></h4>
+            <div>{files}</div>
           </aside>
         </div>
       </div>

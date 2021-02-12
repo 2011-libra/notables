@@ -7,13 +7,23 @@
 }
 
 .dropzone_drop {
-  flex: 1;
+  position: fixed;
+  top: 100px;
+  right: 15px;
+  height: 70vh;
+  width: 220px;
+  transition: border 0.24s ease-in-out;
+  text-align: center;
+  border: 2px dashed #b0b0b0;
+  background-color: #dedede;
+  padding: 0 18px;
+  padding-top: 15vh;
+  z-index: -1;
+  /* flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
-  height: 70vh;
-  margin-top: -300px;
+  margin-bottom: -300px;
   padding-top: 20vh;
   border-width: 2;
   border-radius: 2;
@@ -25,7 +35,7 @@
   transition: border 0.24s ease-in-out;
   margin-left: 10px;
   margin-right: 10px;
-  text-align: center;
+  text-align: center; */
 }
 
 .dropzone_drop:hover {
@@ -37,6 +47,7 @@
 .dropzone_drop > p {
   font-size: medium;
   font-style: italic;
+  display: block;
   /* font-weight: bold; */
 }
 
@@ -53,12 +64,18 @@
   height: 100%;
 }
 
+#app > div.header > div.makeStyles-root-1 > div > div > div.dropzone_container > div:nth-child(2) > aside {
+  z-index: 1;
+  padding: 0px 25px
+}
+
 #app > div.header > div.makeStyles-root-1 > div > div > div.dropzone_container > div:nth-child(2) > aside > h4 {
   text-align: center;
 }
 
-#app > div.header > div.makeStyles-root-1 > div > div > div.dropzone_container > div:nth-child(2) > aside > ul {
+#app > div.header > div.makeStyles-root-1 > div > div > div.dropzone_container > div:nth-child(2) > aside > div > ul {
   padding: 2px 8px;
   text-align: center;
-  color: cornflowerblue
+  color: cornflowerblue;
+  list-style-type: none;
 }
