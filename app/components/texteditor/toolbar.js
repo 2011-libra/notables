@@ -98,7 +98,6 @@ export default function toolbar() {
       target.focusNode.className.includes('codeBlock') ||
       target.focusNode.className.includes('code-blocks')
     ) {
-
       alert(
         'To add a code block, please start on a new line inside the text area. NOTE: Inline code blocks are not premitted.'
       );

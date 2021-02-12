@@ -43,6 +43,16 @@ function texteditor(props) {
 
   useEffect(() => {
     createCodeRunnerEvent();
+
+    onkeydown = (e) => {
+      if(document.getSelection().anchorNode.parentElement.localName === 'pre' ||
+      document.getSelection().anchorNode.localName === 'pre'
+      ){
+        if(e.key === 'Enter' || e.code === 'Enter'){
+          e.preventDefault()
+        }
+      }
+    }
   });
 
   function createCodeRunnerEvent() {
