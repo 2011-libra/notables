@@ -27,21 +27,6 @@ function texteditor(props) {
       .replace(/<\/code><\/p>/g, `</pre><button id="TBD-button" class="run-code-button" contentEditable=false placeholder="add your code here...">▶ Run Code</button>`);
   }
 
-  // const downloadTxtFile = () => {
-  //   let innerHTML = document.getElementById('contentEditable').innerHTML;
-  //   let turndownService = new TurndownService();
-  //   let markdown = turndownService.turndown(innerHTML);
-
-  //   const element = document.createElement('a');
-  //   const file = new Blob([markdown], {
-  //     type: 'text/richtext;charset=utf-8'
-  //   });
-  //   element.href = URL.createObjectURL(file);
-  //   element.download = 'myFile.txt';
-  //   document.body.appendChild(element);
-  //   element.click();
-  // };
-
   useEffect(() => {
     createCodeRunnerEvent();
     autoSave();
@@ -50,6 +35,7 @@ function texteditor(props) {
       if(document.getSelection().anchorNode.parentElement.localName === 'pre' ||
       document.getSelection().anchorNode.localName === 'pre'
       ){
+        console.log(e)
         if(e.key === 'Enter' && e.shiftKey === true){
           return;
         }
@@ -60,7 +46,27 @@ function texteditor(props) {
         }
       }
     }
+
+    onkeydown = (e) => {
+      if(document.getSelection().anchorNode.parentElement.localName === 'pre' ||
+      document.getSelection().anchorNode.localName === 'pre'
+      ){
+        if(e.key === 'ArrowDown' && !document.getSelection().anchorNode.nextSibling){
+            const target = document.getElementById('contentEditable')
+            const br = document.createElement('br');
+            target.appendChild(br);
+        }
+        if(e.key === 'ArrowUp' && !document.getSelection().anchorNode.previousSibling){
+          console.log('arrow up')
+          const currSelect = document.getSelection().anchorNode
+          const br = document.createElement('br');
+          currSelect.parentNode.prepend(br);
+        }
+      }
+    }
   });
+
+
 
   function createCodeRunnerEvent() {
     if (
