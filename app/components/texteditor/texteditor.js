@@ -19,9 +19,12 @@ function texteditor() {
   } else {
     markdownResult = md
       .render(result)
-      .replace(/<p><code>/g, `<pre class="codeBlock" id='codeBlock-TBD'>`)
       .replace(
-        /<\/code><\/p>/g,
+        /<pre>\s*<code.*>/g,
+        `<pre class="codeBlock" id='codeBlock-TBD'>`
+      )
+      .replace(
+        /<\/code.*>\s*<\/pre>/g,
         `</pre><button id="TBD-button" class="run-code-button" contentEditable=false placeholder="add your code here...">▶ Run Code</button>`
       );
   }

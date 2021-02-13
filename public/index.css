@@ -4,20 +4,12 @@ body {
 
 p {
   font-size: 20px;
-  margin: 1px 0px;
+  margin: 0px 0px;
 }
 
 a {
   cursor: pointer;
 }
-
-/* h1 {
-  display: inline;
-}
-
-h2 {
-  display: inline;
-} */
 
 button.darkmode-toggle {
   background-color: transparent;

@@ -8,7 +8,6 @@
   background: #e9e3e3;
   padding: 5px;
   margin-top: 10px;
-  border-radius: 3px;
   position: fixed;
   top: 50px;
   width: 100%;
@@ -17,17 +16,12 @@
   justify-content: space-evenly;
 }
 
-.float {
-  position: relative;
-  left: 30px;
-}
-
 #url-input {
-  top: 88px;
+  top: 86px;
 }
 
 #url-input.hidden {
-  top: 35px;
+  top: 30px;
 }
 
 .link-bar {
@@ -42,6 +36,7 @@
 
 .link-drawer {
   border: solid 1px #ddd;
+  border-radius: 0px 0px 6px 6px;
   background-color: #e9e3e3;
   padding: 5px;
   grid-column-start: 4;
@@ -138,7 +133,7 @@ select {
   margin-bottom: 0;
   height: auto;
   min-height: 44px;
-  font-family: 'Courier New', Courier, monospace !important;
+  font-family: monospace !important;
   overflow: auto;
   color: rgb(0, 0, 0);
   padding: 8px;
@@ -233,6 +228,24 @@ select {
   margin: 0px 0px;
 }
 
+#contentEditable > a:hover {
+  background-color: rgb(128, 128, 128);
+}
+
 #contentEditable > div > * {
   margin: 0px 0px;
+}
+
+#contentEditable img {
+  max-width: 90%;
+}
+
+#contentEditable pre {
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+  font-size: 18px;
+  margin: 0;
 }
