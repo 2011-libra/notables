@@ -95,7 +95,7 @@ export default function CustomizedDialogs() {
           <br />
           <Typography gutterBottom>
             If you choose to upload a file by clicking the, "Upload" button, you
-            can only upload only .md or .txt files from your local machine.
+            can only upload only a .md file from your local machine.
           </Typography>
           <br />
           <Typography gutterBottom>
