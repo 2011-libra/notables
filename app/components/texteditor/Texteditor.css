@@ -8,18 +8,12 @@
   background: #e9e3e3;
   padding: 5px;
   margin-top: 10px;
-  border-radius: 3px;
   position: fixed;
   top: 50px;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-}
-
-.float {
-  position: relative;
-  left: 30px;
 }
 
 #url-input {
@@ -42,6 +36,7 @@
 
 .link-drawer {
   border: solid 1px #ddd;
+  border-radius: 0px 0px 6px 6px;
   background-color: #e9e3e3;
   padding: 5px;
   grid-column-start: 4;

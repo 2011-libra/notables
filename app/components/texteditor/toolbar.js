@@ -259,13 +259,14 @@ export default function toolbar() {
             }
           }}
         >
-          <option>Select a heading</option>
-          <option value="0">Normal</option>
+          {/* <option>Select a heading</option> */}
+          <option value="0">Normal text</option>
           <option value="1">Heading 1</option>
           <option value="2">Heading 2</option>
         </select>
 
         <button
+          title="Bold"
           onClick={e => {
             if (
               document.getSelection().anchorNode.parentElement.localName ===
@@ -280,6 +281,7 @@ export default function toolbar() {
           <FaBold />
         </button>
         <button
+          title="Italics"
           onClick={e => {
             if (
               document.getSelection().anchorNode.parentElement.localName ===
@@ -294,6 +296,7 @@ export default function toolbar() {
           <FaItalic />
         </button>
         <button
+          title="Bulleted list"
           onClick={e => {
             if (
               document.getSelection().anchorNode.parentElement.localName ===
@@ -308,6 +311,7 @@ export default function toolbar() {
           <FaListUl />
         </button>
         <button
+          title="Numbered list"
           onClick={e => {
             if (
               document.getSelection().anchorNode.parentElement.localName ===
@@ -321,11 +325,11 @@ export default function toolbar() {
         >
           <FaListOl />
         </button>
-        <button onClick={e => addLink()}>
+        <button title="Add link" onClick={e => addLink()}>
           <FaLink />
         </button>
 
-        <button onClick={e => addCodeBlock()}>
+        <button title="Add code block" onClick={e => addCodeBlock()}>
           <FaCode />
         </button>
       </div>
