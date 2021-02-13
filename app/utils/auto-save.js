@@ -4,7 +4,7 @@ export default function autoSave(state) {
   setInterval(() => {
     let currDoc = document.getElementById('contentEditable').innerHTML;
     window.localStorage.setItem('savedDoc', currDoc);
-  }, 1000);
+  }, 10000);
 
   setInterval(() => {
     let stdoutNodeList = document.getElementsByClassName('sandbox-stdout');
@@ -36,7 +36,10 @@ export default function autoSave(state) {
       );
 
       for (let i = 0; i < allCodeBlockNode.length; i++) {
-        if(allCodeBlockNode[i] === undefined || allRunCodeButtons[i] === undefined){
+        if (
+          allCodeBlockNode[i] === undefined ||
+          allRunCodeButtons[i] === undefined
+        ) {
           return;
         }
         allCodeBlockNode[i].id = 'codeBlock-' + i;

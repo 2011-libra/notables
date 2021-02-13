@@ -9,6 +9,7 @@ import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
+import Link from '@material-ui/core/Link';
 const styles = theme => ({
   root: {
     margin: 0,
@@ -78,35 +79,41 @@ export default function CustomizedDialogs() {
         </DialogTitle>
         <DialogContent dividers>
           <Typography gutterBottom>
-            Welcome to Notables! Want a light weight text editor? Do you want to
-            be able to write plain text and save it as markdown? What about
-            running live code within your text editor?
+            Welcome to Notables! Do you want a light weight text editor? What
+            about being able to write plain text and save it as markdown? Does
+            running live code within your text editor sound amazing?
           </Typography>
           <br />
           <Typography gutterBottom>
             In Notables, you are able to write plain text while styling it, once
-            you are happy with your work, you can click on the "Export" button.
-            This will create a file called "myFile" onto your local machine as a
-            .md file. If you take a look in the .md file, it is in complete
-            markdown! Your regular text is now in markdown! Wow!!!
+            you are happy with your work, you can click on the, "Download"
+            button. This will create a file called "myFile" onto your local
+            machine as a .md file. If you take a look in the .md file, it is now
+            written in markdown! Your regular text has been converted! What?!
+            Wow!!!
           </Typography>
           <br />
           <Typography gutterBottom>
-            If you choose to upload a file, you can only upload .md or .txt
-            files.
+            If you choose to upload a file by clicking the, "Upload" button, you
+            can only upload only a .md file from your local machine.
           </Typography>
           <br />
           <Typography gutterBottom>
-            While you are typing, you may give an code snippet example. Did you
-            ever wish you could RUN that code to see if you wrote it properly?
-            In the toolbar, there is that option. It will open up a codeblock
-            for you to write your code and run, just by clicking the play
-            button!
+            <b>How we are different:</b>
+          </Typography>
+          <Typography gutterBottom>
+            While you are typing your notes, you may decide to include a code
+            snippet. Did you ever wish you could RUN that code inside your text
+            editor? In the text editor toolbar, there is that option, it will
+            the button on the far right. Clicking on it will open up a codeblock
+            for you to write your code and run, just by clicking the "Run code"
+            button! (Make sure it's actual code though!)
           </Typography>
           <br />
           <Typography gutterBottom>
-            Thank you for using Notables! Please contact us if you have any
-            questions! notables@notables.com
+            Thank you for using Notables! Please visit our{' '}
+            <Link href="https://github.com/2011-libra/notables">GitHub</Link> if
+            you have any comments or questions to make our app better!
           </Typography>
         </DialogContent>
         <DialogActions>
