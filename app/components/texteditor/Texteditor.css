@@ -227,6 +227,10 @@ select {
   margin: 0px 0px;
 }
 
+#contentEditable > a:hover {
+  background-color: rgb(128, 128, 128);
+}
+
 #contentEditable > div > * {
   margin: 0px 0px;
 }

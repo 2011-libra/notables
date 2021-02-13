@@ -121,7 +121,6 @@ export default function toolbar() {
       newHyperlink.href =
         url.slice(0, 4).toLowerCase() === 'http' ? url : `https://${url}`;
       newHyperlink.target = '_blank';
-      newHyperlink.contentEditable = false;
     }
   }
 
@@ -360,10 +359,22 @@ export default function toolbar() {
       </div>
       <div id="url-input" className="toolbar link-bar hidden">
         <div className="link-drawer">
-          <input id="txtFormatUrl" placeholder="https://www.example.com" />
-          <button id="create-link-button" onClick={e => setUrl(e)}>
-            Create Link
-          </button>
+          {document.getSelection().anchorNode &&
+          document.getSelection().anchorNode.className &&
+          document.getSelection().anchorNode.className.toLowerCase() === 'a' &&
+          document.getSelection().anchorNode ===
+            document.getSelection().focusNode ? (
+            <button id="remove-link-button" onClick={e => removeUrl(e)}>
+              Remove Link
+            </button>
+          ) : (
+            <>
+              <input id="txtFormatUrl" placeholder="https://www.example.com" />
+              <button id="create-link-button" onClick={e => setUrl(e)}>
+                Create Link
+              </button>
+            </>
+          )}
         </div>
       </div>
     </>

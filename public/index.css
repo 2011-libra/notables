@@ -4,8 +4,8 @@ body {
 
 p {
   font-size: 20px;
-  margin: 1px 0px;
-  display: inline;
+  margin: 0px 0px;
+  /* display: inline; */
 }
 
 a {
@@ -13,9 +13,9 @@ a {
 }
 
 h1 {
-  display: inline;
+  /* display: inline; */
 }
 
 h2 {
-  display: inline;
+  /* display: inline; */
 }
