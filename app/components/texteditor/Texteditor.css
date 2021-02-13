@@ -17,11 +17,11 @@
 }
 
 #url-input {
-  top: 88px;
+  top: 86px;
 }
 
 #url-input.hidden {
-  top: 35px;
+  top: 30px;
 }
 
 .link-bar {
@@ -133,7 +133,7 @@ select {
   margin-bottom: 0;
   height: auto;
   min-height: 44px;
-  font-family: 'Courier New', Courier, monospace !important;
+  font-family: monospace !important;
   overflow: auto;
   color: rgb(0, 0, 0);
   padding: 8px;
@@ -234,4 +234,18 @@ select {
 
 #contentEditable > div > * {
   margin: 0px 0px;
+}
+
+#contentEditable img {
+  max-width: 90%;
+}
+
+#contentEditable pre {
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+  font-size: 18px;
+  margin: 0;
 }

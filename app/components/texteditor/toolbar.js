@@ -152,7 +152,7 @@ export default function toolbar() {
 
     format(
       'insertHTML',
-      `<pre class='codeBlock' id='${id}' placeholder="add your code here...">${target}</pre>`
+      `<pre class='codeBlock' id='${id}' placeholder="add your code here..."><code>${target}</code></pre>`
     );
     let newCodeBlock = document.getElementById(id);
     let runButton = document.createElement('button');
