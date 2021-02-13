@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import keyboardRules from '../../utils/keyboard-rules';
-import createCodeRunnerEvent from '../../utils/createCodeRunnerEvent'
+import createCodeRunnerEvent from '../../utils/createCodeRunnerEvent';
 import './Texteditor.css';
 import { useSelector } from 'react-redux';
 import Toolbar from './toolbar';
@@ -17,16 +17,19 @@ function texteditor() {
   if (result === '') {
     markdownResult = md.render(result);
   } else {
+    console.log('md.render(result)->', md.render(result));
+
     markdownResult = md
       .render(result)
       .replace(
-        /<pre>\s*<code.*>/g,
+        /<(p|pre)>\s*<code[^>]*>/g,
         `<pre class="codeBlock" id='codeBlock-TBD'>`
       )
       .replace(
-        /<\/code.*>\s*<\/pre>/g,
+        /<\/code>\s*<\/(p|pre)>/g,
         `</pre><button id="TBD-button" class="run-code-button" contentEditable=false placeholder="add your code here...">▶ Run Code</button>`
       );
+    console.log('markdown result->', markdownResult);
   }
 
   useEffect(() => {
