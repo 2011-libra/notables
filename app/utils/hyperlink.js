@@ -1,6 +1,16 @@
-let hyperlinkSelection = '';
+let hyperlinkSelection = null;
+let anchorNode = null;
+let anchorOffset = 0;
+let focusNode = null;
+let focusOffset = 0;
 
 export function addLink() {
+  const hypNode = document.getElementById('url-input');
+  if (!hypNode.classList.contains('beneath')) {
+    hypNode.classList.add('beneath');
+    return;
+  }
+
   if (
     //***DRY CODE, FIGURE WAY TO REFACTOR LATER***//
     document.getSelection().anchorNode === null ||
@@ -18,18 +28,18 @@ export function addLink() {
     return;
   }
 
-  hyperlinkSelection = document.getSelection().anchorNode;
+  hyperlinkSelection = document.getSelection();
+  anchorNode = hyperlinkSelection.anchorNode;
+  anchorOffset = hyperlinkSelection.anchorOffset;
+  focusNode = hyperlinkSelection.focusNode;
+  focusOffset = hyperlinkSelection.focusOffset;
+
   if (document.getSelection().anchorNode.parentElement.localName === 'pre') {
     alert('You can not add a hyperlink inside a code block');
     return;
   }
 
-  const hypNode = document.getElementById('url-input');
-  if (hypNode.classList.contains('hidden')) {
-    hypNode.classList.remove('hidden');
-  } else {
-    hypNode.classList.add('hidden');
-  }
+  hypNode.classList.remove('beneath');
 }
 
 export function setUrl(e) {
@@ -38,19 +48,25 @@ export function setUrl(e) {
     return;
   }
 
-  document.getElementById('url-input').className = 'hidden';
+  document.getElementById('url-input').classList.add('beneath');
   const url = document.getElementById('txtFormatUrl').value;
   if (url === '') {
     return;
   }
-  let currSelection = hyperlinkSelection;
-  let currStr = currSelection.data;
-  let newHyperlink = document.createElement('a');
-  newHyperlink.innerText = currStr;
-  newHyperlink.href = `https://${url}`;
-  newHyperlink.target = '_blank';
-  newHyperlink.contentEditable = false;
 
-  currSelection.parentNode.insertBefore(newHyperlink, currSelection);
-  currSelection.parentNode.removeChild(currSelection);
+  hyperlinkSelection.setBaseAndExtent(
+    anchorNode,
+    anchorOffset,
+    focusNode,
+    focusOffset
+  );
+
+  document.execCommand('createLink', false, 'PLACEHOLDER_URL');
+  let newHyperlinks = document.querySelectorAll('a[href="PLACEHOLDER_URL"]');
+  for (let newHyperlink of newHyperlinks) {
+    newHyperlink.href =
+      url.slice(0, 4).toLowerCase() === 'http' ? url : `https://${url}`;
+    newHyperlink.target = '_blank';
+    newHyperlink.contentEditable = false;
+  }
 }
