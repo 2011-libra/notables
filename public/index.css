@@ -5,19 +5,10 @@ body {
 p {
   font-size: 20px;
   margin: 0px 0px;
-  /* display: inline; */
 }
 
 a {
   cursor: pointer;
-}
-
-h1 {
-  /* display: inline; */
-}
-
-h2 {
-  /* display: inline; */
 }
 
 button.darkmode-toggle {
