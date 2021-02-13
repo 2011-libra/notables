@@ -15,7 +15,11 @@ import './Texteditor.css';
 import { set } from 'lodash';
 
 export default function toolbar() {
-  let hyperlinkSelection = '';
+  let hyperlinkSelection = null;
+  let anchorNode = null;
+  let anchorOffset = 0;
+  let focusNode = null;
+  let focusOffset = 0;
 
   useEffect(() => {
     if (document.getElementById('txtFormatUrl')) {
@@ -43,6 +47,11 @@ export default function toolbar() {
   /*** HYPERLINK ***/
   /*****************/
   function addLink() {
+    const hypNode = document.getElementById('url-input');
+    if (!hypNode.classList.contains('hidden')) {
+      hypNode.classList.add('hidden');
+      return;
+    }
     if (
       //***DRY CODE, FIGURE WAY TO REFACTOR LATER***//
       document.getSelection().anchorNode === null ||
@@ -60,18 +69,18 @@ export default function toolbar() {
       return;
     }
 
-    hyperlinkSelection = document.getSelection().anchorNode;
+    hyperlinkSelection = document.getSelection();
+    anchorNode = hyperlinkSelection.anchorNode;
+    anchorOffset = hyperlinkSelection.anchorOffset;
+    focusNode = hyperlinkSelection.focusNode;
+    focusOffset = hyperlinkSelection.focusOffset;
+
     if (document.getSelection().anchorNode.parentElement.localName === 'pre') {
       alert('You can not add a hyperlink inside a code block');
       return;
     }
 
-    const hypNode = document.getElementById('url-input');
-    if (hypNode.classList.contains('hidden')) {
-      hypNode.classList.remove('hidden');
-    } else {
-      hypNode.classList.add('hidden');
-    }
+    hypNode.classList.remove('hidden');
   }
 
   /*******************/
@@ -88,16 +97,32 @@ export default function toolbar() {
     if (url === '') {
       return;
     }
-    let currSelection = hyperlinkSelection;
-    let currStr = currSelection.data;
-    let newHyperlink = document.createElement('a');
-    newHyperlink.innerText = currStr;
-    newHyperlink.href = `https://${url}`;
-    newHyperlink.target = '_blank';
-    newHyperlink.contentEditable = false;
 
-    currSelection.parentNode.insertBefore(newHyperlink, currSelection);
-    currSelection.parentNode.removeChild(currSelection);
+    hyperlinkSelection.setBaseAndExtent(
+      anchorNode,
+      anchorOffset,
+      focusNode,
+      focusOffset
+    );
+    // let currSelection = hyperlinkSelection;
+    // let currStr = currSelection.data;
+    // let newHyperlink = document.createElement('a');
+    // newHyperlink.innerText = currStr;
+    // newHyperlink.href = `https://${url}`;
+    // newHyperlink.target = '_blank';
+    // newHyperlink.contentEditable = false;
+
+    // currSelection.parentNode.insertBefore(newHyperlink, currSelection);
+    // currSelection.parentNode.removeChild(currSelection);
+
+    format('createLink', 'PLACEHOLDER_URL');
+    let newHyperlinks = document.querySelectorAll('a[href="PLACEHOLDER_URL"]');
+    for (let newHyperlink of newHyperlinks) {
+      newHyperlink.href =
+        url.slice(0, 4).toLowerCase() === 'http' ? url : `https://${url}`;
+      newHyperlink.target = '_blank';
+      newHyperlink.contentEditable = false;
+    }
   }
 
   /**********************************/
