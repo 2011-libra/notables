@@ -1,4 +1,6 @@
-function createCodeRunnerEvent() {
+const axios = require('axios');
+
+export default function createCodeRunnerEvent() {
   if (
     document
       .getElementById('contentEditable')
@@ -19,6 +21,14 @@ function createCodeRunnerEvent() {
 
     for (let i = 0; i < allRunCodeButtons.length; i++) {
       allRunCodeButtons[i].addEventListener('click', async () => {
+        if(
+          document.getElementById(`codeBlock-${i}`).innerText.trim() === '' ||
+          document.getElementById(`codeBlock-${i}`).innerText.length < 2
+        ){
+          alert('Unable to "Run Code" if code block is empty, or less than 2 charaters long.')
+          return;
+        }
+
         let runnableCode = document
           .getElementById(`codeBlock-${i}`)
           .innerText.replace('▶', '');
@@ -30,6 +40,13 @@ function createCodeRunnerEvent() {
 
 
         const today = new Date();
+
+        document.getElementById(`codeBlock-${i}-button`).disabled = true;
+
+          setTimeout(() => {
+            // fail-safe
+            document.getElementById(`codeBlock-${i}-button`).disabled = false;
+          }, 8000)
 
         const stdout = await axios.post('/code', {
           code: runnableCode,
@@ -48,9 +65,10 @@ function createCodeRunnerEvent() {
         } else {
           document.getElementById(`stdout-for-${i}`).innerText = stdout.data;
         }
+        setTimeout(() => {
+          document.getElementById(`codeBlock-${i}-button`).disabled = false;
+        }, 2000)
       });
     }
   }
 }
-
-export default createCodeRunnerEvent;

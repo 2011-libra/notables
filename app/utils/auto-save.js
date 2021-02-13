@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-export default function autoSave() {
+export default function autoSave(state) {
   setInterval(() => {
     let currDoc = document.getElementById('contentEditable').innerHTML;
     window.localStorage.setItem('savedDoc', currDoc);
@@ -12,6 +12,10 @@ export default function autoSave() {
       stdoutNodeList[i].remove();
     }
   }, 60000);
+
+  if(state.trim().length > 1){
+    return;
+  }
 
   if (window.localStorage.getItem('savedDoc')) {
     let savedDoc = window.localStorage.getItem('savedDoc');

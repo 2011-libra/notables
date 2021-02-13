@@ -1,4 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import keyboardRules from '../../utils/keyboard-rules';
+import createCodeRunnerEvent from '../../utils/createCodeRunnerEvent'
 import './Texteditor.css';
 import { useSelector } from 'react-redux';
 import Toolbar from './toolbar';
@@ -26,126 +28,9 @@ function texteditor() {
 
   useEffect(() => {
     createCodeRunnerEvent();
-    autoSave();
-
-    onkeypress = e => {
-      if (
-        document.getSelection().anchorNode.parentElement.localName === 'pre' ||
-        document.getSelection().anchorNode.localName === 'pre'
-      ) {
-        console.log(e);
-        if (e.key === 'Enter' && e.shiftKey === true) {
-          return;
-        }
-        if (e.key === 'Enter' || e.code === 'Enter') {
-          e.preventDefault();
-          alert('Use `shift + enter` to start on a new line.');
-          return;
-        }
-      }
-    };
-
-    onkeydown = e => {
-      if (
-        document.getSelection().anchorNode.parentElement.localName === 'pre' ||
-        document.getSelection().anchorNode.localName === 'pre'
-      ) {
-        if (
-          e.key === 'ArrowDown' &&
-          !document.getSelection().anchorNode.nextSibling
-        ) {
-          const target = document.getElementById('contentEditable');
-          const br = document.createElement('br');
-          target.appendChild(br);
-        }
-        if (
-          e.key === 'ArrowUp' &&
-          !document.getSelection().anchorNode.previousSibling
-        ) {
-          console.log('arrow up');
-          const currSelect = document.getSelection().anchorNode;
-          const br = document.createElement('br');
-          currSelect.parentNode.prepend(br);
-        }
-      }
-    };
+    autoSave(result);
+    keyboardRules();
   });
-
-  function createCodeRunnerEvent() {
-    if (
-      document
-        .getElementById('contentEditable')
-        .innerHTML.includes('class="codeBlock"') ||
-      document
-        .getElementById('contentEditable')
-        .innerHTML.includes("class='codeBlock'")
-    ) {
-      const allCodeBlockNode = document.getElementsByClassName('codeBlock');
-      const allRunCodeButtons = document.getElementsByClassName(
-        'run-code-button'
-      );
-
-      for (let i = 0; i < allCodeBlockNode.length; i++) {
-        allCodeBlockNode[i].id = 'codeBlock-' + i;
-        allRunCodeButtons[i].id = 'codeBlock-' + i + '-button';
-      }
-
-      for (let i = 0; i < allRunCodeButtons.length; i++) {
-        allRunCodeButtons[i].addEventListener('click', async () => {
-          if (
-            document.getElementById(`codeBlock-${i}`).innerText.trim() === '' ||
-            document.getElementById(`codeBlock-${i}`).innerText.length < 2
-          ) {
-            alert(
-              'Unable to "Run Code" if code block is empty, or less than 2 charaters long.'
-            );
-            return;
-          }
-
-          let runnableCode = document
-            .getElementById(`codeBlock-${i}`)
-            .innerText.replace('▶', '');
-
-          if (document.getElementById(`stdout-for-${i}`)) {
-            let outliers = document.getElementById(`stdout-for-${i}`).innerText;
-            runnableCode = runnableCode
-              .replace('▶', '')
-              .slice(0, -outliers.length);
-          }
-
-          const today = new Date();
-
-          document.getElementById(`codeBlock-${i}-button`).disabled = true;
-
-          setTimeout(() => {
-            // fail-safe
-            document.getElementById(`codeBlock-${i}-button`).disabled = false;
-          }, 8000);
-
-          const stdout = await axios.post('/code', {
-            code: runnableCode,
-            token: `${Math.ceil(
-              Math.random() * (8888 - 0) + 0
-            )}${today.getFullYear()}${today.getMonth()}${today.getDate()}${today.getHours()}${today.getMinutes()}${today.getMilliseconds()}`
-          });
-
-          if (!document.getElementById(`stdout-for-${i}`)) {
-            const outputNode = document.createElement('pre');
-            outputNode.innerText = stdout.data;
-            outputNode.id = `stdout-for-${i}`;
-            outputNode.className = 'sandbox-stdout';
-            outputNode.setAttribute('contentEditable', false);
-            document.getElementById(`codeBlock-${i}`).appendChild(outputNode);
-          } else {
-            document.getElementById(`stdout-for-${i}`).innerText = stdout.data;
-          }
-          setTimeout(() => {
-            document.getElementById(`codeBlock-${i}-button`).disabled = false;
-          }, 2000);
-        });
-      }
-    }
-  }
 
   return (
     <div className="texteditor_container">
