@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-function createCodeRunnerEvent() {
+export default function createCodeRunnerEvent() {
   if (
     document
       .getElementById('contentEditable')
@@ -41,6 +41,13 @@ function createCodeRunnerEvent() {
 
         const today = new Date();
 
+        document.getElementById(`codeBlock-${i}-button`).disabled = true;
+
+          setTimeout(() => {
+            // fail-safe
+            document.getElementById(`codeBlock-${i}-button`).disabled = false;
+          }, 8000)
+
         const stdout = await axios.post('/code', {
           code: runnableCode,
           token: `${Math.ceil(
@@ -58,9 +65,10 @@ function createCodeRunnerEvent() {
         } else {
           document.getElementById(`stdout-for-${i}`).innerText = stdout.data;
         }
+        setTimeout(() => {
+          document.getElementById(`codeBlock-${i}-button`).disabled = false;
+        }, 2000)
       });
     }
   }
 }
-
-export default createCodeRunnerEvent;
