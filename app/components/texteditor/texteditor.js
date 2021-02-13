@@ -31,7 +31,7 @@ function texteditor(props) {
 
   useEffect(() => {
     createCodeRunnerEvent();
-    autoSave();
+    autoSave(result);
     keyboardRules();
   });
 
