@@ -1,3 +1,5 @@
+const axios = require('axios');
+
 function createCodeRunnerEvent() {
   if (
     document
@@ -19,6 +21,14 @@ function createCodeRunnerEvent() {
 
     for (let i = 0; i < allRunCodeButtons.length; i++) {
       allRunCodeButtons[i].addEventListener('click', async () => {
+        if(
+          document.getElementById(`codeBlock-${i}`).innerText.trim() === '' ||
+          document.getElementById(`codeBlock-${i}`).innerText.length < 2
+        ){
+          alert('Unable to "Run Code" if code block is empty, or less than 2 charaters long.')
+          return;
+        }
+
         let runnableCode = document
           .getElementById(`codeBlock-${i}`)
           .innerText.replace('▶', '');
