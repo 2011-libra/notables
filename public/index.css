@@ -5,17 +5,25 @@ body {
 p {
   font-size: 20px;
   margin: 1px 0px;
-  display: inline;
 }
 
 a {
   cursor: pointer;
 }
 
-h1 {
+/* h1 {
   display: inline;
 }
 
 h2 {
   display: inline;
+} */
+
+button.darkmode-toggle {
+  background-color: transparent;
+  z-index: 1;
+}
+
+body > div:nth-child(2) {
+  background-color: transparent;
 }
