@@ -252,12 +252,14 @@ export default function toolbar() {
               return;
             }
             if (e.target.value === '1') {
-              const target = document.getSelection();
-              format('insertHTML', `<h1>${target}</h1>`);
+              // const target = document.getSelection();
+              // format('insertHTML', `<h1>${target}</h1>`);
+              format('heading', 'H1');
               document.querySelector('select').selectedIndex = 0;
             } else if (e.target.value === '2') {
-              const target = document.getSelection();
-              format('insertHTML', `<h2>${target}</h2>`);
+              // const target = document.getSelection();
+              // format('insertHTML', `<h2>${target}</h2>`);
+              format('heading', 'H2');
               document.querySelector('select').selectedIndex = 0;
             }
             //This code is manually changing the current tags and replacing it with p tags
