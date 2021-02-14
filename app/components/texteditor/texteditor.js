@@ -12,7 +12,6 @@ function texteditor() {
   let importState = useSelector(state => state);
   let result = importState.import.result ? importState.import.result : '';
   let markdownResult = result;
-  console.log(result);
 
   if (result === '') {
     markdownResult = md.render(result);
