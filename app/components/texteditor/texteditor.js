@@ -12,13 +12,10 @@ function texteditor() {
   let importState = useSelector(state => state);
   let result = importState.import.result ? importState.import.result : '';
   let markdownResult = result;
-  console.log(result);
 
   if (result === '') {
     markdownResult = md.render(result);
   } else {
-    console.log('md.render(result)->', md.render(result));
-
     markdownResult = md
       .render(result)
       .replace(
@@ -29,7 +26,6 @@ function texteditor() {
         /<\/code>\s*<\/(p|pre)>/g,
         `</pre><button id="TBD-button" class="run-code-button" contentEditable=false placeholder="add your code here...">▶ Run Code</button>`
       );
-    console.log('markdown result->', markdownResult);
   }
 
   useEffect(() => {

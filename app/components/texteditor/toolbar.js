@@ -2,14 +2,18 @@ import React, { useEffect } from 'react';
 import format from '../../utils/format';
 import { setUrl, addLink } from '../../utils/hyperlink';
 import addCodeBlock from '../../utils/addCodeBlock';
+import clearDoc from '../../utils/clearDoc';
 import {
   FaBold,
   FaItalic,
   FaListUl,
   FaListOl,
   FaLink,
-  FaCode
+  FaCode,
 } from 'react-icons/fa';
+import {
+  BsTrash
+} from 'react-icons/bs';
 import './Texteditor.css';
 
 export default function toolbar() {
@@ -139,6 +143,9 @@ export default function toolbar() {
         <button title="Add code block" onClick={e => addCodeBlock()}>
           <FaCode />
         </button>
+        <button title="Delete Document" id="trash-doc" onClick={e => clearDoc()}>
+          <BsTrash />
+      </button>
       </div>
       <div id="url-input" className="toolbar link-bar beneath">
         <div className="link-drawer">
