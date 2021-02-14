@@ -19,7 +19,8 @@ export function addLink() {
     document.getSelection().anchorNode.nodeValue === 'About us' ||
     document.getSelection().anchorNode.nodeValue === 'Upload' ||
     document.getSelection().anchorNode.nodeValue === 'Download' ||
-    document.getSelection().anchorNode.nodeValue === null
+    document.getSelection().anchorNode.nodeValue === null ||
+    document.getSelection().anchorNode.length < 2
     //***DRY CODE, FIGURE WAY TO REFACTOR LATER***//
   ) {
     alert(
