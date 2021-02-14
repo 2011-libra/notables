@@ -1,5 +1,5 @@
 export default function clearDoc (){
-  if(confirm('Are you sure you want to delete this document?')){
+  if(confirm('⚠️ WARNING ⚠️ : Are you sure you want to DELETE this document?')){
     document.getElementById('contentEditable').innerHTML = '';
   }
 }
