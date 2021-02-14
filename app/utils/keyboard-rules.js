@@ -31,13 +31,17 @@ export default function keyboardRules(){
       return;
     }
 
-  if(document.getSelection().anchorNode.previousSibling.innerText.includes('Run Code') ||
-    document.getSelection().anchorNode.previousSibling.id.includes('codeBlock')
-    ){
-      if(e.key === 'Backspace'){
-        let targetId = document.getSelection().anchorNode.previousSibling.previousSibling.id;
-        document.getElementById(targetId).remove()
+    try {
+      if(document.getSelection().anchorNode.previousSibling.innerText.includes('Run Code') ||
+      document.getSelection().anchorNode.previousSibling.id.includes('codeBlock')
+      ){
+        if(e.key === 'Backspace'){
+          let targetId = document.getSelection().anchorNode.previousSibling.previousSibling.id;
+          document.getElementById(targetId).remove()
+        }
+        return;
       }
+    } catch (error) {
       return;
     }
   }

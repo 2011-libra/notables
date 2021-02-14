@@ -14,14 +14,17 @@
   display: flex;
   align-items: center;
   justify-content: space-evenly;
+  box-shadow: 0px 3px 5px gray;
 }
 
 #url-input {
-  top: 86px;
+  top: 85px;
+  box-shadow: none;
 }
 
 #url-input.beneath {
-  top: 30px;
+  top: 27px;
+  box-shadow: none;
 }
 
 .link-bar {
@@ -35,12 +38,31 @@
 }
 
 .link-drawer {
-  border: solid 1px #ddd;
+  border: solid 2px rgb(153, 152, 152);
   border-radius: 0px 0px 6px 6px;
-  background-color: #e9e3e3;
+  background-color: #c8bebe;
   padding: 5px;
   grid-column-start: 4;
   width: 200px;
+}
+
+#txtFormatUrl {
+  width:180px;
+  padding: 2px 5px;
+}
+
+#create-link-button {
+  background-color: transparent;
+  border: none;
+  float: right;
+  font-weight: bold;
+  margin-top: 5px;
+  outline: none;
+  color: #686565;
+}
+
+#create-link-button:hover {
+  color: black
 }
 
 select {
