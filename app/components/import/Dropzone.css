@@ -51,22 +51,9 @@
   /* font-weight: bold; */
 }
 
-#app > div.header > div.makeStyles-root-1 > div > div > div.makeStyles-drawerHeader-5 > div > h1 {
+.drawer > h1 {
   font-size: 20px;
   font-family: Helvetica;
-}
-
-#app > div.header > div.makeStyles-root-1 > div > div > div.makeStyles-drawerHeader-5 > div > h1:hover {
-  color: lightgray
-}
-
-#app > div.header > div.makeStyles-root-1 > div > div > div.makeStyles-drawerHeader-5 > div {
-  height: 100%;
-}
-
-#app > div.header > div.makeStyles-root-1 > div > div > div.dropzone_container > div:nth-child(2) > aside {
-  z-index: 1;
-  padding: 0px 25px
 }
 
 #app > div.header > div.makeStyles-root-1 > div > div > div.dropzone_container > div:nth-child(2) > aside > h4 {
