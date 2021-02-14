@@ -73,7 +73,7 @@
   text-align: center;
 }
 
-#app > div.header > div.makeStyles-root-1 > div > div > div.dropzone_container > div:nth-child(2) > aside > div > ul {
+aside > div > ul {
   padding: 2px 8px;
   text-align: center;
   color: cornflowerblue;
