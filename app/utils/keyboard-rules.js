@@ -35,7 +35,6 @@ export default function keyboardRules(){
     document.getSelection().anchorNode.previousSibling.id.includes('codeBlock')
     ){
       if(e.key === 'Backspace'){
-        console.log('Condition Met:', e)
         let targetId = document.getSelection().anchorNode.previousSibling.previousSibling.id;
         document.getElementById(targetId).remove()
       }
