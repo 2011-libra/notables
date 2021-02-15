@@ -40,7 +40,7 @@ router.post('/', async (req, res, next) => {
   try {
     makeWorkingDir(token, { code });
     console.log('[API Route] sandbox()  input:', chalk.yellow(code));
-    const output = await sandbox(token);
+    const output = (await sandbox(token)) || '[No output]';
     console.log('[API Route] sandbox() output:', chalk.blue(output));
 
     res.send(output);
