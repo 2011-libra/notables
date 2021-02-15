@@ -5,6 +5,7 @@ const path = require('path');
 const chalk = require('chalk');
 const rimraf = require('rimraf');
 
+// Create a temporary directory to store client code to run
 const makeWorkingDir = (token, codeObj) => {
   try {
     fs.mkdirSync(path.join(__dirname, `/tmp/${token}`));
@@ -12,6 +13,7 @@ const makeWorkingDir = (token, codeObj) => {
     console.log('Error in mkDir:', error);
   }
 
+  // Store client code within a JSON file
   try {
     fs.writeFileSync(
       path.join(__dirname, `/tmp/${token}/code.json`),
@@ -22,18 +24,16 @@ const makeWorkingDir = (token, codeObj) => {
   }
 };
 
+// Remove working directory when code is finished
 const cleanupWorkingDir = token => {
   try {
-    // Not Node-10 compatible:
-    // fs.rmdirSync(path.join(__dirname, `/tmp/${token}`), { recursive: true });
     rimraf.sync(path.join(__dirname, `./tmp/${token}`));
   } catch (error) {
     console.log('Error in cleanupWorkingDir:', error);
   }
 };
 
-// Check that brackets match and there are no floating
-// string delimiters
+// Check that brackets match and there are no floating string delimiters
 const pairsMatch = string => {
   const opens = {
     '(': true,
@@ -79,6 +79,7 @@ const pairsMatch = string => {
   return stack.length === 0 && inString === '';
 };
 
+// POST /api/code/
 router.post('/', async (req, res, next) => {
   const code = req.body.code;
   const token = req.body.token;
