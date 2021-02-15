@@ -8,7 +8,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { FaCode } from 'react-icons/fa';
 import addCodeBlock from './addCodeBlock';
 
-export default function codeRunnerAlert() {
+export default function createCodeAlert() {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
