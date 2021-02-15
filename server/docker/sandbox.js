@@ -102,15 +102,15 @@ const runContainer = async token => {
   return stdout.toString();
 };
 
-// Remove control characters captured from container's stdout
+// Remove control characters captured from container's stdout.
+// When the container's stdout is captured, it is done so in chunks of
+// unpredictable length; even running the same code multiple times will not give
+// the same underlying chunks. Each chunk begins with a (signed) long (8 bytes)
+// representing the length of the following chunk. We need to discard these.
+// They all begin with ASCII code 1 (and may have more 1's in the middle) and
+// fill up 8 bytes in all.
 const trimControlCharacters = string => {
-  let readableOutput = '';
-  for (let i = 0; i < string.length; i++) {
-    if (string.charCodeAt(i) > 31 || string.charCodeAt(i) === 10) {
-      readableOutput += string[i];
-    }
-  }
-  return readableOutput;
+  return string.replace(/\x01.{7}/g, '');
 };
 
 // Main function: Run the container and return the output it captures
