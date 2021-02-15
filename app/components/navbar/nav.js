@@ -78,24 +78,28 @@ function Nav() {
   const downloadTxtFile = () => {
     let stdoutNodeList = document.getElementsByClassName('sandbox-stdout');
     let runButtonNodeList = document.getElementsByClassName('run-code-button');
-    for (let i = stdoutNodeList.length - 1; i >= 0; i--) {
-      stdoutNodeList[i].remove();
+    if (document.getElementById('contentEditable').innerHTML.length === 0) {
+      alert('There is nothing to download!');
+    } else {
+      for (let i = stdoutNodeList.length - 1; i >= 0; i--) {
+        stdoutNodeList[i].remove();
+      }
+
+      let innerHTML = document.getElementById('contentEditable').innerHTML;
+      innerHTML = innerHTML.replace(/▶.Run.Code/g, '');
+
+      let markdown = turndownService.turndown(innerHTML);
+
+      const element = document.createElement('a');
+      const file = new Blob([markdown], {
+        type: 'text/richtext;charset=utf-8'
+      });
+      element.href = URL.createObjectURL(file);
+      element.download = 'myFile.md';
+      document.body.appendChild(element);
+      element.click();
+      createCodeRunnerEvent();
     }
-
-    let innerHTML = document.getElementById('contentEditable').innerHTML;
-    innerHTML = innerHTML.replace(/▶.Run.Code/g, '');
-
-    let markdown = turndownService.turndown(innerHTML);
-
-    const element = document.createElement('a');
-    const file = new Blob([markdown], {
-      type: 'text/richtext;charset=utf-8'
-    });
-    element.href = URL.createObjectURL(file);
-    element.download = 'myFile.md';
-    document.body.appendChild(element);
-    element.click();
-    createCodeRunnerEvent();
   };
 
   const handleClick = event => {
