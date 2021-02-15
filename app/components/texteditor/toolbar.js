@@ -12,8 +12,8 @@ import {
   FaCode
 } from 'react-icons/fa';
 import './Texteditor.css';
-import CodeRunnerAlert from '../../utils/codeRunnerAlert';
-import HtmlAlert from '../../utils/htmlAlert';
+import CreateCodeAlert from '../../utils/createCodeAlert';
+import HyperlinkAlert from '../../utils/hyperlinkAlert';
 
 export default function toolbar() {
   useEffect(() => {
@@ -138,10 +138,10 @@ export default function toolbar() {
         {/* <button title="Add link" onClick={e => addLink()}>
           <FaLink />
         </button> */}
-        <HtmlAlert />
+        <HyperlinkAlert />
         {/* <button title="Add code block" onClick={e => addCodeBlock()}> */}
 
-        <CodeRunnerAlert />
+        <CreateCodeAlert />
         {/* </button> */}
 
         <ClearDoc />

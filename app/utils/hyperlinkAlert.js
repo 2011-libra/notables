@@ -7,7 +7,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { FaLink } from 'react-icons/fa';
 import { addLink } from './hyperlink';
-export default function htmlAlert() {
+export default function hyperlinkAlert() {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
