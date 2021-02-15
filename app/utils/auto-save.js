@@ -4,7 +4,7 @@ export default function autoSave(state) {
   setInterval(() => {
     let currDoc = document.getElementById('contentEditable').innerHTML;
     window.localStorage.setItem('savedDoc', currDoc);
-  }, 10000);
+  }, 1000);
 
   setInterval(() => {
     let stdoutNodeList = document.getElementsByClassName('sandbox-stdout');
@@ -13,7 +13,7 @@ export default function autoSave(state) {
     }
   }, 60000);
 
-  if(state.trim().length > 1){
+  if (state.trim().length > 1) {
     return;
   }
 

@@ -18,20 +18,17 @@ function addLineAfterBlock(id) {
 export default function addCodeBlock() {
   const codeBlock = document.createElement('pre');
   const target = document.getSelection();
-  if (
-    // target.anchorNode.localName === 'div' ||
-    target.anchorNode === null ||
-    target.anchorNode.localName === 'a' ||
-    target.focusNode.nodeName.includes('#text') ||
-    target.focusNode.classList.contains('title') ||
-    target.focusNode.className.includes('codeBlock') ||
-    target.focusNode.className.includes('code-blocks')
-  ) {
-    alert(
-      'To add a code block, please start on a new line inside the text area. NOTE: Inline code blocks are not premitted.'
-    );
-    return;
-  }
+  // if (
+  //   // target.anchorNode.localName === 'div' ||
+  //   target.anchorNode === null ||
+  //   target.anchorNode.localName === 'a' ||
+  //   target.focusNode.nodeName.includes('#text') ||
+  //   target.focusNode.classList.contains('title') ||
+  //   target.focusNode.className.includes('codeBlock') ||
+  //   target.focusNode.className.includes('code-blocks')
+  // ) {
+  //   return;
+  // }
 
   const id = `codeBlock-${
     document.getElementsByClassName('codeBlock').length + 1

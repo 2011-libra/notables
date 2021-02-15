@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import format from '../../utils/format';
 import { setUrl, addLink } from '../../utils/hyperlink';
-import addCodeBlock from '../../utils/addCodeBlock';
+// import addCodeBlock from '../../utils/addCodeBlock';
 import ClearDoc from '../../utils/clearDoc';
 import {
   FaBold,
@@ -12,6 +12,8 @@ import {
   FaCode
 } from 'react-icons/fa';
 import './Texteditor.css';
+import CreateCodeAlert from '../../utils/createCodeAlert';
+import HyperlinkAlert from '../../utils/hyperlinkAlert';
 
 export default function toolbar() {
   useEffect(() => {
@@ -133,13 +135,14 @@ export default function toolbar() {
         >
           <FaListOl />
         </button>
-        <button title="Add link" onClick={e => addLink()}>
+        {/* <button title="Add link" onClick={e => addLink()}>
           <FaLink />
-        </button>
+        </button> */}
+        <HyperlinkAlert />
+        {/* <button title="Add code block" onClick={e => addCodeBlock()}> */}
 
-        <button title="Add code block" onClick={e => addCodeBlock()}>
-          <FaCode />
-        </button>
+        <CreateCodeAlert />
+        {/* </button> */}
 
         <ClearDoc />
       </div>
