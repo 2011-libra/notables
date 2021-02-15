@@ -47,8 +47,8 @@ export default function hyperlinkAlert() {
         <DialogTitle id="alert-dialog-title">{'Error'}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            'Please select/highlight the text you are intending to hyperlink
-            first.'
+            Please select/highlight the text you are intending to hyperlink
+            first.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
