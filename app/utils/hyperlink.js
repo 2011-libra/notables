@@ -11,24 +11,6 @@ export function addLink() {
     return;
   }
 
-  if (
-    //***DRY CODE, FIGURE WAY TO REFACTOR LATER***//
-    document.getSelection().anchorNode === null ||
-    document.getSelection().anchorNode.innerText === '' ||
-    document.getSelection().anchorNode.className === 'toolbar' ||
-    document.getSelection().anchorNode.nodeValue === 'About us' ||
-    document.getSelection().anchorNode.nodeValue === 'Upload' ||
-    document.getSelection().anchorNode.nodeValue === 'Download' ||
-    document.getSelection().anchorNode.nodeValue === null ||
-    document.getSelection().anchorNode.length < 2
-    //***DRY CODE, FIGURE WAY TO REFACTOR LATER***//
-  ) {
-    alert(
-      'Please select/highlight the text you are intending to hyperlink first.'
-    );
-    return;
-  }
-
   hyperlinkSelection = document.getSelection();
   anchorNode = hyperlinkSelection.anchorNode;
   anchorOffset = hyperlinkSelection.anchorOffset;
