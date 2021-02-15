@@ -5,26 +5,27 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { FaCode } from 'react-icons/fa';
-import addCodeBlock from './addCodeBlock';
-
-export default function createCodeAlert() {
+import { FaLink } from 'react-icons/fa';
+import { addLink } from '../../utils/hyperlink';
+export default function hyperlinkAlert() {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
-    const target = document.getSelection();
     if (
-      //   target.anchorNode.localName === 'div' ||
-      target.anchorNode === null ||
-      target.anchorNode.localName === 'a' ||
-      target.focusNode.nodeName.includes('#text') ||
-      target.focusNode.classList.contains('title') ||
-      target.focusNode.className.includes('codeBlock') ||
-      target.focusNode.className.includes('code-blocks')
+      //***DRY CODE, FIGURE WAY TO REFACTOR LATER***//
+      document.getSelection().anchorNode === null ||
+      document.getSelection().anchorNode.innerText === '' ||
+      document.getSelection().anchorNode.className === 'toolbar' ||
+      document.getSelection().anchorNode.nodeValue === 'About us' ||
+      document.getSelection().anchorNode.nodeValue === 'Upload' ||
+      document.getSelection().anchorNode.nodeValue === 'Download' ||
+      document.getSelection().anchorNode.nodeValue === null ||
+      document.getSelection().anchorNode.length < 2
+      //***DRY CODE, FIGURE WAY TO REFACTOR LATER***//
     ) {
       setOpen(true);
     } else {
-      addCodeBlock();
+      addLink();
     }
   };
 
@@ -35,7 +36,7 @@ export default function createCodeAlert() {
   return (
     <div>
       <Button onClick={handleClickOpen}>
-        <FaCode />
+        <FaLink />
       </Button>
       <Dialog
         open={open}
@@ -46,15 +47,12 @@ export default function createCodeAlert() {
         <DialogTitle id="alert-dialog-title">{'Error'}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            To add a code block, please start on a new line inside the text
-            area.
-          </DialogContentText>
-          <DialogContentText>
-            NOTE: Inline code blocks are not premitted.
+            Please select/highlight the text you are intending to hyperlink
+            first.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={handleClose} color="primary" autoFocus>
             Close
           </Button>
         </DialogActions>

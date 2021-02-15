@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import format from '../../utils/format';
 import { setUrl, addLink } from '../../utils/hyperlink';
 // import addCodeBlock from '../../utils/addCodeBlock';
-import ClearDoc from '../../utils/clearDoc';
+import ClearDoc from '../alerts/clearDoc';
 import {
   FaBold,
   FaItalic,
@@ -12,8 +12,8 @@ import {
   FaCode
 } from 'react-icons/fa';
 import './Texteditor.css';
-import CreateCodeAlert from '../../utils/createCodeAlert';
-import HyperlinkAlert from '../../utils/hyperlinkAlert';
+import CreateCodeAlert from '../alerts/createCodeAlert';
+import HyperlinkAlert from '../alerts/hyperlinkAlert';
 
 export default function toolbar() {
   useEffect(() => {
