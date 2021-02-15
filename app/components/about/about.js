@@ -104,7 +104,7 @@ export default function CustomizedDialogs() {
           <Typography gutterBottom>
             While you are typing your notes, you may decide to include a code
             snippet. Did you ever wish you could RUN that code inside your text
-            editor? In the text editor toolbar, there is that option, it will
+            editor? In the text editor toolbar, there is that option,
             the button on the far right. Clicking on it will open up a codeblock
             for you to write your code and run, just by clicking the "Run code"
             button! (Make sure it's actual code though!)
