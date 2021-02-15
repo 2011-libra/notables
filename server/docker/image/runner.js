@@ -7,6 +7,7 @@ const vm = new NodeVM({
 });
 
 try {
+  vm.run('process = {}');
   vm.run(codeObj.code);
 } catch (error) {
   console.log(error.toString());
