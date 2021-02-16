@@ -47,7 +47,9 @@ If you wish to fork and develop this repository, the development environment can
 
 # Acknowledgements
 
-The approach to server security used here is based on an article by [Tim Nolet](https://www.freecodecamp.org/news/running-untrusted-javascript-as-a-saas-is-hard-this-is-how-i-tamed-the-demons-973870f76e1c/).
+- The approach to server security used here is based on an article by [Tim Nolet](https://www.freecodecamp.org/news/running-untrusted-javascript-as-a-saas-is-hard-this-is-how-i-tamed-the-demons-973870f76e1c/).
+
+- The inspiration to building our own WYSIWYG came from [Freedom Evenden](https://medium.com/javascript-in-plain-english/how-to-create-a-wysiwyg-text-editor-from-scratch-in-reactjs-710f9ebfa665)
 
 # Authors
 
