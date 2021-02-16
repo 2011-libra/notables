@@ -85,6 +85,7 @@ const listenToContainer = async (container, stream) => {
 const runContainer = async token => {
   const stdout = new streams.WritableStream();
   const container = await makeContainer(token);
+  let errorMsg = '';
 
   try {
     await archiveCode(token);
@@ -94,12 +95,18 @@ const runContainer = async token => {
   } catch (error) {
     console.log('Error in runContainer:', error);
   } finally {
+    const start = new Date();
     // Next line will automatically kill container in 10 sec.
     await container.stop();
+    const elapsed = new Date() - start;
+    console.log('elapsed time: ', elapsed);
+    if (elapsed > 10000) {
+      errorMsg = 'ERROR: Request timed out.';
+    }
     await container.remove();
   }
 
-  return stdout.toString();
+  return errorMsg || stdout.toString();
 };
 
 // Remove control characters captured from container's stdout.
